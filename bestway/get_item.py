@@ -1,6 +1,5 @@
-import requests
 from bs4 import BeautifulSoup
-from bway_item import *
+from bestway.bway_item import *
 import requests
 
 
@@ -12,7 +11,12 @@ def GET_ITEM(link_code, cookies, headers):
 
     name = right_block.find_all("h1", class_="prodname")[0].text
     unit_size = right_block.find_all("p", class_="prodsize")[0].text
-    b_price = right_block.find_all("p", class_="prodprice")[0].text
+
+    b_price = "0.00"
+    try:
+        b_price = right_block.find_all("p", class_="prodprice")[0].text
+    except:
+        b_price = "0.00"
 
     prod_table = right_block.find_all("table", class_="prodtable")[0]
     prod_table_rows = prod_table.find_all("tr")
@@ -37,7 +41,8 @@ def GET_ITEM(link_code, cookies, headers):
         elif flag == "Brand:":
             brand = value
         else:
-            print("Unexpected ROW PARSE FIELD!")
+            tv = 0.0
+            # print("Unexpected ROW PARSE FIELD!")
             # Error Handling? Unexpected Val Detected!
 
     item = BestwayItem(name, unit_size, b_price, rsp, por, pack_size, code, ean, vat_rate, brand)

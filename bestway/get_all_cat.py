@@ -1,4 +1,7 @@
 import mysql.connector
+import requests
+from bs4 import BeautifulSoup
+import get_item
 
 cookies = {
     'unbxd_depot': '834',
@@ -28,3 +31,22 @@ mydb = mysql.connector.connect(
     password="mpospass",
     database="mpos"
 )
+
+url = 'https://www.bestwaywholesale.co.uk/soft-drinks/501811'
+page = requests.get(url, cookies=cookies, headers=headers)
+soup = BeautifulSoup(page.content, "html.parser")
+
+the_list = soup.find(id="shop-products")
+list_elements = the_list.find_all("li")
+
+target_book = []
+
+for el in list_elements:
+    try:
+        target_book.append(el["data-ga-product-id"])
+    except:
+        print("Misc Item")
+
+for target_link in target_book:
+    item = get_item.GET_ITEM(target_link, cookies, headers)
+    item.commit_to_sql(mydb)
