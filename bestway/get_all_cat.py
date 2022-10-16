@@ -47,8 +47,8 @@ def Upload_Category(href, cookies, headers, mydb):
 
     print("DONE")
 
-    # with alive_bar(len(target_book), title="SQL Committing", force_tty=True) as bar:
-    #     for el in target_book:
-    #         item = get_item.GET_ITEM(el, cookies, headers)
-    #         item.commit_to_sql(mydb)
-    #         bar()
+    with alive_bar(len(target_book), title="SQL Committing", force_tty=True) as bar:
+        for el in target_book:
+            item = get_item.GET_ITEM(el, cookies, headers)
+            item.commit_to_sql(mydb)
+            bar()

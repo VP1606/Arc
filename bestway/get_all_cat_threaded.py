@@ -48,10 +48,10 @@ def do_cat_threaded(href, cookies, headers, mydb):
     threads = []
     target_book = []
 
-    with ThreadPoolExecutor(max_workers=20) as executor:
-        for url in target_urls:
-            threads.append(executor.submit(handle_page, url, cookies, headers))
-        for task in as_completed(threads):
-            target_book = target_book + task.result()
-
-    print("DONE")
+    with alive_bar(len(target_urls), title="Page Scanning", force_tty=True) as bar:
+        with ThreadPoolExecutor(max_workers=20) as executor:
+            for url in target_urls:
+                threads.append(executor.submit(handle_page, url, cookies, headers))
+            for task in as_completed(threads):
+                target_book = target_book + task.result()
+                bar()
