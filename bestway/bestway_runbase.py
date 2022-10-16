@@ -2,6 +2,7 @@ import mysql.connector
 import get_all_cat
 import time
 import get_all_cat_threaded
+import get_cats
 
 cookies = {
     'unbxd_depot': '834',
@@ -32,18 +33,15 @@ mydb = mysql.connector.connect(
     database="mpos"
 )
 
-# start_1 = time.time()
-# get_all_cat.Upload_Category("soft-drinks", cookies, headers, mydb)
-# finish_1 = time.time()
 
-# start_2 = time.time()
-# get_all_cat_threaded.do_cat_threaded("soft-drinks", cookies, headers, mydb)
-# finish_2 = time.time()
+def RUN(multi=True):
+    cats = get_cats.get_cats(cookies, headers)
+    for index, cat in enumerate(cats):
+        print(index)
+        if multi:
+            get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydb)
+        else:
+            get_all_cat.Upload_Category(cat, cookies, headers, mydb)
 
 
-# print("SINGLE THREAD: {0}".format(str(finish_1 - start_1)))
-# print("MULTI 20 THREAD: {0}".format(str(finish_2 - start_2)))
-
-import get_cats
-
-get_cats.get_cats(cookies, headers)
+RUN()
