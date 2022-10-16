@@ -43,9 +43,15 @@ def build_targets(href, cookies, headers):
     return targets
 
 
+def sql_committing(el, cookies, headers, mydb):
+    item = get_item.GET_ITEM(el, cookies, headers)
+    item.commit_to_sql(mydb)
+
+
 def do_cat_threaded(href, cookies, headers, mydb):
     target_urls = build_targets(href, cookies, headers)
     threads = []
+    sql_threads = []
     target_book = []
 
     with alive_bar(len(target_urls), title="Page Scanning", force_tty=True) as bar:
@@ -54,4 +60,11 @@ def do_cat_threaded(href, cookies, headers, mydb):
                 threads.append(executor.submit(handle_page, url, cookies, headers))
             for task in as_completed(threads):
                 target_book = target_book + task.result()
+                bar()
+
+    with alive_bar(len(target_book), title="Committing to SQL", force_tty=True) as bar:
+        with ThreadPoolExecutor(max_workers=20) as executor:
+            for el in target_book:
+                sql_threads.append(executor.submit(sql_committing, el, cookies, headers, mydb))
+            for task in as_completed(sql_threads):
                 bar()

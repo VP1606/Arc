@@ -1,5 +1,7 @@
 import mysql.connector
 import get_all_cat
+import time
+import get_all_cat_threaded
 
 cookies = {
     'unbxd_depot': '834',
@@ -29,9 +31,6 @@ mydb = mysql.connector.connect(
     password="mpospass",
     database="mpos"
 )
-
-import time
-import get_all_cat_threaded
 
 # start_1 = time.time()
 # get_all_cat.Upload_Category("soft-drinks", cookies, headers, mydb)
