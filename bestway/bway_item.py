@@ -1,4 +1,6 @@
 import mysql.connector
+
+
 class BestwayItem:
     def __init__(self, name, unit_size, b_price, rsp, por, pack_size, code, ean, vat_rate, brand):
         self.name = name
