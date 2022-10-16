@@ -30,4 +30,17 @@ mydb = mysql.connector.connect(
     database="mpos"
 )
 
+import time
+import get_all_cat_threaded
+
+start_1 = time.time()
 get_all_cat.Upload_Category("soft-drinks", cookies, headers, mydb)
+finish_1 = time.time()
+
+start_2 = time.time()
+get_all_cat_threaded.do_cat_threaded("soft-drinks", cookies, headers, mydb)
+finish_2 = time.time()
+
+
+print("SINGLE THREAD: {0}".format(str(finish_1 - start_1)))
+print("MULTI 20 THREAD: {0}".format(str(finish_2 - start_2)))
