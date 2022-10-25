@@ -21,6 +21,8 @@ class BestwayItem:
             vat_val = 0.0
         elif self.vat_rate == "Standard":
             vat_val = 0.2
+        elif self.vat_rate == "5%":
+            vat_val = 0.05
         else:
             print("VAT RATE ERROR: [{0}]".format(self.vat_rate))
 
