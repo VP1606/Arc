@@ -63,8 +63,6 @@ def do_cat_threaded(href, cookies, headers, mydb):
                 bar()
 
     with alive_bar(len(target_book), title="Committing to SQL", force_tty=True) as bar:
-        with ThreadPoolExecutor(max_workers=20) as executor:
-            for el in target_book:
-                sql_threads.append(executor.submit(sql_committing, el, cookies, headers, mydb))
-            for task in as_completed(sql_threads):
-                bar()
+        for el in target_book:
+            sql_committing(el, cookies, headers, mydb)
+            bar()
