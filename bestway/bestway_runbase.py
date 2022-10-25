@@ -1,5 +1,4 @@
 import mysql.connector
-import get_all_cat
 import get_all_cat_threaded
 import get_cats
 
@@ -35,14 +34,11 @@ mydb = mysql.connector.connect(
 )
 
 
-def RUN(multi=True):
+def RUN():
     cats = get_cats.get_cats(cookies, headers)
     for index, cat in enumerate(cats):
         print(index)
-        if multi:
-            get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydb)
-        else:
-            get_all_cat.Upload_Category(cat, cookies, headers, mydb)
+        get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydb)
 
 def test():
     cats = get_cats.get_cats(cookies, headers)
