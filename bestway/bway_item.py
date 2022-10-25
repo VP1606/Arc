@@ -30,7 +30,7 @@ class BestwayItem:
         mycursor = mydb.cursor()
 
         sql = "INSERT INTO rrpextract (datetime, stockref, description, price, source, vat, por, packsize, 	suppliercode, brand, in_stock) VALUES (NOW(), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-        vals = (self.ean, self.name, rsp_formatted, "BESTWAY", vat_val, b_price_formatted, self.pack_size, int(self.code), self.brand, self.stock)
+        vals = (self.ean, self.name, rsp_formatted, "BESTWAY", vat_val, 0.00, self.pack_size, int(self.code), self.brand, self.stock)
 
         mycursor.execute(sql, vals)
         mydb.commit()
