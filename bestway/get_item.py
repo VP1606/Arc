@@ -11,10 +11,13 @@ def GET_ITEM(link_code, cookies, headers):
 
     name = right_block.find_all("h1", class_="prodname")[0].text
     unit_size = right_block.find_all("p", class_="prodsize")[0].text
+    
+    stock = 0
 
     b_price = "£0.00"
     try:
         b_price = right_block.find_all("p", class_="prodprice")[0].text
+        stock = 1
     except:
         pass
 
@@ -45,5 +48,5 @@ def GET_ITEM(link_code, cookies, headers):
             # print("Unexpected ROW PARSE FIELD!")
             # Error Handling? Unexpected Val Detected!
 
-    item = BestwayItem(name, unit_size, b_price, rsp, por, pack_size, code, ean, vat_rate, brand)
+    item = BestwayItem(name, unit_size, b_price, rsp, por, pack_size, code, ean, vat_rate, brand, stock)
     return item

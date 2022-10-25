@@ -36,19 +36,21 @@ mydb = mysql.connector.connect(
 )
 
 
-# def RUN(multi=True):
-#     cats = get_cats.get_cats(cookies, headers)
-#     for index, cat in enumerate(cats):
-#         print(index)
-#         if multi:
-#             get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydb)
-#         else:
-#             get_all_cat.Upload_Category(cat, cookies, headers, mydb)
+def RUN(multi=True):
+    cats = get_cats.get_cats(cookies, headers)
+    for index, cat in enumerate(cats):
+        print(index)
+        if multi:
+            get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydb)
+        else:
+            get_all_cat.Upload_Category(cat, cookies, headers, mydb)
 
+def test():
+    import get_item
+    code = "612516-1"
+    item = get_item.GET_ITEM(code, cookies, headers)
+    print(item.name, item.b_price, item.rsp)
+    item.commit_to_sql(mydb=mydb)
 
 # RUN()
-
-import get_item
-code = "612516-1"
-item = get_item.GET_ITEM(code, cookies, headers)
-print(item.name, item.b_price, item.rsp)
+test()
