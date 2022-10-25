@@ -22,7 +22,7 @@ class BestwayItem:
         elif self.vat_rate == "Standard":
             vat_val = 0.2
         else:
-            print("VAT RATE ERROR")
+            print("VAT RATE ERROR: [{0}]".format(self.vat_rate))
 
         rsp_formatted = float(self.rsp[1:])
         b_price_formatted = float(self.b_price[1:])
