@@ -16,6 +16,9 @@ class BestwayItem:
         self.stock = stock
 
     def commit_to_sql(self, mydb):
+
+        # print("{0} [{1}, {2}, {3}, {4}]".format(self.name, self.b_price, self.rsp, self.ean, self.vat_rate))
+
         vat_val = 0.0
         if self.vat_rate == "Exempt":
             vat_val = 0.0

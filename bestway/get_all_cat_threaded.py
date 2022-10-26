@@ -45,7 +45,10 @@ def build_targets(href, cookies, headers):
 
 def sql_committing(el, cookies, headers, mydb):
     item = get_item.GET_ITEM(el, cookies, headers)
-    item.commit_to_sql(mydb)
+    if item.rsp == '':
+        pass
+    else:
+        item.commit_to_sql(mydb)
 
 
 def do_cat_threaded(href, cookies, headers, mydb):
