@@ -37,5 +37,13 @@ def GET_ITEM(link_code, cookies, headers):
         else:
             print("Unknown Key in COL4!")
 
-    item = BookerItem(name, b_price, rsp, por, code, vat_rate)
+    fields = soup.find_all("span", class_="font-weight-bold")
+    brand_name = ""
+    for el in fields:
+        if el.text == "Brand ":
+            brand_holder = el.find_next_sibling()
+            brand_name = brand_holder.text
+            break
+
+    item = BookerItem(name, b_price, rsp, por, code, vat_rate, brand_name)
     return item

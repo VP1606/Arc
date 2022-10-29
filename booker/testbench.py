@@ -27,16 +27,28 @@ headers = {
     'Connection': 'keep-alive',
 }
 
-import mysql.connector
+import requests
+from bs4 import BeautifulSoup
 
-mydb = mysql.connector.connect(
-    host="netherly1.dyndns.org",
-    user="mpos",
-    password="mpospass",
-    database="mpos"
-)
+link = "https://www.booker.co.uk/products/product%20detail?Code=275138&returnUrl=http%3a%2f%2fwww.booker.co.uk" \
+       "%2fproducts%2fproduct-list%3fcategoryName%3dCS3_100001%26view%3dUnGrouped%26sortField%3dPromotion" \
+       "%26SortDirection%3dAscending%26sortOrder%3d%26multi%3dFalse%26pageIndex%3d0 "
 
-import get_all_cat_threaded
-href = "/products/product-list?categoryName=CS3_100001"
+code = "/products/product%20detail?Code=275138&returnUrl=http%3a%2f%2fwww.booker.co.uk" \
+       "%2fproducts%2fproduct-list%3fcategoryName%3dCS3_100001%26view%3dUnGrouped%26sortField%3dPromotion" \
+       "%26SortDirection%3dAscending%26sortOrder%3d%26multi%3dFalse%26pageIndex%3d0"
 
-get_all_cat_threaded.do_cat_threaded(href, cookies, headers, mydb)
+page = requests.get(link, cookies=cookies, headers=headers)
+soup = BeautifulSoup(page.content, "html.parser")
+
+# fields = soup.find_all("span", class_="font-weight-bold")
+# brand = ""
+# for el in fields:
+#     if el.text == "Brand ":
+#         neext = el.find_next_sibling()
+#         brand = neext.text
+#         break
+# print(brand)
+
+import get_item
+get_item.GET_ITEM(code, cookies, headers)
