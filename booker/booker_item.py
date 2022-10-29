@@ -13,7 +13,11 @@ class BookerItem:
         self.unit_size = unit_size
 
     def commit_to_sql(self, mydb):
-        vat_val = int(self.vat_rate[:-1]) / 100
+
+        vat_val = 0.0
+        if self.vat_rate != "":
+            vat_val = int(self.vat_rate[:-1]) / 100
+
         rsp_formatted = float(self.rsp[1:])
         b_price_formatted = float(self.b_price[1:])
 

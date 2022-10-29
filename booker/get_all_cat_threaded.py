@@ -49,7 +49,11 @@ def sql_committing(el, cookies, headers, mydb):
     if item.rsp == '':
         pass
     else:
-        item.commit_to_sql(mydb)
+        try:
+            item.commit_to_sql(mydb)
+        except:
+            print("SQL ERROR!")
+            print("{0} {1} {2}".format(item.name, item.rsp, item.vat_rate))
 
 
 def do_cat_threaded(href, cookies, headers, mydb):
