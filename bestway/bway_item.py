@@ -53,7 +53,9 @@ class BestwayItem:
 
         mycursor = mydb.cursor()
 
-        sql = "INSERT INTO rrpextract (datetime, stockref, description, price, source, vat, por, packsize, 	suppliercode, brand, in_stock, supplier_price, supplier_packsize, profit_percent) VALUES (NOW(), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        sql = "INSERT INTO rrpextract (datetime, stockref, description, price, source, vat, por, packsize, 	" \
+              "suppliercode, brand, in_stock, supplier_price, supplier_packsize, profit_percent) VALUES (NOW(), %s, " \
+              "%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) "
         vals = (self.ean, self.name, rsp_formatted, "BESTWAY", vat_val, self.por, self.pack_size, int(self.code), self.brand, self.stock, b_price_formatted, self.unit_size, profit_percent)
 
         mycursor.execute(sql, vals)
