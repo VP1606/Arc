@@ -1,5 +1,6 @@
 import mysql.connector
 
+
 class BookerItem:
     def __init__(self, name, b_price, rsp, por, code, vat_rate, brand_name):
         self.name = name
