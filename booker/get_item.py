@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 from booker_item import *
 import requests
 
+
 def GET_ITEM(link_code, cookies, headers):
     url = "https://www.booker.co.uk{0}".format(link_code)
     page = requests.get(url, cookies=cookies, headers=headers)
