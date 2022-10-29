@@ -8,8 +8,8 @@ def get_cats(cookies, headers):
     page = requests.get(url, cookies=cookies, headers=headers)
     soup = BeautifulSoup(page.content, "html.parser")
 
-    cat_collection = soup.find_all("div", class_="category-list row mt-3")[0]
-    cat_refs = cat_collection.find_all("a")
+    cat_collection = soup.find_all("div", class_="departments")[0]
+    cat_refs = cat_collection.find_all("a", class_="departmentItemx")
 
     for ref in cat_refs:
         cats.append(ref["href"])
