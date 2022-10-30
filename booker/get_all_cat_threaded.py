@@ -54,11 +54,13 @@ def sql_committing(item, cookies, headers, mydb):
             print("SQL ERROR!")
             print("{0} {1} {2}".format(item.name, item.rsp, item.vat_rate))
 
+
 def build_item(link, cookies, headers):
     item_book = []
     item = get_item.GET_ITEM(link, cookies, headers)
     item_book.append(item)
     return item_book
+
 
 def do_cat_threaded(href, cookies, headers, mydb):
     target_urls = build_targets(href, cookies, headers)
