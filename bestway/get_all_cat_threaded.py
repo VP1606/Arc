@@ -43,19 +43,25 @@ def build_targets(href, cookies, headers):
     return targets
 
 
-def sql_committing(el, cookies, headers, mydb):
-    item = get_item.GET_ITEM(el, cookies, headers)
+def sql_committing(item, cookies, headers, mydb):
     if item.rsp == '':
         pass
     else:
         item.commit_to_sql(mydb)
 
 
+def build_item(link, cookies, headers):
+    item_book = []
+    item = get_item.GET_ITEM(link, cookies, headers)
+    item_book.append(item)
+    return item_book
+
+
 def do_cat_threaded(href, cookies, headers, mydb):
     target_urls = build_targets(href, cookies, headers)
     threads = []
-    sql_threads = []
     target_book = []
+    item_book = []
 
     with alive_bar(len(target_urls), title="Page Scanning", force_tty=True) as bar:
         with ThreadPoolExecutor(max_workers=20) as executor:
@@ -65,7 +71,16 @@ def do_cat_threaded(href, cookies, headers, mydb):
                 target_book = target_book + task.result()
                 bar()
 
+    threads = []
+    with alive_bar(len(target_book), title="Building Items", force_tty=True) as bar:
+        with ThreadPoolExecutor(max_workers=20) as executor:
+            for link in target_book:
+                threads.append(executor.submit(build_item, link, cookies, headers))
+            for task in as_completed(threads):
+                item_book = item_book + task.result()
+                bar()
+
     with alive_bar(len(target_book), title="Committing to SQL", force_tty=True) as bar:
-        for el in target_book:
+        for el in item_book:
             sql_committing(el, cookies, headers, mydb)
             bar()
