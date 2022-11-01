@@ -49,5 +49,14 @@ def GET_ITEM(link_code, cookies, headers):
     unit_size = parent_pack_supplier.find_all("p", class_="font-weight-bold")[0].text
     unit_size = unit_size[11:]
 
-    item = BookerItem(name, b_price, rsp, por, code, vat_rate, brand_name, unit_size)
+    ean = ""
+    ean_targs = soup.find_all("a", class_="d-flex align-items-center mt-0 add-to-list flex-grow-1")
+
+    if ean_targs != []:
+        tar_href = ean_targs[0]["href"]
+        targed = tar_href.split("%")
+        targed = targed.pop().lower()
+        ean = targed.split("d")[1]
+
+    item = BookerItem(name, b_price, rsp, por, code, vat_rate, brand_name, unit_size, ean)
     return item

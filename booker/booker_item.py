@@ -2,7 +2,7 @@ import mysql.connector
 
 
 class BookerItem:
-    def __init__(self, name, b_price, rsp, por, code, vat_rate, brand_name, unit_size):
+    def __init__(self, name, b_price, rsp, por, code, vat_rate, brand_name, unit_size, ean):
         self.name = name
         self.b_price = b_price
         self.rsp = rsp
@@ -11,7 +11,7 @@ class BookerItem:
         self.vat_rate = vat_rate
         self.brand = brand_name
         self.unit_size = unit_size
-
+        self.ean = ean
     def commit_to_sql(self, mydb):
 
         vat_val = 0.0
@@ -23,11 +23,11 @@ class BookerItem:
 
         mycursor = mydb.cursor()
 
-        sql = "INSERT INTO rrpextract (datetime, description, price, source, vat, por, 	" \
+        sql = "INSERT INTO rrpextract (datetime, stockref, description, price, source, vat, por, 	" \
               "suppliercode, brand, supplier_price, supplier_packsize) VALUES (NOW(), %s, " \
-              "%s, %s, %s, %s, %s, %s, %s, %s) "
+              "%s, %s, %s, %s, %s, %s, %s, %s, %s) "
 
-        vals = (self.name, rsp_formatted, "BOOKER", vat_val, self.por, self.code, self.brand, b_price_formatted, self.unit_size)
+        vals = (self.ean, self.name, rsp_formatted, "BOOKER", vat_val, self.por, self.code, self.brand, b_price_formatted, self.unit_size)
 
         mycursor.execute(sql, vals)
         mydb.commit()

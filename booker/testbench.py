@@ -1,3 +1,5 @@
+import mysql.connector
+
 cookies = {
     '.ASPXAUTH': '33CDC131F6B53F37F4CD7574642D835967A51D82D8A6590D9458E4A03B4E7A0865957038CCCDE8C81BF535CF43D10906E2E68CC5C5F753A1FFE61CB700FD9FF078ED772AF4E3BFA0D599EF6E357E59BDDAF20FA62473875654F8F4BABD6C07017C7BACFEFCC502ABC2364A2C04FC31B345A332373010DE4489159EA264C44AFC3FEF3C2B16CD024C200CED0B5908933933E9ACCB12F01ACD090D34668872344C',
     'QueueITAccepted-SDFrts345E-V3_prodqueue': 'EventId%3Dprodqueue%26QueueId%3D88ffb793-eb73-481b-8cfe-b9657295ca6a%26RedirectType%3Dsafetynet%26IssueTime%3D1667054608%26Hash%3D351d8fc58a1d03a30e5b20c3b19b256f4430564d3630c79245120c9cd827534f',
@@ -27,28 +29,20 @@ headers = {
     'Connection': 'keep-alive',
 }
 
-import requests
-from bs4 import BeautifulSoup
+mydb = mysql.connector.connect(
+    host="netherly1.dyndns.org",
+    user="mpos",
+    password="mpospass",
+    database="mpos"
+)
 
-link = "https://www.booker.co.uk/products/product%20detail?Code=275138&returnUrl=http%3a%2f%2fwww.booker.co.uk" \
-       "%2fproducts%2fproduct-list%3fcategoryName%3dCS3_100001%26view%3dUnGrouped%26sortField%3dPromotion" \
-       "%26SortDirection%3dAscending%26sortOrder%3d%26multi%3dFalse%26pageIndex%3d0 "
+import get_all_cat_threaded
+import get_cats
+import time
 
-code = "/products/product%20detail?Code=275138&returnUrl=http%3a%2f%2fwww.booker.co.uk" \
-       "%2fproducts%2fproduct-list%3fcategoryName%3dCS3_100001%26view%3dUnGrouped%26sortField%3dPromotion" \
-       "%26SortDirection%3dAscending%26sortOrder%3d%26multi%3dFalse%26pageIndex%3d0"
+cats = get_cats.get_cats(cookies, headers)
 
-page = requests.get(link, cookies=cookies, headers=headers)
-soup = BeautifulSoup(page.content, "html.parser")
-
-# fields = soup.find_all("span", class_="font-weight-bold")
-# brand = ""
-# for el in fields:
-#     if el.text == "Brand ":
-#         neext = el.find_next_sibling()
-#         brand = neext.text
-#         break
-# print(brand)
-
-import get_item
-get_item.GET_ITEM(code, cookies, headers)
+start_time_tpe = time.time()
+get_all_cat_threaded.do_cat_threaded(cats[0], cookies, headers, mydb)
+end_time_tpe = time.time()
+print("ThreadPoolExecutor DUR: {0}".format(end_time_tpe - start_time_tpe))
