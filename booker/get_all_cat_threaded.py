@@ -29,17 +29,22 @@ def build_targets(href, cookies, headers):
     page = requests.get(url, cookies=cookies, headers=headers)
     soup = BeautifulSoup(page.content, "html.parser")
 
-    pagination = soup.find_all("ul", class_="pagination")[0]
-    page_box = pagination.find_all("li", class_="page-item d-flex").pop()
-    final_box = page_box.find_all("a", class_="page-link font-weight-bold")[0]
-    max_index = int(final_box.text)
-
-    link_stem = final_box["href"][:-1]
-
     targets = [url]
-    for i in range(1, max_index):
-        link = "https://www.booker.co.uk{0}{1}".format(link_stem, str(i))
-        targets.append(link)
+
+    try:
+        pagination = soup.find_all("ul", class_="pagination")[0]
+        page_box = pagination.find_all("li", class_="page-item d-flex").pop()
+        final_box = page_box.find_all("a", class_="page-link font-weight-bold")[0]
+        max_index = int(final_box.text)
+
+        link_stem = final_box["href"][:-1]
+
+        for i in range(1, max_index):
+            link = "https://www.booker.co.uk{0}{1}".format(link_stem, str(i))
+            targets.append(link)
+
+    except:
+        pass
 
     return targets
 
