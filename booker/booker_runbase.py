@@ -43,8 +43,9 @@ mydb = mysql.connector.connect(
 def RUN():
     start_time = time.time()
     cats = get_cats.get_cats(cookies, headers)
+    print("Total Cycles to be executed: {0}".format(len(cats)))
     for index, cat in enumerate(cats):
-        print(index)
+        print("Cycle No. {0}".format(index + 1))
         get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydb)
 
     end_time = time.time()
