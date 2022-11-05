@@ -1,6 +1,7 @@
 import mysql.connector
 import get_all_cat_threaded
 import get_cats
+import json
 
 cookies = {
     'unbxd_depot': '834',
@@ -34,16 +35,24 @@ mydb = mysql.connector.connect(
 )
 
 
-def RUN():
+def RUN(generate_ean_list=False):
+    print("--------BESTWAY START--------")
     cats = get_cats.get_cats(cookies, headers)
+    ean_list = []
     for index, cat in enumerate(cats):
         print(index)
-        get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydb)
+        ean_list = ean_list + get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydb)
 
-def test():
-    cats = get_cats.get_cats(cookies, headers)
-    for index, cat in enumerate(cats):
-        print(index)
-        get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydb)
+    for i in range(10):
+        ean_list.append(str(i))
+
+    if generate_ean_list is True:
+        ean_json = json.dumps(ean_list)
+        ean_file = open("../temp/ean_list.json", "w")
+        ean_file.write(ean_json)
+        ean_file.close()
+
+    print("--------BESTWAY DONE--------")
+
 
 RUN()
