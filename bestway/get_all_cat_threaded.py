@@ -62,7 +62,7 @@ def generate_ean_list(item):
     return pack
 
 
-def do_cat_threaded(href, cookies, headers, mydb, generate_ean_list):
+def do_cat_threaded(href, cookies, headers, mydb, generate_ean_list_called):
     target_urls = build_targets(href, cookies, headers)
     threads = []
     target_book = []
@@ -87,7 +87,7 @@ def do_cat_threaded(href, cookies, headers, mydb, generate_ean_list):
                 item_book = item_book + task.result()
                 bar()
 
-    if generate_ean_list:
+    if generate_ean_list_called:
         threads = []
         with alive_bar(len(item_book), title="Generating EAN List", force_tty=True) as bar:
             with ThreadPoolExecutor(max_workers=20) as executor:
