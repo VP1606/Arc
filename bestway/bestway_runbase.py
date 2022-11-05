@@ -55,4 +55,5 @@ def RUN(generate_ean_list=False):
     print("--------BESTWAY DONE--------")
 
 
-RUN()
+RUN(generate_ean_list=True)
+
