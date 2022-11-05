@@ -58,7 +58,13 @@ def build_item(link, cookies, headers):
 
 
 def generate_ean_list(item):
-    pack = [item.ean, item.name, float(item.rsp[1:])]
+    try:
+        rsp = float(item.rsp[1:])
+    except:
+        rsp = 0.00
+        pass
+
+    pack = [item.ean, item.name, rsp]
     return pack
 
 
@@ -94,12 +100,12 @@ def do_cat_threaded(href, cookies, headers, mydb, generate_ean_list_called):
                 for item in item_book:
                     threads.append(executor.submit(generate_ean_list, item))
                 for task in as_completed(threads):
-                    ean_list = ean_list.append(task.result())
+                    ean_list.append(task.result())
                     bar()
 
-    with alive_bar(len(target_book), title="Committing to SQL", force_tty=True) as bar:
-        for el in item_book:
-            sql_committing(el, cookies, headers, mydb)
-            bar()
+    # with alive_bar(len(target_book), title="Committing to SQL", force_tty=True) as bar:
+    #     for el in item_book:
+    #         sql_committing(el, cookies, headers, mydb)
+    #         bar()
 
     return ean_list
