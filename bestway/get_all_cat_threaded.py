@@ -103,9 +103,9 @@ def do_cat_threaded(href, cookies, headers, mydb, generate_ean_list_called):
                     ean_list.append(task.result())
                     bar()
 
-    # with alive_bar(len(target_book), title="Committing to SQL", force_tty=True) as bar:
-    #     for el in item_book:
-    #         sql_committing(el, cookies, headers, mydb)
-    #         bar()
+    with alive_bar(len(target_book), title="Committing to SQL", force_tty=True) as bar:
+        for el in item_book:
+            sql_committing(el, cookies, headers, mydb)
+            bar()
 
     return ean_list

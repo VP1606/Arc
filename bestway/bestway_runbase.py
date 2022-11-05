@@ -41,7 +41,7 @@ def RUN(generate_ean_list=False):
     ean_list = []
     for index, cat in enumerate(cats):
         print(index)
-        ean_list = ean_list + get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydb)
+        ean_list = ean_list + get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydb, generate_ean_list)
 
     for i in range(10):
         ean_list.append(str(i))
