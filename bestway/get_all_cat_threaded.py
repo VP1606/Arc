@@ -58,8 +58,8 @@ def build_item(link, cookies, headers):
 
 
 def generate_ean_list(item):
-    ean = item.ean
-    return ean
+    pack = [item.ean, item.name, float(item.rsp[1:])]
+    return pack
 
 
 def do_cat_threaded(href, cookies, headers, mydb, generate_ean_list):
@@ -94,7 +94,7 @@ def do_cat_threaded(href, cookies, headers, mydb, generate_ean_list):
                 for item in item_book:
                     threads.append(executor.submit(generate_ean_list, item))
                 for task in as_completed(threads):
-                    ean_list = ean_list + task.result()
+                    ean_list = ean_list.append(task.result())
                     bar()
 
     with alive_bar(len(target_book), title="Committing to SQL", force_tty=True) as bar:
