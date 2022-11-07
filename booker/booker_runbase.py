@@ -4,6 +4,7 @@ import get_cats
 import time
 import get_by_search_threaded
 import json
+import sys
 
 cookies = {
     '.ASPXAUTH': '33CDC131F6B53F37F4CD7574642D835967A51D82D8A6590D9458E4A03B4E7A0865957038CCCDE8C81BF535CF43D10906E2E68CC5C5F753A1FFE61CB700FD9FF078ED772AF4E3BFA0D599EF6E357E59BDDAF20FA62473875654F8F4BABD6C07017C7BACFEFCC502ABC2364A2C04FC31B345A332373010DE4489159EA264C44AFC3FEF3C2B16CD024C200CED0B5908933933E9ACCB12F01ACD090D34668872344C',
@@ -43,6 +44,7 @@ mydb = mysql.connector.connect(
 
 
 def RUN():
+    print("------BOOKER------")
     start_time = time.time()
     cats = get_cats.get_cats(cookies, headers)
     print("Total Cycles to be executed: {0}".format(len(cats)))
@@ -56,6 +58,7 @@ def RUN():
 
 
 def RUN_by_search():
+    print("------BOOKER BY SEARCH------")
     start_time = time.time()
     file = open("../temp/ean_list.json", "r")
     ean_book = json.loads(file.read())
@@ -70,4 +73,14 @@ def RUN_by_search():
     print("Duration: {0}".format(end_time - start_time))
 
 
-RUN_by_search()
+args = sys.argv
+by_search = False
+
+for arg in args:
+    if arg == "-bs":
+        by_search = True
+
+if by_search:
+    RUN_by_search()
+else:
+    RUN()
