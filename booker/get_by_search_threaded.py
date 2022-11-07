@@ -20,7 +20,7 @@ def search_ean(ean_pack, cookies, headers):
             break
 
     if matched_row_el is None:
-        return ""
+        return "", False, False, False
 
     else:
         rrp_full = ""
@@ -32,7 +32,7 @@ def search_ean(ean_pack, cookies, headers):
                 break
 
         if rrp_full == "":
-            return ""
+            return "", True, False, False
         else:
             rsp = rrp_full.replace("RRP: £", "")
             rsp = float(rsp)
@@ -42,10 +42,10 @@ def search_ean(ean_pack, cookies, headers):
                 link = coll["onclick"]
                 link = link[33:]
                 link = link[:-1]
-                return link
+                return link, True, True, True
             else:
                 # DISCARD
-                return ""
+                return "", True, True, False
 
 
 def do_by_search(ean_book, cookies, headers, mydb):
@@ -53,18 +53,31 @@ def do_by_search(ean_book, cookies, headers, mydb):
     target_book = []
     item_book = []
 
+    search_stats = [0, 0, 0]
+
     with alive_bar(len(ean_book), title="Scanning EAN Book", force_tty=True) as bar:
         with ThreadPoolExecutor(max_workers=20) as executor:
             for ean_pack in ean_book:
                 if type(ean_pack) == list:
                     threads.append(executor.submit(search_ean, ean_pack, cookies, headers))
                 else:
+                    bar()
                     pass
             for task in as_completed(threads):
-                if task.result() == "":
+
+                link, found, found_rrp, better_rrp = task.result()
+
+                if found:
+                    search_stats[0] = search_stats[0] + 1
+                if found_rrp:
+                    search_stats[1] = search_stats[1] + 1
+                if better_rrp:
+                    search_stats[2] = search_stats[2] + 1
+
+                if link == "":
                     bar()
                 else:
-                    target_book.append(task.result())
+                    target_book.append(link)
                     bar()
 
     threads = []
@@ -80,3 +93,7 @@ def do_by_search(ean_book, cookies, headers, mydb):
         for el in item_book:
             sql_committing(el, cookies, headers, mydb)
             bar()
+
+    print("Finish STATS; Found: {0}, Found w/ RRP: {1}, Found w/ Better RRP: {2}.".format(search_stats[0],
+                                                                                          search_stats[1],
+                                                                                          search_stats[2]))
