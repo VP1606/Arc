@@ -3,7 +3,7 @@ from bway_item import *
 import requests
 
 
-def GET_ITEM(link_code, cookies, headers):
+def GET_ITEM(link_code, cookies, headers, collect_pricing):
     url = 'https://www.bestwaywholesale.co.uk/product/{0}'.format(link_code)
     page = requests.get(url, cookies=cookies, headers=headers)
     soup = BeautifulSoup(page.content, "html.parser")
@@ -15,11 +15,12 @@ def GET_ITEM(link_code, cookies, headers):
     stock = 0
 
     b_price = "£0.00"
-    try:
-        b_price = right_block.find_all("p", class_="prodprice")[0].text
-        stock = 1
-    except:
-        pass
+    if collect_pricing:
+        try:
+            b_price = right_block.find_all("p", class_="prodprice")[0].text
+            stock = 1
+        except:
+            pass
 
     prod_table = right_block.find_all("table", class_="prodtable")[0]
     prod_table_rows = prod_table.find_all("tr")

@@ -50,9 +50,9 @@ def sql_committing(item, cookies, headers, mydb):
         item.commit_to_sql(mydb)
 
 
-def build_item(link, cookies, headers):
+def build_item(link, cookies, headers, collect_pricing):
     item_book = []
-    item = get_item.GET_ITEM(link, cookies, headers)
+    item = get_item.GET_ITEM(link, cookies, headers, collect_pricing)
     item_book.append(item)
     return item_book
 
@@ -68,7 +68,7 @@ def generate_ean_list(item):
     return pack
 
 
-def do_cat_threaded(href, cookies, headers, mydb, generate_ean_list_called):
+def do_cat_threaded(href, cookies, headers, mydb, generate_ean_list_called, collect_pricing):
     target_urls = build_targets(href, cookies, headers)
     threads = []
     target_book = []
@@ -88,7 +88,7 @@ def do_cat_threaded(href, cookies, headers, mydb, generate_ean_list_called):
     with alive_bar(len(target_book), title="Building Items", force_tty=True) as bar:
         with ThreadPoolExecutor(max_workers=20) as executor:
             for link in target_book:
-                threads.append(executor.submit(build_item, link, cookies, headers))
+                threads.append(executor.submit(build_item, link, cookies, headers, collect_pricing))
             for task in as_completed(threads):
                 item_book = item_book + task.result()
                 bar()

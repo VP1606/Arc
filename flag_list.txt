@@ -1,0 +1,9 @@
+----BESTWAY----
+
+-ge : Generate EAN List, to use Booker by search.
+-spd : "Sale Price Disabled" - stating not to collect the purchase price of items.
+
+----BOOKER----
+
+-bs : Operate Booker by search.
+-spd : "Sale Price Disabled" - stating not to collect the purchase price of items. Cookies will be set to None (anonymous).
