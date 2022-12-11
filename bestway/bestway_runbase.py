@@ -63,6 +63,16 @@ def RUN(cookies, headers, generate_ean_list=False, collect_pricing=True):
     print("--------BESTWAY DONE--------")
 
 
+def RUN_Test(cookies, headers):
+    print("--------BESTWAY START--------")
+    print("----------TEST MODE----------")
+    cats = get_cats.get_cats(cookies, headers)
+    cat = cats[2]
+    print("Running off Index 2...")
+    get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydb, False, False)
+    print("--------BESTWAY DONE--------")
+
+
 args = sys.argv
 generate_ean = False
 collect_pricing = True
@@ -72,5 +82,12 @@ for arg in args:
         generate_ean = True
     if arg == "-spd":
         collect_pricing = False
+    if arg == "-mcross":
+        mydb = mysql.connector.connect(
+                host="milecross.dyndns.org",
+                user="mpos",
+                password="mpospass",
+                database="mpos"
+        )
 
 RUN(cookies=cookies_raw, headers=headers_raw, generate_ean_list=generate_ean, collect_pricing=collect_pricing)
