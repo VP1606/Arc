@@ -21,13 +21,16 @@ class BookerItem:
         rsp_formatted = float(self.rsp[1:])
         b_price_formatted = float(self.b_price[1:])
 
+        por = str(self.por).replace("%", "")
+        por = float(por)
+
         mycursor = mydb.cursor()
 
         sql = "INSERT INTO rrpextract (datetime, stockref, description, price, source, vat, por, 	" \
               "suppliercode, brand, supplier_price, supplier_packsize) VALUES (NOW(), %s, " \
               "%s, %s, %s, %s, %s, %s, %s, %s, %s) "
 
-        vals = (self.ean, self.name, rsp_formatted, "BOOKER", vat_val, self.por, self.code, self.brand, b_price_formatted, self.unit_size)
+        vals = (self.ean, self.name, rsp_formatted, "BOOKER", vat_val, por, self.code, self.brand, b_price_formatted, self.unit_size)
 
         mycursor.execute(sql, vals)
         mydb.commit()

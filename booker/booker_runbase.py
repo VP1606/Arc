@@ -57,6 +57,16 @@ def RUN():
     print("Duration: {0}".format(end_time - start_time))
 
 
+def RUN_Test():
+    print("------BOOKER------")
+    print("-----TESTMODE-----")
+    cats = get_cats.get_cats(cookies, headers)
+    print("Running Index 1...")
+    cat = cats[1]
+    get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydb)
+    print("-----------------------")
+
+
 def RUN_by_search():
     print("------BOOKER BY SEARCH------")
     start_time = time.time()
@@ -79,6 +89,14 @@ by_search = False
 for arg in args:
     if arg == "-bs":
         by_search = True
+    if arg == "-mcross":
+        mydb.close()
+        mydb = mysql.connector.connect(
+                host="milecross.dyndns.org",
+                user="mpos",
+                password="mpospass",
+                database="mpos"
+        )
 
 if by_search:
     RUN_by_search()
