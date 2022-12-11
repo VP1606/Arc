@@ -83,6 +83,7 @@ for arg in args:
     if arg == "-spd":
         collect_pricing = False
     if arg == "-mcross":
+        mydb.close()
         mydb = mysql.connector.connect(
                 host="milecross.dyndns.org",
                 user="mpos",
