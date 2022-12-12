@@ -1,5 +1,5 @@
 #!/bin/bash
-
+echo "DB CROSS MODE"
 source venv/bin/activate
 cd bestway
 python bestway_runbase.py -ge -mcross
