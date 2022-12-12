@@ -29,11 +29,11 @@ headers_raw = {
 }
 
 mydb = mysql.connector.connect(
-    host="netherly1.dyndns.org",
-    user="mpos",
-    password="mpospass",
-    database="mpos"
-)
+                host="milecross.dyndns.org",
+                user="mpos",
+                password="mpospass",
+                database="mpos"
+        )
 
 
 def RUN(cookies, headers, generate_ean_list=False, collect_pricing=True):
@@ -82,13 +82,5 @@ for arg in args:
         generate_ean = True
     if arg == "-spd":
         collect_pricing = False
-    if arg == "-mcross":
-        mydb.close()
-        mydb = mysql.connector.connect(
-                host="milecross.dyndns.org",
-                user="mpos",
-                password="mpospass",
-                database="mpos"
-        )
 
 RUN(cookies=cookies_raw, headers=headers_raw, generate_ean_list=generate_ean, collect_pricing=collect_pricing)

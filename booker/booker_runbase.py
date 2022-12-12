@@ -36,11 +36,11 @@ headers = {
 }
 
 mydb = mysql.connector.connect(
-    host="netherly1.dyndns.org",
-    user="mpos",
-    password="mpospass",
-    database="mpos"
-)
+                host="milecross.dyndns.org",
+                user="mpos",
+                password="mpospass",
+                database="mpos"
+        )
 
 
 def RUN():
@@ -89,14 +89,6 @@ by_search = False
 for arg in args:
     if arg == "-bs":
         by_search = True
-    if arg == "-mcross":
-        mydb.close()
-        mydb = mysql.connector.connect(
-                host="milecross.dyndns.org",
-                user="mpos",
-                password="mpospass",
-                database="mpos"
-        )
 
 if by_search:
     RUN_by_search()
