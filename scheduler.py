@@ -4,27 +4,16 @@ import os
 import argparse
 
 
-def operator(db_name):
-    if db_name == "nth":
-        os.system("./run_main.sh")
-    elif db_name == "mlc":
-        os.system("./run_cross.sh")
-    else:
-        os.system("./run_main.sh")
+def operator():
+    os.system("./run_cross.sh")
 
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("-db", "--database", help="Database Select (nth | mlc)", type=str, default="nth")
 parser.add_argument("-day", "--day", help="Specify Run Day in full.", type=str, default="monday")
 parser.add_argument("-time", "--time", help="Specify Run Time(24HR; HH:MM)", type=str, default="00:00")
 
 args = parser.parse_args()
-
-db = str.lower(args.database)
-if db != "nth" and db != "mlc":
-    print("Unknown DB! Defaulting to Netherley...")
-    db = "nth"
 
 day = str.lower(args.day)
 
@@ -34,21 +23,21 @@ if ":" not in time or len(time) != 5:
     time = "00:00"
 
 if day == "monday" or "mon":
-    schedule.every().monday.at(time).do(operator, db)
+    schedule.every().monday.at(time).do(operator)
 elif day == "tuesday" or "tues":
-    schedule.every().tuesday.at(time).do(operator, db)
+    schedule.every().tuesday.at(time).do(operator)
 elif day == "wednesday" or "wed":
-    schedule.every().wednesday.at(time).do(operator, db)
+    schedule.every().wednesday.at(time).do(operator)
 elif day == "thursday" or "thurs":
-    schedule.every().thursday.at(time).do(operator, db)
+    schedule.every().thursday.at(time).do(operator)
 elif day == "friday" or "fri":
-    schedule.every().friday.at(time).do(operator, db)
+    schedule.every().friday.at(time).do(operator)
 elif day == "saturday" or "sat":
-    schedule.every().saturday.at(time).do(operator, db)
+    schedule.every().saturday.at(time).do(operator)
 elif day == "sunday" or "sun":
-    schedule.every().sunday.at(time).do(operator, db)
+    schedule.every().sunday.at(time).do(operator)
 else:
-    schedule.every().monday.at(time).do(operator, db)
+    schedule.every().monday.at(time).do(operator)
 
 while True:
     schedule.run_pending()
