@@ -51,8 +51,11 @@ class BestwayItem:
 
         profit_percent = round(profit_percent, 2)
 
-        por = str(self.por).replace("%", "")
-        por = float(por)
+        try:
+            por = str(self.por).replace("%", "")
+            por = float(por)
+        except:
+            por = 0.0
 
         mycursor = mydb.cursor()
 
