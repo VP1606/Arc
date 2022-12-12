@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "DB NETH MODE"
-source venv/bin/activate
+. venv/bin/activate
 cd bestway
 python bestway_runbase.py -ge
 cd -
