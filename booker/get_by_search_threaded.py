@@ -56,7 +56,7 @@ def do_by_search(ean_book, cookies, headers, mydb):
     search_stats = [0, 0, 0]
 
     with alive_bar(len(ean_book), title="Scanning EAN Book", force_tty=True) as bar:
-        with ThreadPoolExecutor(max_workers=20) as executor:
+        with ThreadPoolExecutor(max_workers=5) as executor:
             for ean_pack in ean_book:
                 if type(ean_pack) == list:
                     threads.append(executor.submit(search_ean, ean_pack, cookies, headers))
