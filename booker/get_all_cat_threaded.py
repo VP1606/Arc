@@ -67,7 +67,7 @@ def build_item(link, cookies, headers):
     return item_book
 
 
-def do_cat_threaded(href, cookies, headers, mydb):
+def do_cat_threaded(href, cookies, headers, mydbs):
     target_urls = build_targets(href, cookies, headers)
     threads = []
     target_book = []
@@ -92,5 +92,6 @@ def do_cat_threaded(href, cookies, headers, mydb):
 
     with alive_bar(len(target_book), title="Committing to SQL", force_tty=True) as bar:
         for el in item_book:
-            sql_committing(el, cookies, headers, mydb)
+            for mydb in mydbs:
+                sql_committing(el, cookies, headers, mydb)
             bar()

@@ -48,7 +48,7 @@ def search_ean(ean_pack, cookies, headers):
                 return "", True, True, False
 
 
-def do_by_search(ean_book, cookies, headers, mydb):
+def do_by_search(ean_book, cookies, headers, mydbs):
     threads = []
     target_book = []
     item_book = []
@@ -91,7 +91,8 @@ def do_by_search(ean_book, cookies, headers, mydb):
 
     with alive_bar(len(target_book), title="Committing to SQL", force_tty=True) as bar:
         for el in item_book:
-            sql_committing(el, cookies, headers, mydb)
+            for mydb in mydbs:
+                sql_committing(el, cookies, headers, mydb)
             bar()
 
     print("Finish STATS; Found: {0}, Found w/ RRP: {1}, Found w/ Better RRP: {2}.".format(search_stats[0],

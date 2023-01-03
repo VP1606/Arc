@@ -68,7 +68,7 @@ def generate_ean_list(item):
     return pack
 
 
-def do_cat_threaded(href, cookies, headers, mydb, generate_ean_list_called, collect_pricing):
+def do_cat_threaded(href, cookies, headers, mydbs, generate_ean_list_called, collect_pricing):
     target_urls = build_targets(href, cookies, headers)
     threads = []
     target_book = []
@@ -105,7 +105,8 @@ def do_cat_threaded(href, cookies, headers, mydb, generate_ean_list_called, coll
 
     with alive_bar(len(target_book), title="Committing to SQL", force_tty=True) as bar:
         for el in item_book:
-            sql_committing(el, cookies, headers, mydb)
+            for mydb in mydbs:
+                sql_committing(el, cookies, headers, mydb)
             bar()
 
     return ean_list

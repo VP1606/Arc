@@ -28,12 +28,39 @@ headers_raw = {
     'Connection': 'keep-alive',
 }
 
-mydb = mysql.connector.connect(
-                host="milecross.dyndns.org",
-                user="mpos",
-                password="mpospass",
-                database="mpos"
-        )
+# mydbs = [mysql.connector.connect(
+#         host="milecross.dyndns.org",
+#         user="mpos",
+#         password="mpospass",
+#         database="mpos"
+#     ), mysql.connector.connect(
+#         host="netherly1.dyndns.org",
+#         user="mpos",
+#         password="mpospass",
+#         database="mpos"
+#     ), mysql.connector.connect(
+#         host="runcorn.dyndns.org",
+#         user="mpos",
+#         password="mpospass",
+#         database="mpos"
+#     ), mysql.connector.connect(
+#         host="rathbone.dyndns.org",
+#         user="mpos",
+#         password="mpospass",
+#         database="mpos"
+#     )]
+
+mydbs = [mysql.connector.connect(
+        host="milecross.dyndns.org",
+        user="mpos",
+        password="mpospass",
+        database="mpos"
+    ), mysql.connector.connect(
+        host="netherly1.dyndns.org",
+        user="mpos",
+        password="mpospass",
+        database="mpos"
+    )]
 
 
 def RUN(cookies, headers, generate_ean_list=False, collect_pricing=True):
@@ -51,7 +78,7 @@ def RUN(cookies, headers, generate_ean_list=False, collect_pricing=True):
     ean_list = []
     for index, cat in enumerate(cats):
         print(index)
-        ean_list = ean_list + get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydb, generate_ean_list, collect_pricing)
+        ean_list = ean_list + get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydbs, generate_ean_list, collect_pricing)
 
 
     if generate_ean_list is True:
@@ -69,7 +96,7 @@ def RUN_Test(cookies, headers):
     cats = get_cats.get_cats(cookies, headers)
     cat = cats[2]
     print("Running off Index 2...")
-    get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydb, False, False)
+    get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydbs, False, False)
     print("--------BESTWAY DONE--------")
 
 
@@ -83,4 +110,5 @@ for arg in args:
     if arg == "-spd":
         collect_pricing = False
 
-RUN(cookies=cookies_raw, headers=headers_raw, generate_ean_list=generate_ean, collect_pricing=collect_pricing)
+# RUN(cookies=cookies_raw, headers=headers_raw, generate_ean_list=generate_ean, collect_pricing=collect_pricing)
+RUN_Test(cookies_raw, headers_raw)

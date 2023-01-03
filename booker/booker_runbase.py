@@ -35,12 +35,39 @@ headers = {
     'Connection': 'keep-alive',
 }
 
-mydb = mysql.connector.connect(
-                host="milecross.dyndns.org",
-                user="mpos",
-                password="mpospass",
-                database="mpos"
-        )
+# mydbs = [mysql.connector.connect(
+#         host="milecross.dyndns.org",
+#         user="mpos",
+#         password="mpospass",
+#         database="mpos"
+#     ), mysql.connector.connect(
+#         host="netherly1.dyndns.org",
+#         user="mpos",
+#         password="mpospass",
+#         database="mpos"
+#     ), mysql.connector.connect(
+#         host="runcorn.dyndns.org",
+#         user="mpos",
+#         password="mpospass",
+#         database="mpos"
+#     ), mysql.connector.connect(
+#         host="rathbone.dyndns.org",
+#         user="mpos",
+#         password="mpospass",
+#         database="mpos"
+#     )]
+
+mydbs = [mysql.connector.connect(
+        host="milecross.dyndns.org",
+        user="mpos",
+        password="mpospass",
+        database="mpos"
+    ), mysql.connector.connect(
+        host="netherly1.dyndns.org",
+        user="mpos",
+        password="mpospass",
+        database="mpos"
+    )]
 
 
 def RUN():
@@ -50,7 +77,7 @@ def RUN():
     print("Total Cycles to be executed: {0}".format(len(cats)))
     for index, cat in enumerate(cats):
         print("Cycle No. {0}".format(index + 1))
-        get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydb)
+        get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydbs)
 
     end_time = time.time()
     print("-----------------------")
@@ -63,7 +90,7 @@ def RUN_Test():
     cats = get_cats.get_cats(cookies, headers)
     print("Running Index 1...")
     cat = cats[1]
-    get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydb)
+    get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydbs)
     print("-----------------------")
 
 
@@ -76,7 +103,7 @@ def RUN_by_search():
 
     print("Total Cycles to be executed: {0}".format(len(ean_book)))
 
-    get_by_search_threaded.do_by_search(ean_book, cookies, headers, mydb)
+    get_by_search_threaded.do_by_search(ean_book, cookies, headers, mydbs)
 
     end_time = time.time()
     print("-----------------------")
