@@ -1,11 +1,38 @@
 import mysql.connector
 
-mydb = mysql.connector.connect(
-    host="milecross.dyndns.org",
-    user="mpos",
-    password="mpospass",
-    database="mpos"
-)
+# mydbs = [mysql.connector.connect(
+#         host="milecross.dyndns.org",
+#         user="mpos",
+#         password="mpospass",
+#         database="mpos"
+#     ), mysql.connector.connect(
+#         host="netherly1.dyndns.org",
+#         user="mpos",
+#         password="mpospass",
+#         database="mpos"
+#     ), mysql.connector.connect(
+#         host="runcorn.dyndns.org",
+#         user="mpos",
+#         password="mpospass",
+#         database="mpos"
+#     ), mysql.connector.connect(
+#         host="rathbone.dyndns.org",
+#         user="mpos",
+#         password="mpospass",
+#         database="mpos"
+#     )]
+
+mydbs = [mysql.connector.connect(
+        host="milecross.dyndns.org",
+        user="mpos",
+        password="mpospass",
+        database="mpos"
+    ), mysql.connector.connect(
+        host="netherly1.dyndns.org",
+        user="mpos",
+        password="mpospass",
+        database="mpos"
+    )]
 
 
 def rrpextractsummary(mydb):
@@ -72,4 +99,5 @@ def extension_pack(mydb):
 
 
 if __name__ == '__main__':
-    extension_pack(mydb)
+    for mydb in mydbs:
+        extension_pack(mydb)
