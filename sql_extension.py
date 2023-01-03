@@ -20,6 +20,12 @@ import mysql.connector
 #         user="mpos",
 #         password="mpospass",
 #         database="mpos"
+#     ),
+#     mysql.connector.connect(
+#         host="breezehill1.dyndns.org",
+#         user="mpos",
+#         password="mpospass",
+#         database="mpos"
 #     )]
 
 mydbs = [mysql.connector.connect(

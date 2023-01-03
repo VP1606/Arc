@@ -28,28 +28,6 @@ headers_raw = {
     'Connection': 'keep-alive',
 }
 
-# mydbs = [mysql.connector.connect(
-#         host="milecross.dyndns.org",
-#         user="mpos",
-#         password="mpospass",
-#         database="mpos"
-#     ), mysql.connector.connect(
-#         host="netherly1.dyndns.org",
-#         user="mpos",
-#         password="mpospass",
-#         database="mpos"
-#     ), mysql.connector.connect(
-#         host="runcorn.dyndns.org",
-#         user="mpos",
-#         password="mpospass",
-#         database="mpos"
-#     ), mysql.connector.connect(
-#         host="rathbone.dyndns.org",
-#         user="mpos",
-#         password="mpospass",
-#         database="mpos"
-#     )]
-
 mydbs = [mysql.connector.connect(
         host="milecross.dyndns.org",
         user="mpos",
@@ -57,6 +35,22 @@ mydbs = [mysql.connector.connect(
         database="mpos"
     ), mysql.connector.connect(
         host="netherly1.dyndns.org",
+        user="mpos",
+        password="mpospass",
+        database="mpos"
+    ), mysql.connector.connect(
+        host="runcorn.dyndns.org",
+        user="mpos",
+        password="mpospass",
+        database="mpos"
+    ), mysql.connector.connect(
+        host="rathbone.dyndns.org",
+        user="mpos",
+        password="mpospass",
+        database="mpos"
+    ),
+    mysql.connector.connect(
+        host="breezehill1.dyndns.org",
         user="mpos",
         password="mpospass",
         database="mpos"
@@ -110,5 +104,4 @@ for arg in args:
     if arg == "-spd":
         collect_pricing = False
 
-# RUN(cookies=cookies_raw, headers=headers_raw, generate_ean_list=generate_ean, collect_pricing=collect_pricing)
-RUN_Test(cookies_raw, headers_raw)
+RUN(cookies=cookies_raw, headers=headers_raw, generate_ean_list=generate_ean, collect_pricing=collect_pricing)

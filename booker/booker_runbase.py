@@ -35,28 +35,6 @@ headers = {
     'Connection': 'keep-alive',
 }
 
-# mydbs = [mysql.connector.connect(
-#         host="milecross.dyndns.org",
-#         user="mpos",
-#         password="mpospass",
-#         database="mpos"
-#     ), mysql.connector.connect(
-#         host="netherly1.dyndns.org",
-#         user="mpos",
-#         password="mpospass",
-#         database="mpos"
-#     ), mysql.connector.connect(
-#         host="runcorn.dyndns.org",
-#         user="mpos",
-#         password="mpospass",
-#         database="mpos"
-#     ), mysql.connector.connect(
-#         host="rathbone.dyndns.org",
-#         user="mpos",
-#         password="mpospass",
-#         database="mpos"
-#     )]
-
 mydbs = [mysql.connector.connect(
         host="milecross.dyndns.org",
         user="mpos",
@@ -64,6 +42,22 @@ mydbs = [mysql.connector.connect(
         database="mpos"
     ), mysql.connector.connect(
         host="netherly1.dyndns.org",
+        user="mpos",
+        password="mpospass",
+        database="mpos"
+    ), mysql.connector.connect(
+        host="runcorn.dyndns.org",
+        user="mpos",
+        password="mpospass",
+        database="mpos"
+    ), mysql.connector.connect(
+        host="rathbone.dyndns.org",
+        user="mpos",
+        password="mpospass",
+        database="mpos"
+    ),
+    mysql.connector.connect(
+        host="breezehill1.dyndns.org",
         user="mpos",
         password="mpospass",
         database="mpos"
