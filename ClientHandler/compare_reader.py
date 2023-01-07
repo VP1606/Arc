@@ -36,7 +36,7 @@ def local_generator(address):
 
     mycursor = mydb.cursor(buffered=True)
 
-    sql = "select t.stockref, t.description,r.description as supplierdescr, t.retailprice as ourprice ,  r.price as rrp , p.d  as lastsolddate " \
+    sql = "select t.stockref, t.description,r.description as supplierdescr, t.retailprice as ourprice ,  r.price as rrp , p.d  as lastsolddate, por " \
           "from tbl_products t, _lastordery23 p , rrpextractsummary r " \
           "where t.stockref= p.product and r.stockref=t.stockref " \
           "and r.price>t.retailprice and p.d > date_add(now(),Interval -100 day )"
@@ -52,7 +52,8 @@ def local_generator(address):
             "stockref": int(rec[0]),
             "description": str(rec[2]),
             "current": float(rec[3]),
-            "rrp": float(rec[4])
+            "rrp": float(rec[4]),
+            "por": float(rec[6])
         }
 
         book.append(res)
