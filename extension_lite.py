@@ -1,4 +1,5 @@
 import mysql.connector
+import os
 
 # mydbs = [mysql.connector.connect(
 #         host="milecross.dyndns.org",
@@ -52,8 +53,14 @@ def rrpextractsummary(mydb):
     mydb.commit()
 
 
+def dump_original(mydb):
+    cmd = "export MYSQL_PWD=mpospass; mysqldump -h milecross.dyndns.org -u mpos mpos rrpextractsummary --no-tablespaces > summrary_temp.sql"
+    os.system(cmd)
+
+
 def extension_pack(mydb):
     rrpextractsummary(mydb)
+    dump_original(mydb)
 
 
 if __name__ == '__main__':
