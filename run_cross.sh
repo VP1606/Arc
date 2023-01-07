@@ -8,4 +8,5 @@ cd booker
 python booker_runbase.py -bs -mcross
 cd -
 echo "SQL Cleanup..."
-python sql_extension.py
+#python sql_extension.py
+python extension_lite.py
