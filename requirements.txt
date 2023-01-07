@@ -4,3 +4,4 @@ beautifulsoup4
 mysql-connector-python
 schedule
 alive_progress
+Flask
