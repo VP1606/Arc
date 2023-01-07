@@ -18,3 +18,8 @@ def price_list():
 @app.route("/get_update_date")
 def get_update_date():
     return gd.get_date("milecross.dyndns.org")
+
+
+@app.route("/test")
+def test():
+    return "TEST!"
