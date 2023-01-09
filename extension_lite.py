@@ -26,7 +26,7 @@ def rrpextractsummary(mydb):
     sql = "INSERT INTO rrpextractsummary " \
           "SELECT stockref, max(price) price, description, now() datetime, por from rrpextract " \
           "where datetime>=DATE_ADD(now(), INTERVAL -1 DAY) " \
-          "group by stockref, description"
+          "group by stockref, description, por"
 
     mycursor.execute(sql)
     mydb.commit()
@@ -41,7 +41,7 @@ def dump_original(mydb):
 
 def export_to_all(targets):
     for target in targets:
-        cmd = "export MYSQL_PWD=mpospass; mysql -h {0} -u mpos mpos < summrary_temp.sql".format(str(target))
+        cmd = "export MYSQL_PWD=mpospass; mysql -h {0} -u mpos mpos < summary_temp.sql".format(str(target))
         os.system(cmd)
 
 
