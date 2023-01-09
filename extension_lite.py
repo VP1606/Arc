@@ -24,9 +24,9 @@ def rrpextractsummary(mydb):
     mydb.commit()
 
     sql = "INSERT INTO rrpextractsummary " \
-          "SELECT stockref, max(price) price, description, now() datetime, por from rrpextract " \
+          "SELECT stockref, max(price) price, description, now() datetime, por, vat from rrpextract " \
           "where datetime>=DATE_ADD(now(), INTERVAL -1 DAY) " \
-          "group by stockref, description, por"
+          "group by stockref, description, por, vat"
 
     mycursor.execute(sql)
     mydb.commit()
