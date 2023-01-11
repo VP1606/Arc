@@ -1,6 +1,7 @@
 from flask import Flask, request, send_file
 import compare_reader as cr
 import get_date as gd
+import price_submitter as ps
 
 app = Flask(__name__)
 pub_id = "iahfiasfdosai2313212**7613"
@@ -23,3 +24,12 @@ def get_update_date():
 @app.route("/test")
 def test():
     return "TEST!"
+
+
+@app.route("/update_price")
+def update_price():
+    target = request.args.get("target")
+    stockref = request.args.get("stockref")
+    price = float(request.args.get("price"))
+
+    ps.price_upload(target, stockref, price)
