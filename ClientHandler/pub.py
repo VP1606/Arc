@@ -2,6 +2,7 @@ from flask import Flask, request, send_file
 import compare_reader as cr
 import get_date as gd
 import price_submitter as ps
+import desc_update as du
 
 app = Flask(__name__)
 pub_id = "iahfiasfdosai2313212**7613"
@@ -33,3 +34,14 @@ def update_price():
     price = float(request.args.get("price"))
 
     ps.price_upload(target, stockref, price)
+
+
+@app.route("/update_desc")
+def update_desc():
+    id = request.args.get("id")
+    if pub_id == id:
+        desc = request.args.get("desc")
+        stockref = request.args.get("ean")
+        address = request.args.get("address")
+
+        du.update_desc(desc, address, stockref)
