@@ -3,6 +3,7 @@ import compare_reader as cr
 import get_date as gd
 import price_submitter as ps
 import desc_update as du
+import update_products as up
 
 app = Flask(__name__)
 pub_id = "iahfiasfdosai2313212**7613"
@@ -45,3 +46,12 @@ def update_desc():
         address = request.args.get("address")
 
         du.update_desc(desc, address, stockref)
+
+
+@app.route("/get_plist")
+def get_plist():
+    id = request.args.get("id")
+    if pub_id == id:
+        target = request.args.get("target")
+        result = up.get_all_products(target)
+        return result
