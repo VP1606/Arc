@@ -55,3 +55,12 @@ def get_plist():
         target = request.args.get("target")
         result = up.get_all_products(target)
         return result
+
+
+@app.route("/get_rrplist")
+def get_rrp_list():
+    id = request.args.get("id")
+    if pub_id == id:
+        target = request.args.get("target")
+        result = up.get_all_rrps(target)
+        return result
