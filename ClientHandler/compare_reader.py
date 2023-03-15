@@ -55,7 +55,7 @@ def local_generator(address):
             "rrp": float(rec[4]),
             "por": float(rec[6]),
             "vat": float(rec[7]),
-            "true_description": str(rec[1])
+            "local_description": str(rec[1])
         }
 
         book.append(res)
