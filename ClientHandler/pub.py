@@ -35,7 +35,7 @@ def update_price():
     price = float(request.args.get("price"))
 
     ps.price_upload(target, stockref, price)
-    return True
+    return "True"
 
 
 @app.route("/update_desc")
@@ -47,7 +47,7 @@ def update_desc():
         address = request.args.get("address")
 
         du.update_desc(desc, address, stockref)
-    return True
+    return "True"
 
 
 @app.route("/get_plist")
