@@ -2,7 +2,7 @@ import mysql.connector
 import json
 
 
-def get_all_products(address):
+def get_all_products(address, period):
     mydb = mysql.connector.connect(
         host=address,
         user="mpos",
@@ -12,8 +12,12 @@ def get_all_products(address):
 
     mycursor = mydb.cursor()
 
-    sql = "SELECT * " \
-          "FROM tbl_products "
+    # sql = "SELECT * " \
+    #       "FROM tbl_products "
+
+    sql = "select * " \
+          "from tbl_products t, _lastordery23 p " \
+          "where t.StockRef=p.product and p.d > date_add(now(),Interval -{0} day);".format(period)
 
     mycursor.execute(sql)
     res = mycursor.fetchall()

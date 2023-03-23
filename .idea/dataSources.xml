@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="mpos@milecross.dyndns.org" uuid="b35e11cb-c078-4857-93cf-4768a41a5c17">
+    <data-source source="LOCAL" name="mpos_netherly" uuid="47eb8639-f866-4542-9957-c320879a1b11">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://milecross.dyndns.org:3306/mpos</jdbc-url>
+      <jdbc-url>jdbc:mysql://netherly1.dyndns.org:3306/mpos</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="mpos_breezehill" uuid="0220fa11-d147-4d70-8d4b-0d0f6fccc2ad">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://breezehill1.dyndns.org:3306/mpos</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

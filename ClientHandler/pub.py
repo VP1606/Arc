@@ -55,7 +55,10 @@ def get_plist():
     id = request.args.get("id")
     if pub_id == id:
         target = request.args.get("target")
-        result = up.get_all_products(target)
+        period = request.args.get("period")
+        if period is None:
+            period = "100"
+        result = up.get_all_products(target, period)
         return result
 
 
