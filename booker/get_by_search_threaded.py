@@ -20,7 +20,7 @@ def search_ean(ean_pack, cookies, headers):
             break
 
     if matched_row_el is None:
-        return "", False, False, False
+        return "", False, False, False, ean_pack[0]
 
     else:
         rrp_full = ""
@@ -32,7 +32,7 @@ def search_ean(ean_pack, cookies, headers):
                 break
 
         if rrp_full == "":
-            return "", True, False, False
+            return "", True, False, False, ean_pack[0]
         else:
             rsp = rrp_full.replace("RRP: £", "")
             rsp = float(rsp)
@@ -42,10 +42,10 @@ def search_ean(ean_pack, cookies, headers):
                 link = coll["onclick"]
                 link = link[33:]
                 link = link[:-1]
-                return link, True, True, True
+                return link, True, True, True, ean_pack[0]
             else:
                 # DISCARD
-                return "", True, True, False
+                return "", True, True, False, ean_pack[0]
 
 
 def do_by_search(ean_book, cookies, headers, mydbs):
@@ -65,7 +65,7 @@ def do_by_search(ean_book, cookies, headers, mydbs):
                     pass
             for task in as_completed(threads):
 
-                link, found, found_rrp, better_rrp = task.result()
+                link, found, found_rrp, better_rrp, ean = task.result()
 
                 if found:
                     search_stats[0] = search_stats[0] + 1
@@ -77,14 +77,15 @@ def do_by_search(ean_book, cookies, headers, mydbs):
                 if link == "":
                     bar()
                 else:
-                    target_book.append(link)
+                    target_book.append([link, ean])
                     bar()
 
     threads = []
     with alive_bar(len(target_book), title="Building Items", force_tty=True) as bar:
         with ThreadPoolExecutor(max_workers=20) as executor:
-            for link in target_book:
-                threads.append(executor.submit(build_item, link, cookies, headers))
+            for brick in target_book:
+                print(brick)
+                threads.append(executor.submit(build_item, brick[0], cookies, headers, ean=brick[1]))
             for task in as_completed(threads):
                 item_book = item_book + task.result()
                 bar()

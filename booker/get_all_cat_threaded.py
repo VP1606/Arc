@@ -53,16 +53,12 @@ def sql_committing(item, cookies, headers, mydb):
     if item.rsp == '':
         pass
     else:
-        try:
-            item.commit_to_sql(mydb)
-        except:
-            print("SQL ERROR!")
-            print("{0} {1} {2}".format(item.name, item.rsp, item.vat_rate))
+        item.commit_to_sql(mydb)
 
 
-def build_item(link, cookies, headers):
+def build_item(link, cookies, headers, ean=""):
     item_book = []
-    item = get_item.GET_ITEM(link, cookies, headers)
+    item = get_item.GET_ITEM(link, cookies, headers, ean)
     item_book.append(item)
     return item_book
 

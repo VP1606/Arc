@@ -3,7 +3,7 @@ from booker_item import *
 import requests
 
 
-def GET_ITEM(link_code, cookies, headers):
+def GET_ITEM(link_code, cookies, headers, ean=""):
     url = "https://www.booker.co.uk{0}".format(link_code)
     page = requests.get(url, cookies=cookies, headers=headers)
     soup = BeautifulSoup(page.content, "html.parser")
@@ -51,6 +51,5 @@ def GET_ITEM(link_code, cookies, headers):
 
     name = name.strip()
 
-    ean = ""
     item = BookerItem(name, b_price, rsp, por, code, vat_rate, brand_name, unit_size, ean)
     return item
