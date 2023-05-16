@@ -12,8 +12,8 @@ class BookerItem:
         self.brand = brand_name
         self.unit_size = unit_size
         self.ean = ean
-    def commit_to_sql(self, mydb):
 
+    def commit_to_sql(self, mydb: mysql.connector.MySQLConnection):
         vat_val = 0.0
         if self.vat_rate != "":
             vat_val = int(self.vat_rate[:-1]) / 100
@@ -24,7 +24,9 @@ class BookerItem:
         por = str(self.por).replace("%", "")
         por = float(por)
 
+        mydb.reconnect()
         mycursor = mydb.cursor()
+
 
         sql = "INSERT INTO rrpextract (datetime, stockref, description, price, source, vat, por, 	" \
               "suppliercode, brand, supplier_price, supplier_packsize) VALUES (NOW(), %s, " \
