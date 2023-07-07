@@ -5,3 +5,5 @@ mysql-connector-python
 schedule
 alive_progress
 Flask
+fastapi
+uvicorn

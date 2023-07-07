@@ -1,71 +1,62 @@
-from flask import Flask, request, send_file
 import compare_reader as cr
 import get_date as gd
 import price_submitter as ps
 import desc_update as du
 import update_products as up
 
-app = Flask(__name__)
+from fastapi import FastAPI
+from fastapi.responses import Response
+
+app = FastAPI()
 pub_id = "iahfiasfdosai2313212**7613"
 
 
-@app.route("/price_list")
-def price_list():
-    id = request.args.get("id")
-    target = request.args.get("target")
+@app.get("/price_list")
+async def price_list(id: str, target: str):
     if pub_id == id:
         result = cr.local_generator(str(target))
-        return result
+        return Response(content=result, media_type="application/json")
 
 
-@app.route("/get_update_date")
-def get_update_date():
-    return gd.get_date("milecross.dyndns.org")
+@app.get("/get_update_date")
+async def get_update_date():
+    ret = gd.get_date("milecross.dyndns.org")
+    return Response(content=ret, media_type="application/json")
 
 
-@app.route("/test")
-def test():
-    return "TEST!"
+@app.get("/test")
+async def test():
+    return Response(content='TEST!', media_type="application/json")
 
 
-@app.route("/update_price")
-def update_price():
-    target = request.args.get("target")
-    stockref = request.args.get("stockref")
-    price = float(request.args.get("price"))
-
-    ps.price_upload(target, stockref, price)
-    return "True"
-
-
-@app.route("/update_desc")
-def update_desc():
-    id = request.args.get("id")
+@app.get("/update_price")
+async def update_price(id: str, target: str, stockref: str, price: str):
     if pub_id == id:
-        desc = request.args.get("desc")
-        stockref = request.args.get("ean")
-        address = request.args.get("address")
+        _price = float(price)
+        ps.price_upload(target, stockref, _price)
+    return Response(content='True', media_type="application/json")
 
+
+@app.get("/update_desc")
+async def update_desc(id: str, desc: str, stockref: str, address: str):
+    if pub_id == id:
         du.update_desc(desc, address, stockref)
-    return "True"
+        return Response(content='True', media_type="application/json")
+    else:
+        return Response(content='False', media_type="application/json")
 
 
-@app.route("/get_plist")
-def get_plist():
-    id = request.args.get("id")
+@app.get("/get_plist")
+async def get_plist(id: str, target: str, period: str):
     if pub_id == id:
-        target = request.args.get("target")
-        period = request.args.get("period")
-        if period is None:
+        if period is None or period == "":
             period = "100"
         result = up.get_all_products(target, period)
-        return result
+        return Response(content=result, media_type="application/json")
 
 
-@app.route("/get_rrplist")
-def get_rrp_list():
-    id = request.args.get("id")
+@app.get("/get_rrplist")
+async def get_rrp_list(id: str, target: str):
     if pub_id == id:
-        target = request.args.get("target")
         result = up.get_all_rrps(target)
-        return result
+        return Response(content=result, media_type="application/json")
