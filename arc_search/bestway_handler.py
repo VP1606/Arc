@@ -1,6 +1,7 @@
 import sys
 import os
 import json
+import cookie_jar
 
 # class BestwayItem(
 #     name: Any,
@@ -16,9 +17,9 @@ import json
 def build_item(product_code):
     parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     sys.path.append(os.path.join(parent_dir, 'bestway'))
-    from get_item import GET_ITEM as GT_GET_ITEM
+    from get_item import GET_ITEM
 
-    item = GT_GET_ITEM(product_code, None, None, True)
+    item = GET_ITEM(product_code, cookies=cookie_jar.bestway_cookies, headers=cookie_jar.bestway_headers, collect_pricing=True)
     return item
 
 def bestway_collector(product_code: str):
