@@ -22,13 +22,23 @@ def build_item(product_code):
     item = GET_ITEM(product_code, cookies=cookie_jar.bestway_cookies, headers=cookie_jar.bestway_headers, collect_pricing=True)
     return item
 
-def bestway_collector(product_code: str):
-    item = build_item(product_code)
-    ret_dict = {}
+def bestway_collector(ean: str):
+    parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    sys.path.append(os.path.join(parent_dir, 'bestway'))
+    from ean_search_sys import search_ean
 
-    ret_dict["item_name"] = item.name
-    ret_dict["ean"] = item.ean
-    ret_dict["rsp"] = item.rsp
-    ret_dict["wholesale_price"] = item.b_price
+    search_res = search_ean(ean=ean, cookies=cookie_jar.bestway_cookies, headers=cookie_jar.bestway_headers)
 
-    return json.dumps(ret_dict)
+    if search_res[0] is True:
+        item = search_res[1]
+        ret_dict = {}
+
+        ret_dict["item_name"] = item.name
+        ret_dict["ean"] = item.ean
+        ret_dict["rsp"] = item.rsp
+        ret_dict["wholesale_price"] = item.b_price
+
+        return json.dumps(ret_dict)
+
+    else:
+        return json.dumps(cookie_jar.res_unavailable_message)

@@ -50,3 +50,8 @@ booker_headers = {
     'Referer': 'https://www.booker.co.uk/products/product-list?categoryName=CS3_100001',
     'Connection': 'keep-alive',
 }
+
+res_unavailable_message = {
+    "status": "expected",
+    "message": "Item Not Found"
+}

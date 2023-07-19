@@ -9,7 +9,7 @@ pub_id = "iahfiasfdosai2313212**7613"
 
 res_unavailable_message = json.dumps({
     "status": "expected",
-    "message": "Item Not Found"
+    "message": "Item Not Found (from PUB)"
 })
 
 # search_bestway?id=iahfiasfdosai2313212**7613&ean=815941-1
@@ -27,7 +27,7 @@ async def test():
 async def search_bestway(id: str, ean: str):
     if pub_id == id:
         try:
-            result = bestway_collector(product_code=ean)
+            result = bestway_collector(ean=ean)
             return Response(content=result, media_type="application/json")
         except:
             return Response(content=res_unavailable_message, media_type="application/json")
