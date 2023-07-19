@@ -17,10 +17,10 @@ import cookie_jar
 
 def build_item(link_code: str, cookies, headers, ean: str):
     parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-    sys.path.append(os.path.join(parent_dir, 'booker'))
-    from get_item import GET_ITEM
+    sys.path.append(parent_dir)
+    from booker.get_item import GET_ITEM as BOOKER_GET_ITEM
 
-    item = GET_ITEM(link_code=link_code, cookies=cookies, headers=headers, ean=ean)
+    item = BOOKER_GET_ITEM(link_code=link_code, cookies=cookies, headers=headers, ean=ean)
     return item
 
 def do_ean_search(ean: str, item_name: str):
@@ -42,4 +42,4 @@ def booker_collector(ean: str, product_name: str):
     ret_dict["rsp"] = item.rsp
     ret_dict["wholesale_price"] = item.b_price
 
-    return json.dumps(ret_dict)
+    return ret_dict

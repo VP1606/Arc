@@ -38,7 +38,7 @@ def bestway_collector(ean: str):
         ret_dict["rsp"] = item.rsp
         ret_dict["wholesale_price"] = item.b_price
 
-        return json.dumps(ret_dict)
+        return ret_dict
 
     else:
-        return json.dumps(cookie_jar.res_unavailable_message)
+        return cookie_jar.res_unavailable_message
