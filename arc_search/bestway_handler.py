@@ -35,7 +35,9 @@ def bestway_collector(ean: str):
 
         ret_dict["item_name"] = item.name
         ret_dict["ean"] = item.ean
+        ret_dict["supplier_code"] = item.code
         ret_dict["rsp"] = item.rsp
+        ret_dict["wholesale_unit_size"] = item.unit_size
         ret_dict["wholesale_price"] = item.b_price
 
         return ret_dict
