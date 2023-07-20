@@ -61,10 +61,7 @@ async def search_parfetts(id: str, ean: str, product_name: str=""):
 async def search_all(id: str, ean: str, product_name: str):
     if pub_id == id:
         search_name = product_name
-        main_res = {
-            "bestway": None,
-            "booker": None
-        }
+        main_res = {}
 
         try:
             bestway_result = bestway_collector(ean=ean)
