@@ -3,6 +3,7 @@ import get_all_cat_threaded
 import get_cats
 import json
 import sys
+import os
 
 cookies_raw = {
     'unbxd_depot': '834',
@@ -28,35 +29,9 @@ headers_raw = {
     'Connection': 'keep-alive',
 }
 
-# mydbs = [mysql.connector.connect(
-#         host="milecross.dyndns.org",
-#         user="mpos",
-#         password="mpospass",
-#         database="mpos"
-#     ), mysql.connector.connect(
-#         host="netherly1.dyndns.org",
-#         user="mpos",
-#         password="mpospass",
-#         database="mpos"
-#     ), mysql.connector.connect(
-#         host="runcorn.dyndns.org",
-#         user="mpos",
-#         password="mpospass",
-#         database="mpos"
-#     ), mysql.connector.connect(
-#         host="rathbone.dyndns.org",
-#         user="mpos",
-#         password="mpospass",
-#         database="mpos"
-#     ),
-#     mysql.connector.connect(
-#         host="breezehill1.dyndns.org",
-#         user="mpos",
-#         password="mpospass",
-#         database="mpos"
-#     )]
+home_db_address = str(os.environ.get("HOME_SQL"))
 mydbs = [mysql.connector.connect(
-        host="milecross.dyndns.org",
+        host=home_db_address,
         user="mpos",
         password="mpospass",
         database="mpos"
