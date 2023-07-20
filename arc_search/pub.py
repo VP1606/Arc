@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.responses import Response
 from bestway_handler import bestway_collector
 from booker_handler import booker_collector
+from parfetts_handler import parfetts_collector
 import json
 import cookie_jar
 
@@ -45,6 +46,17 @@ async def search_booker(id: str, ean: str, product_name: str):
     else:
         return Response(content='False', media_type="application/json")
     
+@app.get("/search_parfetts")
+async def search_booker(id: str, ean: str, product_name: str=""):
+    if pub_id == id:
+        try:
+            result = parfetts_collector(ean=ean, name=product_name)
+            return Response(content=json.dumps(result), media_type="application/json")
+        except:
+            return Response(content=res_unavailable_message, media_type="application/json")
+    else:
+        return Response(content='False', media_type="application/json")
+    
 @app.get("/search_all")
 async def search_all(id: str, ean: str, product_name: str):
     if pub_id == id:
@@ -66,6 +78,12 @@ async def search_all(id: str, ean: str, product_name: str):
             main_res["booker"] = booker_result
         except:
             main_res["booker"] = cookie_jar.res_unavailable_message
+
+        try:
+            parfetts_result = parfetts_collector(ean=ean, name=search_name)
+            main_res["parfetts"] = parfetts_result
+        except:
+            main_res["parfetts"] = cookie_jar.res_unavailable_message
 
         return Response(content=json.dumps(main_res), media_type="application/json")
 
