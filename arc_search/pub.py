@@ -47,7 +47,7 @@ async def search_booker(id: str, ean: str, product_name: str):
         return Response(content='False', media_type="application/json")
     
 @app.get("/search_parfetts")
-async def search_booker(id: str, ean: str, product_name: str=""):
+async def search_parfetts(id: str, ean: str, product_name: str=""):
     if pub_id == id:
         try:
             result = parfetts_collector(ean=ean, name=product_name)
