@@ -7,3 +7,4 @@ alive_progress
 Flask
 fastapi
 uvicorn
+selenium
