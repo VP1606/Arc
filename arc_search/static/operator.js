@@ -33,24 +33,36 @@ function do_search() {
 function jsonHandler(data) {
     // BESTWAY
     const bestway = data.bestway;
-    createComponent(
-        "Bestway", "OK", bestway.item_name, bestway.ean, bestway.supplier_code, bestway.rsp, 
-        bestway.wholesale_unit_size, bestway.wholesale_price
-    );
+    if ("status" in bestway) {
+        console.log("Error detected in Bestway.")
+    } else {
+        createComponent(
+            "Bestway", "OK", bestway.item_name, bestway.ean, bestway.supplier_code, bestway.rsp, 
+            bestway.wholesale_unit_size, bestway.wholesale_price
+        );
+    }
 
     // BOOKER
     const booker = data.booker;
-    createComponent(
-        "Booker", "OK", booker.item_name, booker.ean, booker.supplier_code, booker.rsp, 
-        booker.wholesale_unit_size, booker.wholesale_price
-    );
+    if ("status" in booker) {
+        console.log("Error detected in Booker.")
+    } else {
+        createComponent(
+            "Booker", "OK", booker.item_name, booker.ean, booker.supplier_code, booker.rsp, 
+            booker.wholesale_unit_size, booker.wholesale_price
+        );
+    }
 
     // PARFETTS
     const parfetts = data.parfetts;
-    createComponent(
-        "Parfetts", "OK", parfetts.item_name, parfetts.ean, "-", parfetts.rsp,
-        "-", parfetts.wholesale_price
-    );
+    if ("status" in parfetts) {
+        console.log("Error detected in Parfetts.")
+    } else {
+        createComponent(
+            "Parfetts", "OK", parfetts.item_name, parfetts.ean, "-", parfetts.rsp,
+            "-", parfetts.wholesale_price
+        );
+    }
 
 }
 
