@@ -1,13 +1,17 @@
 from fastapi import FastAPI
-from fastapi.responses import Response
+from fastapi.responses import Response, FileResponse
 from bestway_handler import bestway_collector
 from booker_handler import booker_collector
 from parfetts_handler import parfetts_collector
 import json
 import cookie_jar
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
 
 app = FastAPI()
 pub_id = "iahfiasfdosai2313212**7613"
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 res_unavailable_message = json.dumps({
     "status": "expected",
@@ -19,6 +23,11 @@ res_unavailable_message = json.dumps({
 # /products/product detail?Code=260459&returnUrl=http%3a%2f%2fwww.booker.co.uk%2fproducts%2fsearch%3fkeywords%3d5012035962609
 
 # NOTE: Booker search requires item name!
+
+@app.get("/")
+async def read_main():
+    html_file_path = Path("static/mainpage.html")
+    return FileResponse(html_file_path)
 
 @app.get("/test")
 async def test():
