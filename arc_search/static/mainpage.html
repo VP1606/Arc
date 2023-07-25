@@ -2,6 +2,11 @@
     <head>
         <link rel="stylesheet" type="text/css" href="/static/main_styling.css">
         <!-- <link rel="stylesheet" type="text/css" href="main_styling.css"> -->
+        <script>
+            function filterNonNumeric(input) {
+              input.value = input.value.replace(/\D/g, '');
+            }
+        </script>
     </head>
     <body>
         <div class="centre-container" id="main-title-stack">
@@ -16,7 +21,9 @@
             <div class="centre-container" id="search-field-stack">
                 <img src="/static/search_back.png" alt="Image description">
             </div>
-            <p id="search-field-entry">50008273395043</p>
+            <!-- <p id="search-field-entry">50008273395043</p> -->
+            <!-- <div contenteditable="true" id="search-field-entry" name="search-field-entry" oninput="filterNonNumeric(this)">50008273395043</div> -->
+            <input type="text" name="ean-code" id="search-field-typebox" placeholder="EAN" oninput="filterNonNumeric(this)">
         </div>
         
         <div class="centre-container" id="search-button-stack">
