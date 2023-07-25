@@ -47,7 +47,7 @@
     position: relative;
     height: 70px;
     margin-top: 80px;
-  }
+}
 
 #search-field-stack {
     height: 70px;
@@ -119,3 +119,13 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+  .v-stack {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally within VStack */
+}
+
+.return-component {
+    padding-bottom: 30px;
+}
