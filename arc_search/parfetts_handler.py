@@ -1,7 +1,7 @@
 import sys
 import os
 import time
-import cookie_jar
+import cookie_jar, secret_jar
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -21,8 +21,8 @@ def parfetts_login():
     pass_entry = driver.find_element(By.XPATH, cookie_jar.parfetts_pass_entry_xpath)
     login_button = driver.find_element(By.XPATH, cookie_jar.parfetts_login_button_xpath)
 
-    user_entry.send_keys(cookie_jar.parfetts_username)
-    pass_entry.send_keys(cookie_jar.parfetts_password)
+    user_entry.send_keys(secret_jar.parfetts_username)
+    pass_entry.send_keys(secret_jar.parfetts_password)
     login_button.click()
 
     time.sleep(2)

@@ -60,9 +60,6 @@ booker_headers = {
     'Connection': 'keep-alive',
 }
 
-parfetts_username = "manove@gmail.com"
-parfetts_password = "aRiOq58h"
-
 parfetts_user_entry_xpath = '//*[@id="__next"]/div[2]/div[5]/div[2]/div/div/div/div/div/form/div[2]/div/div/input'
 parfetts_pass_entry_xpath = '//*[@id="__next"]/div[2]/div[5]/div[2]/div/div/div/div/div/form/div[3]/div/div/input'
 parfetts_login_button_xpath = '//*[@id="__next"]/div[2]/div[5]/div[2]/div/div/div/div/div/form/div[4]/div/button'
