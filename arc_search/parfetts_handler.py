@@ -12,7 +12,7 @@ from parfetts.ean_search_sys import search_ean
 
 def parfetts_login():
     chrome_options = Options()
-    # chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--headless")
 
     driver = webdriver.Chrome(options=chrome_options)
     driver.get("https://online.parfetts.co.uk/login?path=/")
