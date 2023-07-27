@@ -1,6 +1,5 @@
 import sys
 import os
-import json
 import cookie_jar, secret_jar
 import time
 from selenium import webdriver
@@ -60,12 +59,12 @@ def build_item(product_code):
     item = GET_ITEM(product_code, cookies=cookie_jar.bestway_cookies, headers=cookie_jar.bestway_headers, collect_pricing=True)
     return item
 
-def bestway_collector(ean: str):
+def bestway_collector(ean: str, driver: webdriver.Chrome):
     parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     sys.path.append(os.path.join(parent_dir, 'bestway'))
-    from ean_search_sys import search_ean
+    from ean_search_sys import search_ean_selenium
 
-    search_res = search_ean(ean=ean, cookies=cookie_jar.bestway_cookies, headers=cookie_jar.bestway_headers)
+    search_res = search_ean_selenium(ean=ean, cookies=cookie_jar.bestway_cookies, headers=cookie_jar.bestway_headers, driver=driver)
 
     if search_res[0] is True:
         item = search_res[1]

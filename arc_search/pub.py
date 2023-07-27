@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Depends
 from fastapi.responses import Response, FileResponse
-from bestway_handler import bestway_collector
+from bestway_handler import bestway_collector, bestway_login
 from booker_handler import booker_collector
 from parfetts_handler import parfetts_collector, parfetts_login
 import json
@@ -23,6 +23,10 @@ res_unavailable_message = json.dumps({
 # /products/product detail?Code=260459&returnUrl=http%3a%2f%2fwww.booker.co.uk%2fproducts%2fsearch%3fkeywords%3d5012035962609
 
 # NOTE: Booker search requires item name!
+
+bestway_driver = bestway_login()
+def get_bestway_driver():
+    return bestway_driver
 
 parfetts_driver = parfetts_login()
 def get_parfetts_driver():
@@ -71,13 +75,13 @@ async def search_parfetts(id: str, ean: str, product_name: str=""):
         return Response(content='False', media_type="application/json")
     
 @app.get("/search_all")
-async def search_all(id: str, ean: str, product_name: str, p_driver = Depends(get_parfetts_driver)):
+async def search_all(id: str, ean: str, product_name: str, bw_driver = Depends(get_bestway_driver), p_driver = Depends(get_parfetts_driver)):
     if pub_id == id:
         search_name = product_name
         main_res = {}
 
         try:
-            bestway_result = bestway_collector(ean=ean)
+            bestway_result = bestway_collector(ean=ean, driver=bw_driver)
             search_name = bestway_result["item_name"]
             main_res["bestway"] = bestway_result
         except:
@@ -102,4 +106,5 @@ async def search_all(id: str, ean: str, product_name: str, p_driver = Depends(ge
     
 @app.on_event("shutdown")
 async def shutdown_event():
+    bestway_driver.quit()
     parfetts_driver.quit()
