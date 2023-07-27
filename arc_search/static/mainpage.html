@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/main_styling.css">
+        <!-- <link rel="stylesheet" type="text/css" href="main_styling.css"> -->
+        <script>
+            function filterNonNumeric(input) {
+              input.value = input.value.replace(/\D/g, '');
+            }
+        </script>
+        <script src="/static/operator.js"></script>
+    </head>
+    <body>
+        <div class="centre-container" id="main-title-stack">
+            <h1 id="main-title">ARC SEARCH</h1>
+        </div>
+
+        <div class="centre-container" id="descriptor-stack">
+            <p id="descriptor-title">Enter Product EAN Code Below</p>
+        </div>
+        
+        <div class="centre-container" id="search-container">
+            <div class="centre-container" id="search-field-stack">
+                <img src="/static/search_back.png" alt="Image description">
+            </div>
+            <!-- <p id="search-field-entry">50008273395043</p> -->
+            <!-- <div contenteditable="true" id="search-field-entry" name="search-field-entry" oninput="filterNonNumeric(this)">50008273395043</div> -->
+            <input type="text" name="ean-code" id="search-field-typebox" placeholder="EAN" oninput="filterNonNumeric(this)">
+        </div>
+        
+        <div class="centre-container" id="search-button-stack">
+            <img src="/static/search_btn.png" alt="Image description" onclick="do_search()" id="search-button-clicker" style="display: block;">
+            <div class="loader" id="loader-wheel" style="display: none;"></div>
+        </div>
+
+        <div class="v-stack" id="componentContainer" style="padding-top: 80px;"></div>
+
+        <p id="return-dump" style="display: none;">-----IDLE-----</p>
+    </body>
+</html>
