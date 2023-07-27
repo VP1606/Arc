@@ -60,6 +60,12 @@ booker_headers = {
     'Connection': 'keep-alive',
 }
 
+bestway_account_numer_entry_xpath = '//*[@id="account_number"]'
+bestway_acc_next_button = '//*[@id="main"]/div/div/form/div/p[1]/input'
+
+bestway_acc_password_xpath = '//*[@id="password"]'
+bestway_login_button_xpath = '//*[@id="btn-login"]'
+
 parfetts_user_entry_xpath = '//*[@id="__next"]/div[2]/div[5]/div[2]/div/div/div/div/div/form/div[2]/div/div/input'
 parfetts_pass_entry_xpath = '//*[@id="__next"]/div[2]/div[5]/div[2]/div/div/div/div/div/form/div[3]/div/div/input'
 parfetts_login_button_xpath = '//*[@id="__next"]/div[2]/div[5]/div[2]/div/div/div/div/div/form/div[4]/div/button'
