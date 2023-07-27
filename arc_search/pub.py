@@ -1,8 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.responses import Response, FileResponse
 from bestway_handler import bestway_collector
 from booker_handler import booker_collector
-from parfetts_handler import parfetts_collector
+from parfetts_handler import parfetts_collector, parfetts_login
 import json
 import cookie_jar
 from fastapi.staticfiles import StaticFiles
@@ -23,6 +23,10 @@ res_unavailable_message = json.dumps({
 # /products/product detail?Code=260459&returnUrl=http%3a%2f%2fwww.booker.co.uk%2fproducts%2fsearch%3fkeywords%3d5012035962609
 
 # NOTE: Booker search requires item name!
+
+parfetts_driver = parfetts_login()
+def get_parfetts_driver():
+    return parfetts_driver
 
 @app.get("/")
 async def read_main():
@@ -67,7 +71,7 @@ async def search_parfetts(id: str, ean: str, product_name: str=""):
         return Response(content='False', media_type="application/json")
     
 @app.get("/search_all")
-async def search_all(id: str, ean: str, product_name: str):
+async def search_all(id: str, ean: str, product_name: str, p_driver = Depends(get_parfetts_driver)):
     if pub_id == id:
         search_name = product_name
         main_res = {}
@@ -86,7 +90,7 @@ async def search_all(id: str, ean: str, product_name: str):
             main_res["booker"] = cookie_jar.res_unavailable_message
 
         try:
-            parfetts_result = parfetts_collector(ean=ean, name=search_name)
+            parfetts_result = parfetts_collector(ean=ean, name=search_name, driver=p_driver)
             main_res["parfetts"] = parfetts_result
         except:
             main_res["parfetts"] = cookie_jar.res_unavailable_message
@@ -95,3 +99,7 @@ async def search_all(id: str, ean: str, product_name: str):
 
     else:
         return Response(content='False', media_type="application/json")
+    
+@app.on_event("shutdown")
+async def shutdown_event():
+    parfetts_driver.quit()

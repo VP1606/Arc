@@ -10,9 +10,9 @@ parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(parent_dir)
 from parfetts.ean_search_sys import search_ean
 
-def parfetts_collector(ean: str, name: str):
+def parfetts_login():
     chrome_options = Options()
-    chrome_options.add_argument("--headless")
+    # chrome_options.add_argument("--headless")
 
     driver = webdriver.Chrome(options=chrome_options)
     driver.get("https://online.parfetts.co.uk/login?path=/")
@@ -26,11 +26,11 @@ def parfetts_collector(ean: str, name: str):
     login_button.click()
 
     time.sleep(2)
+    return driver
 
+def parfetts_collector(ean: str, name: str, driver: webdriver.Chrome):
     # Status (OK, MULTIPLE, NOT_FOUND), name, rrp, ws_price, no_hits
     item_result_block = search_ean(ean=ean, driver=driver)
-
-    driver.quit()
 
     if item_result_block[0] == "OK":
         ret_dict = {}
