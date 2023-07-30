@@ -43,9 +43,12 @@ def booker_collector(ean: str, product_name: str):
     if item_result_block[0] == "OK":
         ret_dict = {}
 
+        rrp = item_result_block[2]
+        rrp = rrp.replace("RRP: ", "")
+
         ret_dict["item_name"] = item_result_block[1]
         ret_dict["ean"] = ean
-        ret_dict["rsp"] = item_result_block[2]
+        ret_dict["rsp"] = rrp
         ret_dict["wholesale_price"] = item_result_block[3]
 
         ret_dict["supplier_code"] = item_result_block[4]
