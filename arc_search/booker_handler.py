@@ -37,7 +37,7 @@ def do_ean_search(ean: str, item_name: str):
     return search_res
 
 def booker_collector(ean: str, product_name: str):
-    # Status (OK, MULTIPLE, NOT_FOUND), name, rrp, ws_price, no_hits
+    # Status (OK, MULTIPLE, NOT_FOUND), name, rrp, ws_price, supplier_code, unit_size, no_hits
     item_result_block = search_ean(ean=ean, name=product_name, cookies=cookie_jar.booker_cookies, headers=cookie_jar.booker_headers)
 
     if item_result_block[0] == "OK":
@@ -48,8 +48,8 @@ def booker_collector(ean: str, product_name: str):
         ret_dict["rsp"] = item_result_block[2]
         ret_dict["wholesale_price"] = item_result_block[3]
 
-        ret_dict["supplier_code"] = "-"
-        ret_dict["wholesale_unit_size"] = "-"
+        ret_dict["supplier_code"] = item_result_block[4]
+        ret_dict["wholesale_unit_size"] = item_result_block[5]
 
 
         return ret_dict
