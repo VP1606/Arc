@@ -7,6 +7,7 @@ import json
 import cookie_jar
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
+from sql_save import process_results as sql_process
 
 app = FastAPI()
 pub_id = "iahfiasfdosai2313212**7613"
@@ -99,6 +100,7 @@ async def search_all(id: str, ean: str, product_name: str, bw_driver = Depends(g
         except:
             main_res["parfetts"] = cookie_jar.res_unavailable_message
 
+        sql_process(results=main_res)
         return Response(content=json.dumps(main_res), media_type="application/json")
 
     else:
