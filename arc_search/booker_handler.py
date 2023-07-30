@@ -3,6 +3,10 @@ import os
 import json
 import cookie_jar
 
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(parent_dir)
+from booker.ean_search_sys import search_ean
+
 # class BookerItem:
 #     def __init__(self, name, b_price, rsp, por, code, vat_rate, brand_name, unit_size, ean):
 #         self.name = name
@@ -33,15 +37,27 @@ def do_ean_search(ean: str, item_name: str):
     return search_res
 
 def booker_collector(ean: str, product_name: str):
-    search_res = do_ean_search(ean=ean, item_name=product_name)
-    item = build_item(link_code=search_res[0], cookies=cookie_jar.booker_cookies, headers=cookie_jar.booker_headers, ean=ean)
-    ret_dict = {}
+    # Status (OK, MULTIPLE, NOT_FOUND), name, rrp, ws_price, supplier_code, unit_size, no_hits
+    item_result_block = search_ean(ean=ean, name=product_name, cookies=cookie_jar.booker_cookies, headers=cookie_jar.booker_headers)
 
-    ret_dict["item_name"] = item.name
-    ret_dict["ean"] = item.ean
-    ret_dict["supplier_code"] = item.code
-    ret_dict["rsp"] = item.rsp
-    ret_dict["wholesale_unit_size"] = item.unit_size
-    ret_dict["wholesale_price"] = item.b_price
+    if item_result_block[0] == "OK":
+        ret_dict = {}
 
-    return ret_dict
+        rrp = item_result_block[2]
+        rrp = rrp.replace("RRP: ", "")
+
+        ret_dict["item_name"] = item_result_block[1]
+        ret_dict["ean"] = ean
+        ret_dict["rsp"] = rrp
+        ret_dict["wholesale_price"] = item_result_block[3]
+
+        ret_dict["supplier_code"] = item_result_block[4]
+        ret_dict["wholesale_unit_size"] = item_result_block[5]
+
+
+        return ret_dict
+    else:
+        ret_msg = cookie_jar.res_unavailable_message  
+        ret_msg["no_search_hits"] = item_result_block[4]
+        ret_msg["status"] = item_result_block[0]
+        return ret_msg

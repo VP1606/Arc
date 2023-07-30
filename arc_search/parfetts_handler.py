@@ -1,7 +1,7 @@
 import sys
 import os
 import time
-import cookie_jar
+import cookie_jar, secret_jar
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -10,7 +10,7 @@ parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(parent_dir)
 from parfetts.ean_search_sys import search_ean
 
-def parfetts_collector(ean: str, name: str):
+def parfetts_login():
     chrome_options = Options()
     chrome_options.add_argument("--headless")
 
@@ -21,16 +21,16 @@ def parfetts_collector(ean: str, name: str):
     pass_entry = driver.find_element(By.XPATH, cookie_jar.parfetts_pass_entry_xpath)
     login_button = driver.find_element(By.XPATH, cookie_jar.parfetts_login_button_xpath)
 
-    user_entry.send_keys(cookie_jar.parfetts_username)
-    pass_entry.send_keys(cookie_jar.parfetts_password)
+    user_entry.send_keys(secret_jar.parfetts_username)
+    pass_entry.send_keys(secret_jar.parfetts_password)
     login_button.click()
 
     time.sleep(2)
+    return driver
 
+def parfetts_collector(ean: str, name: str, driver: webdriver.Chrome):
     # Status (OK, MULTIPLE, NOT_FOUND), name, rrp, ws_price, no_hits
     item_result_block = search_ean(ean=ean, driver=driver)
-
-    driver.quit()
 
     if item_result_block[0] == "OK":
         ret_dict = {}

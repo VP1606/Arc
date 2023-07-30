@@ -1,3 +1,4 @@
 venv/
 /temp/ean_list.json
 .vscode/
+arc_search/secret_jar.py

@@ -1,7 +1,10 @@
 import sys
 import os
-import json
-import cookie_jar
+import cookie_jar, secret_jar
+import time
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 
 # class BestwayItem(
 #     name: Any,
@@ -14,6 +17,40 @@ import cookie_jar
 #     ean: Any | str,
 #     vat_rate: Any | str
 
+def bestway_login():
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+
+    driver = webdriver.Chrome(options=chrome_options)
+    driver.get("https://www.bestwaywholesale.co.uk/login-auth")
+
+    time.sleep(2)
+
+    account_num_entry = driver.find_element(By.XPATH, cookie_jar.bestway_account_numer_entry_xpath)
+    acc_enter_button = driver.find_element(By.XPATH, cookie_jar.bestway_acc_next_button)
+
+    account_num_entry.send_keys(secret_jar.bestway_acc_num)
+
+    try:
+        print("Cookie Button!")
+        cookie_button = driver.find_element(By.XPATH, '//*[@id="ccc-notify-accept"]')
+        cookie_button.click()
+        time.sleep(1)
+    except:
+        print("No Cookie Button!")
+
+    acc_enter_button.click()
+    time.sleep(2)
+
+    acc_password_entry = driver.find_element(By.XPATH, cookie_jar.bestway_acc_password_xpath)
+    acc_login_button = driver.find_element(By.XPATH, cookie_jar.bestway_login_button_xpath)
+
+    acc_password_entry.send_keys(secret_jar.bestway_acc_pass)
+    acc_login_button.click()
+    time.sleep(4)
+
+    return driver
+
 def build_item(product_code):
     parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     sys.path.append(os.path.join(parent_dir, 'bestway'))
@@ -22,12 +59,12 @@ def build_item(product_code):
     item = GET_ITEM(product_code, cookies=cookie_jar.bestway_cookies, headers=cookie_jar.bestway_headers, collect_pricing=True)
     return item
 
-def bestway_collector(ean: str):
+def bestway_collector(ean: str, driver: webdriver.Chrome):
     parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     sys.path.append(os.path.join(parent_dir, 'bestway'))
-    from ean_search_sys import search_ean
+    from ean_search_sys import search_ean_selenium
 
-    search_res = search_ean(ean=ean, cookies=cookie_jar.bestway_cookies, headers=cookie_jar.bestway_headers)
+    search_res = search_ean_selenium(ean=ean, cookies=cookie_jar.bestway_cookies, headers=cookie_jar.bestway_headers, driver=driver)
 
     if search_res[0] is True:
         item = search_res[1]
