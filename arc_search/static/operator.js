@@ -123,10 +123,12 @@ function createRow(source, status, name, ean, code, rrp, pack_size, wholesale_pr
         data = data.replace("[PCKZ]", pack_size);
         data = data.replace("[WHP]", wholesale_price);
 
-        const component = document.createElement("tr");
-        component.innerHTML = data;
+        // const component = document.createElement("tr");
+        // component.innerHTML = data;
 
-        document.getElementById('search-result-table').appendChild(component);
+        var table = document.getElementById('search-result-table');
+        var newRow = table.insertRow(-1);
+        newRow.innerHTML = data;
         
       })
       .catch(error => {
