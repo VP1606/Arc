@@ -6,6 +6,13 @@
             function filterNonNumeric(input) {
               input.value = input.value.replace(/\D/g, '');
             }
+
+            function doLaunch() {
+                console.log("Page loaded!");
+                createTable();
+            }
+
+            document.addEventListener("DOMContentLoaded", doLaunch);
         </script>
         <script src="/static/operator.js"></script>
     </head>
@@ -32,7 +39,7 @@
             <div class="loader" id="loader-wheel" style="display: none;"></div>
         </div>
 
-        <div class="v-stack" id="componentContainer" style="padding-top: 80px;"></div>
+        <div class="v-stack" id="componentContainer" style="padding-top: 80px; visibility: hidden;"></div>
 
         <p id="return-dump" style="display: none;">-----IDLE-----</p>
     </body>
