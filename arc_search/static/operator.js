@@ -8,10 +8,12 @@ function do_search() {
 
     var loaderUI = document.getElementById("loader-wheel")
     var searchButton = document.getElementById("search-button-clicker")
+    var componentContainer = document.getElementById("componentContainer")
 
     loaderUI.style.display = "block";
     searchButton.style.display = "none";
     // document.getElementById('componentContainer').innerHTML = '';
+    componentContainer.style.visibility = "hidden";
     resetTable();
 
     var url = `/search_all?id=iahfiasfdosai2313212**7613&ean=${encodeURIComponent(searchEAN)}&product_name=?`
@@ -26,6 +28,7 @@ function do_search() {
 
         jsonHandler(json);
 
+        componentContainer.style.visibility = "visible";
         loaderUI.style.display = "none";
         searchButton.style.display = "block";
     });
