@@ -11,7 +11,8 @@ function do_search() {
 
     loaderUI.style.display = "block";
     searchButton.style.display = "none";
-    document.getElementById('componentContainer').innerHTML = '';
+    // document.getElementById('componentContainer').innerHTML = '';
+    resetTable();
 
     var url = `/search_all?id=iahfiasfdosai2313212**7613&ean=${encodeURIComponent(searchEAN)}&product_name=?`
 
@@ -31,7 +32,6 @@ function do_search() {
 }
 
 function jsonHandler(data) {
-    createTable();
     // BESTWAY
     const bestway = data.bestway;
     if ("status" in bestway) {
@@ -128,10 +128,27 @@ function createRow(source, status, name, ean, code, rrp, pack_size, wholesale_pr
 
         var table = document.getElementById('search-result-table');
         var newRow = table.insertRow(-1);
+        newRow.classList.add("search-return-row");
         newRow.innerHTML = data;
         
       })
       .catch(error => {
         console.error('Error fetching component:', error);
       });
+}
+
+function resetTable() {
+  // const container = document.getElementById('componentContainer');
+  // container.style.display = "none";
+
+  const className = "search-return-row";
+  const rowsToDelete = document.querySelectorAll(`.${className}`);
+
+    // Get the reference to the table's <tbody> element
+  const tableBody = document.getElementById("search-result-table").getElementsByTagName("tbody")[0];
+
+    // Loop through the rows to delete and remove each row from the table
+  rowsToDelete.forEach(row => {
+    tableBody.removeChild(row);
+  });
 }

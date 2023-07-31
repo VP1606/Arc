@@ -6,6 +6,13 @@
             function filterNonNumeric(input) {
               input.value = input.value.replace(/\D/g, '');
             }
+
+            function doLaunch() {
+                console.log("Page loaded!");
+                createTable();
+            }
+
+            document.addEventListener("DOMContentLoaded", doLaunch);
         </script>
         <script src="/static/operator.js"></script>
     </head>
