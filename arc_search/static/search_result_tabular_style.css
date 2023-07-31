@@ -1,0 +1,33 @@
+th, td {
+    color: #000;
+    text-align: center;
+    font-family: Avenir;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+table {
+    position: relative;
+    width: 1200px;
+    height: 260px;
+
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+#main-container {
+    position: relative;
+    width: 1200px;
+    height: 260px;
+}
+
+#baseplate {
+    position: absolute;
+    bottom: 0;
+    width: 1200px;
+    height: 260px;
+}

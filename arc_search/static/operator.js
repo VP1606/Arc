@@ -31,12 +31,13 @@ function do_search() {
 }
 
 function jsonHandler(data) {
+    createTable();
     // BESTWAY
     const bestway = data.bestway;
     if ("status" in bestway) {
         console.log("Error detected in Bestway.")
     } else {
-        createComponent(
+        createRow(
             "Bestway", "OK", bestway.item_name, bestway.ean, bestway.supplier_code, bestway.rsp, 
             bestway.wholesale_unit_size, bestway.wholesale_price
         );
@@ -47,7 +48,7 @@ function jsonHandler(data) {
     if ("status" in booker) {
         console.log("Error detected in Booker.")
     } else {
-        createComponent(
+        createRow(
             "Booker", "OK", booker.item_name, booker.ean, booker.supplier_code, booker.rsp, 
             booker.wholesale_unit_size, booker.wholesale_price
         );
@@ -58,7 +59,7 @@ function jsonHandler(data) {
     if ("status" in parfetts) {
         console.log("Error detected in Parfetts.")
     } else {
-        createComponent(
+        createRow(
             "Parfetts", "OK", parfetts.item_name, parfetts.ean, "-", parfetts.rsp,
             "-", parfetts.wholesale_price
         );
@@ -87,6 +88,46 @@ function createComponent(source, status, name, ean, code, rrp, pack_size, wholes
         component.innerHTML = data;
 
         document.getElementById('componentContainer').appendChild(component);
+      })
+      .catch(error => {
+        console.error('Error fetching component:', error);
+      });
+}
+
+function createTable() {
+    fetch('/static/search_result_tabular.html')
+      .then(response => response.text())
+      .then(data => {
+        const component = document.createElement("div");
+        component.classList.add("return-table-component");
+        component.innerHTML = data;
+
+        document.getElementById('componentContainer').appendChild(component);
+      })
+      .catch(error => {
+        console.error('Error fetching component:', error);
+      });
+}
+
+function createRow(source, status, name, ean, code, rrp, pack_size, wholesale_price) {
+    fetch('/static/search_result_row.html')
+      .then(response => response.text())
+      .then(data => {
+
+        data = data.replace("[SOURCE]", source);
+        data = data.replace("[STATUS]", status);
+        data = data.replace("[NAME]", name);
+        data = data.replace("[EAN]", ean);
+        data = data.replace("[CODE]", code);
+        data = data.replace("[RRP]", rrp);
+        data = data.replace("[PCKZ]", pack_size);
+        data = data.replace("[WHP]", wholesale_price);
+
+        const component = document.createElement("tr");
+        component.innerHTML = data;
+
+        document.getElementById('search-result-table').appendChild(component);
+        
       })
       .catch(error => {
         console.error('Error fetching component:', error);
