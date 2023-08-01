@@ -31,6 +31,7 @@ function clickExactEAN() {
         nameSearch = false;
         eanSearch = false;
         updateAllSearchImages();
+        document.getElementById("specContainer").style.display = "none";
     } else {};
 }
 
@@ -40,6 +41,7 @@ function clickNameSearch() {
         nameSearch = true;
         eanSearch = false;
         updateAllSearchImages();
+        document.getElementById("specContainer").style.display = "block";
     } else {};
 }
 
@@ -49,5 +51,6 @@ function clickEANSearch() {
         nameSearch = false;
         eanSearch = true;
         updateAllSearchImages();
+        document.getElementById("specContainer").style.display = "block";
     } else {};
 }

@@ -11,12 +11,14 @@
                 console.log("Page loaded!");
                 createTable();
                 updateAllSearchImages();
+                createSpecTable();
             }
 
             document.addEventListener("DOMContentLoaded", doLaunch);
         </script>
         <script src="/static/operator.js"></script>
         <script src="/static/search_bar_control.js"></script>
+        <script src="/static/spec_search_handler.js"></script>
     </head>
     <body>
         <div class="centre-container" id="main-title-stack">
@@ -42,6 +44,8 @@
             <img src="/static/search_btn.png" alt="Image description" onclick="do_search()" id="search-button-clicker" style="display: block;">
             <div class="loader" id="loader-wheel" style="display: none;"></div>
         </div>
+
+        <div id="specContainer" style="padding-top: 80px; display: none;"></div>
 
         <div class="v-stack" id="componentContainer" style="padding-top: 80px; visibility: hidden;"></div>
 
