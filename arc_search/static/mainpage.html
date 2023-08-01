@@ -21,8 +21,10 @@
             <h1 id="main-title">ARC SEARCH</h1>
         </div>
 
-        <div class="centre-container" id="descriptor-stack">
-            <p id="descriptor-title">Enter Product EAN Code Below</p>
+        <div style="display:flex; flex-direction: row; justify-content: center; align-items: center; height: 94px; padding-top: 81px;">
+            <img id="exact-ean-btn" class="search_btn_image" src="/static/search_btn_images/exact_ean_off.png" style="padding-right: 83px;" onclick="ToggleSearchVariable(this)">
+            <img id="name-search-btn" class="search_btn_image" src="/static/search_btn_images/name_search_off.png" onclick="ToggleSearchVariable(this)">
+            <img id="ean-search-btn" class="search_btn_image" src="/static/search_btn_images/ean_search_off.png" style="padding-left: 83px;" onclick="ToggleSearchVariable(this)">
         </div>
         
         <div class="centre-container" id="search-container">
