@@ -46,7 +46,7 @@
 #search-container {
     position: relative;
     height: 70px;
-    margin-top: 80px;
+    margin-top: 40px;
 }
 
 #search-field-stack {
@@ -128,4 +128,8 @@
 
 .return-component {
     padding-bottom: 30px;
+}
+
+.search_btn_image {
+    width: 85px;  height: 94px;
 }

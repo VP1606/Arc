@@ -10,5 +10,5 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/")
 async def read_main():
-    html_file_path = Path("static/search_result_tabular.html")
+    html_file_path = Path("static/mainpage.html")
     return FileResponse(html_file_path)

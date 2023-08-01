@@ -10,11 +10,13 @@
             function doLaunch() {
                 console.log("Page loaded!");
                 createTable();
+                updateAllSearchImages();
             }
 
             document.addEventListener("DOMContentLoaded", doLaunch);
         </script>
         <script src="/static/operator.js"></script>
+        <script src="/static/search_bar_control.js"></script>
     </head>
     <body>
         <div class="centre-container" id="main-title-stack">
@@ -22,9 +24,9 @@
         </div>
 
         <div style="display:flex; flex-direction: row; justify-content: center; align-items: center; height: 94px; padding-top: 81px;">
-            <img id="exact-ean-btn" class="search_btn_image" src="/static/search_btn_images/exact_ean_off.png" style="padding-right: 83px;" onclick="ToggleSearchVariable(this)">
-            <img id="name-search-btn" class="search_btn_image" src="/static/search_btn_images/name_search_off.png" onclick="ToggleSearchVariable(this)">
-            <img id="ean-search-btn" class="search_btn_image" src="/static/search_btn_images/ean_search_off.png" style="padding-left: 83px;" onclick="ToggleSearchVariable(this)">
+            <img style="width: 85px;  height: 94px; padding-right: 83px;" id="exact-ean-btn" class="search_btn_image" src="/static/search_btn_images/exact_ean_off.png" onclick="clickExactEAN()">
+            <img style="width: 85px;  height: 94px;" id="name-search-btn" class="search_btn_image" src="/static/search_btn_images/name_search_off.png" onclick="clickNameSearch()">
+            <img style="width: 85px;  height: 94px; padding-left: 83px;" id="ean-search-btn" class="search_btn_image" src="/static/search_btn_images/ean_search_off.png" onclick="clickEANSearch()">
         </div>
         
         <div class="centre-container" id="search-container">
