@@ -11,7 +11,7 @@ def search_ean(ean: str, driver: webdriver.Chrome):
 
     time.sleep(2)
 
-    main_list = driver.find_element(By.CSS_SELECTOR, '#__next > div.undefined.page-wrapper > div.column-wrapper.main-content-wrapper > div.main-column > div > div.main-column-main-content.undefined.false > div > div.product-container.three.false > div.product-grid.w-100')
+    main_list = driver.find_element(By.CLASS_NAME, 'infinite-scroll-pagination')
     search_hits = main_list.find_elements(By.CLASS_NAME, 'product-card ')
 
     search_results = []
@@ -34,9 +34,8 @@ def search_div_parser(hit):
     info_card = hit.find_element(By.CLASS_NAME, 'product-card--container')
     price_card = hit.find_element(By.CLASS_NAME, 'product-card--price')
 
-    item_title = title_card.find_element(By.CSS_SELECTOR, '#__next > div.undefined.page-wrapper > div.column-wrapper.main-content-wrapper > div.main-column > div > div.main-column-main-content.undefined.false > div > div.product-container.three.false > div.product-grid.w-100 > div > div > div > div.product-card--title > a > h5').text
-    ws_price = price_card.find_element(By.CSS_SELECTOR, '#__next > div.undefined.page-wrapper > div.column-wrapper.main-content-wrapper > div.main-column > div > div.main-column-main-content.undefined.false > div > div.product-container.three.false > div.product-grid.w-100 > div > div > div > div.product-card--price > div > div.price-info > div > span').text
-
+    item_title = title_card.find_element(By.XPATH, '/html/body/div/div[2]/div[5]/div[2]/div/div[1]/div/div[2]/div[2]/div/div/div/div[2]/a/h5').text
+    ws_price = price_card.find_element(By.XPATH, '/html/body/div/div[2]/div[5]/div[2]/div/div[1]/div/div[2]/div[2]/div/div/div/div[4]/div/div[1]/div/span').text
     rrp_block = info_card.find_element(By.CLASS_NAME, 'product-card--vat-rrp')
     containers = rrp_block.find_elements(By.CLASS_NAME, 'sub-container')
 
