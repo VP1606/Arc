@@ -1,12 +1,5 @@
 import mysql.connector
 
-mydb = mysql.connector.connect(
-        host="192.168.1.180",
-        user="mpos",
-        password="mpospass",
-        database="mpos"
-    )
-
 def search_by_name(mydb: mysql.connector.MySQLConnection, query: str):
     mycursor = mydb.cursor()
     query_sql = f"SELECT * FROM rrpextractsummary WHERE description LIKE '%{query}%';"
@@ -72,5 +65,3 @@ def post_processor(mydb: mysql.connector.MySQLConnection, input_list: list):
         main_result.append(myrow)
 
     return main_result
-
-mydb.close()
