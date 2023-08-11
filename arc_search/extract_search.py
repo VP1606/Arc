@@ -15,7 +15,8 @@ def search_by_name(mydb: mysql.connector.MySQLConnection, query: str):
     rows = mycursor.fetchall()
     mycursor.close()
 
-    return rows
+    post_rows = post_processor(mydb=mydb, input_list=rows)
+    return post_rows
 
 def search_by_ean(mydb: mysql.connector.MySQLConnection, query: str):
     mycursor = mydb.cursor()
@@ -25,7 +26,8 @@ def search_by_ean(mydb: mysql.connector.MySQLConnection, query: str):
     rows = mycursor.fetchall()
     mycursor.close()
 
-    return rows
+    post_rows = post_processor(mydb=mydb, input_list=rows)
+    return post_rows
 
 def check_sources(mydb: mysql.connector.MySQLConnection, row: list):
     mycursor = mydb.cursor()
@@ -66,9 +68,9 @@ def post_processor(mydb: mysql.connector.MySQLConnection, input_list: list):
         sources = check_sources(mydb=mydb, row=row)
         myrow = list(row)
         myrow.append(sources)
+        myrow[3] = myrow[3].strftime('%Y-%m-%d %H:%M:%S')
         main_result.append(myrow)
 
     return main_result
-
 
 mydb.close()
