@@ -13,13 +13,29 @@ function createSpecTable() {
       });
 };
 
-function createSpecRow(name, ean) {
+function createSpecRow(name, ean, sources) {
     fetch('/static/spec_search/spec_row.html')
       .then(response => response.text())
       .then(data => {
 
         data = data.replace("[NAME]", name);
         data = data.replace("[EAN]", ean);
+
+        const bway_logo = '<img src="/static/supplier_logos/bestway-logo.png" class="supplier_icon" style="width: 45px; height: 45px; visibility: hidden;">';
+        const booker_logo = ' <img src="/static/supplier_logos/booker-logo.png" class="supplier_icon" style="width: 45px; height: 45px; visibility: hidden;">';
+        const parfetts_logo = '<img src="/static/supplier_logos/parfetts-logo.png" class="supplier_icon" style="width: 45px; height: 45px; visibility: hidden;">';
+
+        if ('bestway' in sources && sources.bestway == true) {
+          data = data.replace(bway_logo, bway_logo.replace("hidden", "visible"));
+        };
+
+        if ('booker' in sources && sources.booker == true) {
+          data = data.replace(booker_logo, booker_logo.replace("hidden", "visible"));
+        };
+
+        if ('parfetts' in sources && sources.parfetts == true) {
+          data = data.replace(parfetts_logo, parfetts_logo.replace("hidden", "visible"));
+        }
 
         var table = document.getElementById('spec-search-result-table');
         var newRow = table.insertRow(-1);
@@ -106,6 +122,6 @@ function do_name_search() {
 
 function SearchConstructor(results) {
   for (var row of results) {
-    createSpecRow(row[2], row[0]);
+    createSpecRow(row[2], row[0], row[6]);
   };
 }
