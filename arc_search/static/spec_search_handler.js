@@ -28,3 +28,47 @@ function createSpecRow() {
         console.error('Error fetching component:', error);
       });
 };
+
+function do_ean_search() {
+  var searchEAN = document.getElementById("search-field-typebox").value;
+
+  var loaderUI = document.getElementById("loader-wheel");
+  var searchButton = document.getElementById("search-button-clicker");
+
+  loaderUI.style.display = "block";
+  searchButton.style.display = "none";
+
+  var url = `/search_ean?id=iahfiasfdosai2313212**7613&query=${encodeURIComponent(searchEAN)}`;
+
+  fetch(url, {
+    method: "GET"
+  })
+  .then((response) => response.json())
+  .then((json) => {
+    console.log(json);
+    loaderUI.style.display = "none";
+    searchButton.style.display = "block";
+  });
+};
+
+function do_name_search() {
+  var searchName = document.getElementById("search-field-typebox").value;
+
+  var loaderUI = document.getElementById("loader-wheel");
+  var searchButton = document.getElementById("search-button-clicker");
+
+  loaderUI.style.display = "block";
+  searchButton.style.display = "none";
+
+  var url = `/search_name?id=iahfiasfdosai2313212**7613&query=${encodeURIComponent(searchName)}`;
+
+  fetch(url, {
+    method: "GET"
+  })
+  .then((response) => response.json())
+  .then((json) => {
+    console.log(json);
+    loaderUI.style.display = "none";
+    searchButton.style.display = "block";
+  });
+};
