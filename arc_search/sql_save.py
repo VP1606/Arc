@@ -1,13 +1,13 @@
 import mysql.connector
 
-mydb = mysql.connector.connect(
+def process_results(results: dict):
+    mydb = mysql.connector.connect(
         host="192.168.1.180",
         user="mpos",
         password="mpospass",
         database="mpos"
     )
 
-def process_results(results: dict):
     bestway = results["bestway"]
     booker = results["booker"]
     parfetts = results["parfetts"]
@@ -72,3 +72,4 @@ def process_results(results: dict):
 
     mycursor.execute(sql, vals)
     mydb.commit()
+    mydb.close()
