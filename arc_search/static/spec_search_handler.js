@@ -134,5 +134,12 @@ function SearchConstructor(results) {
 
 function specSelectHit(row_id) {
   const ean = document.getElementById(row_id).textContent;
-  console.log(ean);
+
+  var exact_ean_button = document.getElementById("exact-ean-btn");
+  var ean_input = document.getElementById("search-field-typebox");
+  var search_button = document.getElementById("search-button-clicker");
+
+  exact_ean_button.click();
+  ean_input.value = ean;
+  search_button.click();
 }
