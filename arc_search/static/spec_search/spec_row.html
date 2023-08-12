@@ -1,6 +1,7 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="/static/spec_search/table_styles.css">
+        <script src="/static/spec_search_handler.js"></script>
     </head>
 
     <td>
@@ -9,9 +10,9 @@
         <img src="/static/supplier_logos/parfetts-logo.png" class="supplier_icon" style="width: 45px; height: 45px; visibility: hidden;">
     </td>
     <td>[NAME]</td>
-    <td>[EAN]</td>
+    <td id="[ROW-EAN-ID]">[EAN]</td>
     <td>
-        <img src="/static/select-btn.png" style="width: 200px; height: 45px;">
+        <img src="/static/select-btn.png" style="width: 200px; height: 45px;" onclick='specSelectHit("[ROW-EAN-ID]")'>
     </td>
     
 </html>

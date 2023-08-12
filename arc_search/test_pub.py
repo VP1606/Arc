@@ -27,3 +27,29 @@ res_unavailable_message = json.dumps({
 async def read_main():
     html_file_path = Path("static/mainpage.html")
     return FileResponse(html_file_path)
+
+@app.get("/search_ean")
+async def search_ean(id: str, query: str):
+    if pub_id == id:
+        try:
+            res = search_by_ean(mydb=mydb, query=query)
+            return Response(content=json.dumps(res), media_type="application/json")
+        except:
+            return Response(content=res_unavailable_message, media_type="application/json")
+    else:
+        return Response(content='False', media_type="application/json")
+    
+@app.get("/search_name")
+async def search_name(id: str, query: str):
+    if pub_id == id:
+        try:
+            res = search_by_name(mydb=mydb, query=query)
+            return Response(content=json.dumps(res), media_type="application/json")
+        except:
+            return Response(content=res_unavailable_message, media_type="application/json")
+    else:
+        return Response(content='False', media_type="application/json")
+    
+@app.on_event("shutdown")
+async def shutdown_event():
+    mydb.close()

@@ -13,13 +13,17 @@ function createSpecTable() {
       });
 };
 
-function createSpecRow(name, ean, sources) {
+function createSpecRow(name, ean, sources, row_id) {
     fetch('/static/spec_search/spec_row.html')
       .then(response => response.text())
       .then(data => {
 
+        var new_row_flag = `row-ean-field-${row_id}`;
+        var regex = /\[ROW-EAN-ID\]/g;
+
         data = data.replace("[NAME]", name);
         data = data.replace("[EAN]", ean);
+        data = data.replace(regex, new_row_flag);
 
         const bway_logo = '<img src="/static/supplier_logos/bestway-logo.png" class="supplier_icon" style="width: 45px; height: 45px; visibility: hidden;">';
         const booker_logo = ' <img src="/static/supplier_logos/booker-logo.png" class="supplier_icon" style="width: 45px; height: 45px; visibility: hidden;">';
@@ -121,7 +125,14 @@ function do_name_search() {
 };
 
 function SearchConstructor(results) {
+  var counter = 0;
   for (var row of results) {
-    createSpecRow(row[2], row[0], row[6]);
+    createSpecRow(row[2], row[0], row[6], counter);
+    counter += 1;
   };
+}
+
+function specSelectHit(row_id) {
+  const ean = document.getElementById(row_id).textContent;
+  console.log(ean);
 }
