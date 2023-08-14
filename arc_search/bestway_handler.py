@@ -5,6 +5,9 @@ import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 
 # class BestwayItem(
 #     name: Any,
@@ -24,30 +27,40 @@ def bestway_login():
     driver = webdriver.Chrome(options=chrome_options)
     driver.get("https://www.bestwaywholesale.co.uk/login-auth")
 
-    time.sleep(2)
+    _ = WebDriverWait(driver, 5).until(EC.presence_of_element_located((
+        By.ID, 'account_number'
+    )))
+
+    try:
+        cookie_button = WebDriverWait(driver, 5).until(EC.presence_of_element_located((
+            By.XPATH, '//*[@id="ccc-notify-accept"]'
+        )))
+
+        cookie_button.click()
+        print("Cookie Button!")
+
+    except TimeoutException:
+        print("No Cookie Button!")
 
     account_num_entry = driver.find_element(By.XPATH, cookie_jar.bestway_account_numer_entry_xpath)
     acc_enter_button = driver.find_element(By.XPATH, cookie_jar.bestway_acc_next_button)
 
     account_num_entry.send_keys(secret_jar.bestway_acc_num)
-
-    try:
-        print("Cookie Button!")
-        cookie_button = driver.find_element(By.XPATH, '//*[@id="ccc-notify-accept"]')
-        cookie_button.click()
-        time.sleep(1)
-    except:
-        print("No Cookie Button!")
-
     acc_enter_button.click()
-    time.sleep(2)
+    
+    _ = WebDriverWait(driver, 5).until(EC.presence_of_element_located((
+        By.ID, 'btn-login'
+    )))
 
     acc_password_entry = driver.find_element(By.XPATH, cookie_jar.bestway_acc_password_xpath)
     acc_login_button = driver.find_element(By.XPATH, cookie_jar.bestway_login_button_xpath)
 
     acc_password_entry.send_keys(secret_jar.bestway_acc_pass)
     acc_login_button.click()
-    time.sleep(4)
+    
+    _ = WebDriverWait(driver, 5).until(EC.presence_of_element_located((
+        By.ID, 'main'
+    )))
 
     return driver
 
