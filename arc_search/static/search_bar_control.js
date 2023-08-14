@@ -41,7 +41,7 @@ function clickNameSearch() {
         nameSearch = true;
         eanSearch = false;
         updateAllSearchImages();
-        document.getElementById("specContainer").style.display = "block";
+        document.getElementById("specContainer").style.display = "none";
     } else {};
 }
 
@@ -51,6 +51,6 @@ function clickEANSearch() {
         nameSearch = false;
         eanSearch = true;
         updateAllSearchImages();
-        document.getElementById("specContainer").style.display = "block";
+        document.getElementById("specContainer").style.display = "none";
     } else {};
 }

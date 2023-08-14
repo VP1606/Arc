@@ -73,11 +73,13 @@ function do_ean_search() {
 
   var loaderUI = document.getElementById("loader-wheel");
   var searchButton = document.getElementById("search-button-clicker");
-  var specContainer = document.getElementById("specContainer")
+  var specContainer = document.getElementById("specContainer");
+  var noneFound = document.getElementById("noneFoundContainer");
 
   loaderUI.style.display = "block";
   searchButton.style.display = "none";
   specContainer.style.display = "none";
+  noneFound.style.display = "none";
 
   resetSpecTable();
 
@@ -90,9 +92,15 @@ function do_ean_search() {
   .then((json) => {
     SearchConstructor(json);
 
-    specContainer.style.display = "block";
     loaderUI.style.display = "none";
     searchButton.style.display = "block";
+
+    if (json.length > 0) {
+      specContainer.style.display = "block";
+    } else {
+      noneFound.style.display = "flex";
+    };
+
   });
 };
 
@@ -102,10 +110,12 @@ function do_name_search() {
   var loaderUI = document.getElementById("loader-wheel");
   var searchButton = document.getElementById("search-button-clicker");
   var specContainer = document.getElementById("specContainer");
+  var noneFound = document.getElementById("noneFoundContainer");
 
   loaderUI.style.display = "block";
   searchButton.style.display = "none";
   specContainer.style.display = "none";
+  noneFound.style.display = "none";
 
   resetSpecTable();
 
@@ -118,9 +128,15 @@ function do_name_search() {
   .then((json) => {
     SearchConstructor(json);
 
-    specContainer.style.display = "block";
     loaderUI.style.display = "none";
     searchButton.style.display = "block";
+
+    if (json.length > 0) {
+      specContainer.style.display = "block";
+    } else {
+      noneFound.style.display = "flex";
+    };
+
   });
 };
 
