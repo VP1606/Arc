@@ -13,3 +13,11 @@ th, td {
     width: 1200px;
     height: 250px;
 } */
+
+td {
+    padding-bottom: 40px;
+}
+
+th {
+    padding-bottom: 20px;
+}
