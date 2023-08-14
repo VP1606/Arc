@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-import time
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 def search_ean(ean: str, driver: webdriver.Chrome):
     search_bar = driver.find_element(By.XPATH, '//*[@id="__next"]/div[2]/div[3]/div/div[2]/div/div[3]/div/div/div[1]/input')
@@ -9,9 +10,9 @@ def search_ean(ean: str, driver: webdriver.Chrome):
     enter_btn = driver.find_element(By.XPATH, '//*[@id="__next"]/div[2]/div[3]/div/div[2]/div/div[3]/div/div/div[1]/div/button')
     enter_btn.click()
 
-    time.sleep(2)
-
-    main_list = driver.find_element(By.CLASS_NAME, 'infinite-scroll-pagination')
+    main_list = WebDriverWait(driver, 3).until(EC.presence_of_element_located((
+            By.CLASS_NAME, 'infinite-scroll-pagination'
+    )))
     search_hits = main_list.find_elements(By.CLASS_NAME, 'product-card ')
 
     search_results = []
