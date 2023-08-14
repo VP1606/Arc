@@ -3,6 +3,9 @@ from get_item import GET_ITEM, GET_ITEM_selenium
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 
 def search_ean(ean: str, cookies, headers, collect_pricing=True):
     url = "https://www.bestwaywholesale.co.uk/search?w={0}".format(ean)
@@ -26,30 +29,41 @@ def search_ean(ean: str, cookies, headers, collect_pricing=True):
 
 def search_ean_selenium(ean: str, cookies, headers, driver: webdriver.Chrome):
     print("HI")
+    stime = time.time()
 
     url = "https://www.bestwaywholesale.co.uk/search?w={0}".format(ean)
-
     driver.get(url)
-    time.sleep(2)
+    
+    _ = WebDriverWait(driver, 3).until(EC.presence_of_element_located((
+        By.CLASS_NAME, 'shop-products-column'
+    )))
 
     try:
-        collect_button = driver.find_element(By.XPATH, '//*[@id="fulf-select-C"]')
+        collect_button = WebDriverWait(driver, 1).until(EC.presence_of_element_located((
+            By.XPATH, '//*[@id="fulf-select-C"]'
+        )))
+
         print("Collect Button!")
         collect_button.click()
-        time.sleep(1)
-    except:
-        pass
+
+    except TimeoutException:
+        print("No Collect Button!")
 
     try:
-        collect_xmark = driver.find_element(By.XPATH, '//*[@id="ccmin-modal"]/button')
+        collect_xmark = WebDriverWait(driver, 1).until(EC.presence_of_element_located((
+            By.XPATH, '//*[@id="ccmin-modal"]/button'
+        )))
+
         print("Collect X Mark")
         collect_xmark.click()
-        time.sleep(1)
-    except:
-        pass
+
+    except TimeoutException:
+        print("No Collect XMark!")
 
     driver.get(url)
-    time.sleep(2)
+    _ = WebDriverWait(driver, 3).until(EC.presence_of_element_located((
+        By.CLASS_NAME, 'shop-products-column'
+    )))
 
     page = driver.page_source
 
@@ -68,4 +82,7 @@ def search_ean_selenium(ean: str, cookies, headers, driver: webdriver.Chrome):
             found_item = item
             break
     
+    ftime = time.time()
+    print("HH ::: {0}".format(ftime - stime))
+
     return (found, found_item)
