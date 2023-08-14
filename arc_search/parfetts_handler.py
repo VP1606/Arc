@@ -5,6 +5,8 @@ import cookie_jar, secret_jar
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(parent_dir)
@@ -25,7 +27,10 @@ def parfetts_login():
     pass_entry.send_keys(secret_jar.parfetts_password)
     login_button.click()
 
-    time.sleep(2)
+    _ = WebDriverWait(driver, 5).until(EC.presence_of_element_located((
+        By.CLASS_NAME, 'input-group'
+    )))
+
     return driver
 
 def parfetts_collector(ean: str, name: str, driver: webdriver.Chrome):
