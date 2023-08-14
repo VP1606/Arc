@@ -29,7 +29,6 @@ def search_ean(ean: str, cookies, headers, collect_pricing=True):
 
 def search_ean_selenium(ean: str, cookies, headers, driver: webdriver.Chrome):
     print("HI")
-    stime = time.time()
 
     url = "https://www.bestwaywholesale.co.uk/search?w={0}".format(ean)
     driver.get(url)
@@ -81,8 +80,5 @@ def search_ean_selenium(ean: str, cookies, headers, driver: webdriver.Chrome):
             found = True
             found_item = item
             break
-    
-    ftime = time.time()
-    print("HH ::: {0}".format(ftime - stime))
 
     return (found, found_item)
