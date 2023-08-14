@@ -75,11 +75,13 @@ function do_ean_search() {
   var searchButton = document.getElementById("search-button-clicker");
   var specContainer = document.getElementById("specContainer");
   var noneFound = document.getElementById("noneFoundContainer");
+  var componentContainer = document.getElementById("componentContainer")
 
   loaderUI.style.display = "block";
   searchButton.style.display = "none";
   specContainer.style.display = "none";
   noneFound.style.display = "none";
+  componentContainer.style.visibility = "hidden";
 
   resetSpecTable();
 
@@ -111,11 +113,13 @@ function do_name_search() {
   var searchButton = document.getElementById("search-button-clicker");
   var specContainer = document.getElementById("specContainer");
   var noneFound = document.getElementById("noneFoundContainer");
+  var componentContainer = document.getElementById("componentContainer")
 
   loaderUI.style.display = "block";
   searchButton.style.display = "none";
   specContainer.style.display = "none";
   noneFound.style.display = "none";
+  componentContainer.style.visibility = "hidden";
 
   resetSpecTable();
 

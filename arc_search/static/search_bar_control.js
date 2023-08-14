@@ -31,7 +31,6 @@ function clickExactEAN() {
         nameSearch = false;
         eanSearch = false;
         updateAllSearchImages();
-        document.getElementById("specContainer").style.display = "none";
         var ean_input = document.getElementById("search-field-typebox");
         ean_input.value = "";
         ean_input.placeholder = "EAN";
@@ -44,7 +43,6 @@ function clickNameSearch() {
         nameSearch = true;
         eanSearch = false;
         updateAllSearchImages();
-        document.getElementById("specContainer").style.display = "none";
         var ean_input = document.getElementById("search-field-typebox");
         ean_input.value = "";
         ean_input.placeholder = "NAME";
@@ -57,7 +55,6 @@ function clickEANSearch() {
         nameSearch = false;
         eanSearch = true;
         updateAllSearchImages();
-        document.getElementById("specContainer").style.display = "none";
         var ean_input = document.getElementById("search-field-typebox");
         ean_input.value = "";
         ean_input.placeholder = "EAN";
