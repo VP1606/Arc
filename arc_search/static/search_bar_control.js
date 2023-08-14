@@ -32,6 +32,9 @@ function clickExactEAN() {
         eanSearch = false;
         updateAllSearchImages();
         document.getElementById("specContainer").style.display = "none";
+        var ean_input = document.getElementById("search-field-typebox");
+        ean_input.value = "";
+        ean_input.placeholder = "EAN";
     } else {};
 }
 
@@ -42,6 +45,9 @@ function clickNameSearch() {
         eanSearch = false;
         updateAllSearchImages();
         document.getElementById("specContainer").style.display = "none";
+        var ean_input = document.getElementById("search-field-typebox");
+        ean_input.value = "";
+        ean_input.placeholder = "NAME";
     } else {};
 }
 
@@ -52,5 +58,8 @@ function clickEANSearch() {
         eanSearch = true;
         updateAllSearchImages();
         document.getElementById("specContainer").style.display = "none";
+        var ean_input = document.getElementById("search-field-typebox");
+        ean_input.value = "";
+        ean_input.placeholder = "EAN";
     } else {};
 }
