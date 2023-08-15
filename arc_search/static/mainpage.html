@@ -31,6 +31,19 @@
                 } else {};
             }
 
+            document.addEventListener("DOMContentLoaded", function() {
+                var input = document.getElementById("search-field-typebox");
+                var button = document.getElementById("search-button-clicker");
+                
+                input.addEventListener("keyup", function(event) {
+                    if (event.key === "Enter") {
+                        event.preventDefault(); // Prevent form submission
+                        button.click(); // Trigger button click
+                        input.blur();
+                    }
+                });
+            });
+
         </script>
         <script src="/static/operator.js"></script>
         <script src="/static/search_bar_control.js"></script>

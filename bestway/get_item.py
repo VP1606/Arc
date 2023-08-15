@@ -71,7 +71,8 @@ def GET_ITEM_selenium(link_code, driver: webdriver.Chrome, collect_pricing):
     b_price = "£0.00"
     if collect_pricing:
         try:
-            b_price = right_block.find_all("p", class_="prodprice")[0].text
+            drill_block = right_block.find("div", class_="productpagedetail-inner")
+            b_price = drill_block.find_all("p", class_="prodprice")[0].text
             stock = 1
         except:
             pass
