@@ -1,6 +1,9 @@
 import mysql.connector
+import time
 
 def search_by_name(mydb: mysql.connector.MySQLConnection, query: str):
+    stime = time.time()
+
     mycursor = mydb.cursor()
     query_sql = f"SELECT * FROM rrpextractsummary WHERE description LIKE '%{query}%';"
     mycursor.execute(query_sql)
@@ -8,10 +11,19 @@ def search_by_name(mydb: mysql.connector.MySQLConnection, query: str):
     rows = mycursor.fetchall()
     mycursor.close()
 
+    pstime = time.time()
     post_rows = post_processor(mydb=mydb, input_list=rows)
+    pftime = time.time()
+
+    ftime = time.time()
+    print(f"Name Search Time: {ftime - stime}")
+    print(f"Name Search POST Time: {pftime - pstime}")
+
     return post_rows
 
 def search_by_ean(mydb: mysql.connector.MySQLConnection, query: str):
+    stime = time.time()
+
     mycursor = mydb.cursor()
     query_sql = f"SELECT * FROM rrpextractsummary WHERE stockref LIKE '%{query}%';"
     mycursor.execute(query_sql)
@@ -19,7 +31,16 @@ def search_by_ean(mydb: mysql.connector.MySQLConnection, query: str):
     rows = mycursor.fetchall()
     mycursor.close()
 
+    pstime = time.time()
     post_rows = post_processor(mydb=mydb, input_list=rows)
+    pftime = time.time()
+
+    ftime = time.time()
+    print(ftime - stime)
+
+    print(f"EAN Search Time: {ftime - stime}")
+    print(f"EAN Search POST Time: {pftime - pstime}")
+
     return post_rows
 
 def check_sources(mydb: mysql.connector.MySQLConnection, row: list):
