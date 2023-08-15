@@ -44,10 +44,12 @@ def parfetts_collector(ean: str, name: str, driver: webdriver.Chrome):
         ret_dict["ean"] = ean
         ret_dict["rsp"] = item_result_block[2]
         ret_dict["wholesale_price"] = item_result_block[3]
+        ret_dict["wholesale_unit_size"] = item_result_block[4]
+        ret_dict["supplier_code"] = item_result_block[5]
 
         return ret_dict
     else:
         ret_msg = cookie_jar.res_unavailable_message  
-        ret_msg["no_search_hits"] = item_result_block[4]
+        ret_msg["no_search_hits"] = item_result_block[6]
         ret_msg["status"] = item_result_block[0]
         return ret_msg

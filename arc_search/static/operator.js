@@ -65,8 +65,8 @@ function jsonHandler(data) {
         console.log("Error detected in Parfetts.")
     } else {
         createRow(
-            "Parfetts", "OK", parfetts.item_name, parfetts.ean, "-", parfetts.rsp,
-            "-", parfetts.wholesale_price
+            "Parfetts", "OK", parfetts.item_name, parfetts.ean, parfetts.supplier_code, parfetts.rsp,
+            parfetts.wholesale_unit_size, parfetts.wholesale_price
         );
     }
 
