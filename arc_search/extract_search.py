@@ -1,9 +1,6 @@
 import mysql.connector
-import time
 
 def search_by_name(mydb: mysql.connector.MySQLConnection, query: str):
-    stime = time.time()
-
     mycursor = mydb.cursor()
     query_sql = f"SELECT * " \
                 f"FROM rrpextract a " \
@@ -16,19 +13,10 @@ def search_by_name(mydb: mysql.connector.MySQLConnection, query: str):
     rows = mycursor.fetchall()
     mycursor.close()
 
-    pstime = time.time()
     post_rows = new_post(raw=rows)
-    pftime = time.time()
-
-    ftime = time.time()
-    print(f"Name Search Time: {ftime - stime}")
-    print(f"Name Search POST Time: {pftime - pstime}")
-
     return post_rows
 
 def search_by_ean(mydb: mysql.connector.MySQLConnection, query: str):
-    stime = time.time()
-
     mycursor = mydb.cursor()
     query_sql = f"SELECT * " \
                 f"FROM rrpextract a " \
@@ -41,14 +29,7 @@ def search_by_ean(mydb: mysql.connector.MySQLConnection, query: str):
     rows = mycursor.fetchall()
     mycursor.close()
 
-    pstime = time.time()
     post_rows = new_post(raw=rows)
-    pftime = time.time()
-
-    ftime = time.time()
-    print(f"Name Search Time: {ftime - stime}")
-    print(f"Name Search POST Time: {pftime - pstime}")
-
     return post_rows
 
 # ['3057640100833', 7.65, 'Volvic Natural Mineral Water 6 x 1.5L', '2023-08-14 16:47:22', 31.14, 0.2, {'bestway': True, 'booker': False}]
