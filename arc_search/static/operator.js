@@ -42,9 +42,14 @@ function jsonHandler(data) {
     if ("status" in bestway) {
         console.log("Error detected in Bestway.")
     } else {
+        var b_price = bestway.wholesale_price;
+        if (b_price == "£0.00") {
+          b_price = "-";
+        };
+
         createRow(
             "Bestway", "OK", bestway.item_name, bestway.ean, bestway.supplier_code, bestway.rsp, 
-            bestway.wholesale_unit_size, bestway.wholesale_price
+            bestway.wholesale_unit_size, b_price
         );
     }
 
