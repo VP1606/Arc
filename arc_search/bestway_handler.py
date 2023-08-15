@@ -31,6 +31,7 @@ def bestway_login():
         By.ID, 'account_number'
     )))
 
+    time.sleep(1)
     try:
         cookie_button = WebDriverWait(driver, 5).until(EC.presence_of_element_located((
             By.XPATH, '//*[@id="ccc-notify-accept"]'
