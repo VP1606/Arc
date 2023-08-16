@@ -124,7 +124,22 @@ function createRow(source, status, name, ean, code, rrp, pack_size, wholesale_pr
       .then(response => response.text())
       .then(data => {
 
-        data = data.replace("[SOURCE]", source);
+        const bway_logo = '<img src="/static/supplier_logos/bestway-logo.png" class="supplier_icon" style="width: 45px; height: 45px; display: none;">';
+        const booker_logo = ' <img src="/static/supplier_logos/booker-logo.png" class="supplier_icon" style="width: 45px; height: 45px; display: none;">';
+        const parfetts_logo = '<img src="/static/supplier_logos/parfetts-logo.png" class="supplier_icon" style="width: 45px; height: 45px; display: none;">';
+
+        if (source == "Bestway") {
+          data = data.replace(bway_logo, bway_logo.replace("none", "block"));
+        };
+
+        if (source == "Booker") {
+          data = data.replace(booker_logo, booker_logo.replace("none", "block"));
+        };
+
+        if (source == "Parfetts") {
+          data = data.replace(parfetts_logo, parfetts_logo.replace("none", "block"));
+        };
+
         data = data.replace("[STATUS]", status);
         data = data.replace("[NAME]", name);
         data = data.replace("[EAN]", ean);
@@ -165,14 +180,14 @@ function resetTable() {
 
 function DummyMake() {
   resetTable();
-  
+
   createRow(
-    "Parfetts", "OK", "Volvic Touch of Fruit Kiwi & Lime 1.5L", "3057640577888", "814666", "£1.69",
+    "Booker", "OK", "Volvic Touch of Fruit Kiwi & Lime 1.5L", "3057640577888", "814666", "£1.69",
     "1.5Ltr × 6 × 1", "£4.99"
   );
 
   createRow(
-    "Parfetts", "OK", "Volvic Touch of Fruit Kiwi & Lime 1.5L", "3057640577888", "814666", "£1.69",
+    "Bestway", "OK", "Volvic Touch of Fruit Kiwi & Lime 1.5L", "3057640577888", "814666", "£1.69",
     "1.5Ltr × 6 × 1", "£4.99"
   );
 
