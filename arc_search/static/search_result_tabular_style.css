@@ -9,11 +9,14 @@ th, td, .sources_p {
 }
 
 table {
-    position: relative;
-    width: 100%;
+    width: 95%;
+    /* background-color: orange; */
 }
 
 #main-container {
+    display: flex;
+    justify-content: center;
     position: relative;
     width: 100%;
+    /* background-color: green; */
 }
