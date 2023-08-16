@@ -162,3 +162,24 @@ function resetTable() {
     tableBody.removeChild(row);
   });
 }
+
+function DummyMake() {
+  resetTable();
+  
+  createRow(
+    "Parfetts", "OK", "Volvic Touch of Fruit Kiwi & Lime 1.5L", "3057640577888", "814666", "£1.69",
+    "1.5Ltr × 6 × 1", "£4.99"
+  );
+
+  createRow(
+    "Parfetts", "OK", "Volvic Touch of Fruit Kiwi & Lime 1.5L", "3057640577888", "814666", "£1.69",
+    "1.5Ltr × 6 × 1", "£4.99"
+  );
+
+  createRow(
+    "Parfetts", "OK", "Volvic Touch of Fruit Kiwi & Lime 1.5L", "3057640577888", "814666", "£1.69",
+    "1.5Ltr × 6 × 1", "£4.99"
+  );
+
+  componentContainer.style.visibility = "visible";
+}
