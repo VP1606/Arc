@@ -1,4 +1,4 @@
-th, td {
+th, td, .sources_p {
     color: #000;
     text-align: center;
     font-family: Avenir;
@@ -10,19 +10,10 @@ th, td {
 
 table {
     position: relative;
-    width: 1200px;
-    height: 260px;
+    width: 100%;
 }
 
 #main-container {
     position: relative;
-    width: 1200px;
-    height: 260px;
-}
-
-#baseplate {
-    position: absolute;
-    bottom: 0;
-    width: 1200px;
-    height: 260px;
+    width: 100%;
 }
