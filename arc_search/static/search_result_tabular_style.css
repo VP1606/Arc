@@ -10,7 +10,7 @@ th, td, .sources_p {
 
 table {
     width: 95%;
-    /* background-color: orange; */
+    max-width: 1500px;
 }
 
 #main-container {
@@ -18,5 +18,4 @@ table {
     justify-content: center;
     position: relative;
     width: 100%;
-    /* background-color: green; */
 }
