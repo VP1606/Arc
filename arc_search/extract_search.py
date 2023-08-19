@@ -13,6 +13,8 @@ def extract_search_main(mydb: mysql.connector.MySQLConnection, query: str, mode:
     else:
         pass
 
+    query = query.replace("'", "''")
+
     mycursor = mydb.cursor()
     query_sql = f"SELECT * " \
                 f"FROM rrpextractsummary " \
