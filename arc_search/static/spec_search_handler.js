@@ -25,22 +25,6 @@ function createSpecRow(name, ean, sources, row_id) {
         data = data.replace("[EAN]", ean);
         data = data.replace(regex, new_row_flag);
 
-        const bway_logo = '<img src="/static/supplier_logos/bestway-logo.png" class="supplier_icon" style="width: 45px; height: 45px; visibility: hidden;">';
-        const booker_logo = ' <img src="/static/supplier_logos/booker-logo.png" class="supplier_icon" style="width: 45px; height: 45px; visibility: hidden;">';
-        const parfetts_logo = '<img src="/static/supplier_logos/parfetts-logo.png" class="supplier_icon" style="width: 45px; height: 45px; visibility: hidden;">';
-
-        if ('bestway' in sources && sources.bestway == true) {
-          data = data.replace(bway_logo, bway_logo.replace("hidden", "visible"));
-        };
-
-        if ('booker' in sources && sources.booker == true) {
-          data = data.replace(booker_logo, booker_logo.replace("hidden", "visible"));
-        };
-
-        if ('parfetts' in sources && sources.parfetts == true) {
-          data = data.replace(parfetts_logo, parfetts_logo.replace("hidden", "visible"));
-        }
-
         var table = document.getElementById('spec-search-result-table');
         var newRow = table.insertRow(-1);
         newRow.classList.add("spec-search-return-row");
