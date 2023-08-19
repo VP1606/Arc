@@ -15,11 +15,8 @@ def extract_search_main(mydb: mysql.connector.MySQLConnection, query: str, mode:
 
     mycursor = mydb.cursor()
     query_sql = f"SELECT * " \
-                f"FROM rrpextract a " \
-                f"WHERE DATE(a.datetime) = ( " \
-                f"SELECT DATE(MAX(b.datetime)) FROM rrpextractsummary b " \
-                f") " \
-                f"AND {search_key} LIKE '%{query}%';"
+                f"FROM rrpextractsummary " \
+                f"WHERE {search_key} LIKE '%{query}%';"
     
     mycursor.execute(query_sql)
     rows = mycursor.fetchall()
@@ -31,29 +28,17 @@ def extract_search_main(mydb: mysql.connector.MySQLConnection, query: str, mode:
 def new_post(raw: list):
     collated = {}
     for row in raw:
-        stockref = row[2]
-        desc = row[3]
-        source = row[5]
+        stockref = row[0]
+        desc = row[2]
 
         if stockref in collated:
-            collated[stockref].append(source)
+            pass
         else:
-            collated[stockref] = [desc, source]
+            collated[stockref] = [desc]
         
     main_list = list()
     for stockref, values in collated.items():
         frame = [stockref, 0.0, values[0], '', 0.0, 0.0]
-        sources = {
-            'bestway': False,
-            'booker': False
-        }
-
-        if 'BESTWAY' in values:
-            sources['bestway'] = True
-        if 'BOOKER' in values:
-            sources['booker'] = True
-
-        frame.append(sources)
         main_list.append(frame)
 
     return main_list
