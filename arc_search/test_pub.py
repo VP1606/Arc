@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
-from extract_search import search_by_name, search_by_ean
+from extract_search import extract_search_main
 import mysql.connector
 import json
 
@@ -32,7 +32,7 @@ async def read_main():
 async def search_ean(id: str, query: str):
     if pub_id == id:
         try:
-            res = search_by_ean(mydb=mydb, query=query)
+            res = extract_search_main(mydb=mydb, query=query, mode="ean")
             return Response(content=json.dumps(res), media_type="application/json")
         except:
             return Response(content=res_unavailable_message, media_type="application/json")
@@ -43,7 +43,7 @@ async def search_ean(id: str, query: str):
 async def search_name(id: str, query: str):
     if pub_id == id:
         try:
-            res = search_by_name(mydb=mydb, query=query)
+            res = extract_search_main(mydb=mydb, query=query, mode="name")
             return Response(content=json.dumps(res), media_type="application/json")
         except:
             return Response(content=res_unavailable_message, media_type="application/json")
