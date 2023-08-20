@@ -8,16 +8,22 @@ th, td, .sources_p {
     line-height: normal;
 }
 
-/* table {
-    position: relative;
-    width: 1200px;
-    height: 250px;
-} */
-
 td {
     padding-bottom: 40px;
 }
 
 th {
     padding-bottom: 20px;
+}
+
+table {
+    width: 95%;
+    max-width: 1500px;
+}
+
+#main-container {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: 100%;
 }

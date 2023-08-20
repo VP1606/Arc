@@ -25,6 +25,17 @@ function updateAllSearchImages() {
     setSearchImage('ean-search-btn', eanSearch);
 };
 
+function isTableEmpty(table) {
+    const rows = table.getElementsByTagName("tr");
+    // Exclude the header row by starting the loop from index 1
+    for (let i = 1; i < rows.length; i++) {
+      if (rows[i].getElementsByTagName("td").length > 0) {
+        return false; // Table is not empty
+      }
+    }
+    return true; // Table is empty
+  }
+
 function clickExactEAN() {
     if (eanExact == false) {
         eanExact = true;
@@ -34,6 +45,15 @@ function clickExactEAN() {
         var ean_input = document.getElementById("search-field-typebox");
         ean_input.value = "";
         ean_input.placeholder = "EAN";
+
+        const compTable = document.getElementById("search-result-table");
+        if (isTableEmpty(compTable) == false) {
+            var specContainer = document.getElementById("specContainer");
+            var componentContainer = document.getElementById("componentContainer");
+            componentContainer.style.visibility = "visible";
+            specContainer.style.display = "none";
+        };
+
     } else {};
 }
 
@@ -46,6 +66,15 @@ function clickNameSearch() {
         var ean_input = document.getElementById("search-field-typebox");
         ean_input.value = "";
         ean_input.placeholder = "NAME";
+
+        const specTable = document.getElementById("spec-search-result-table");
+        if (isTableEmpty(specTable) == false) {
+            var specContainer = document.getElementById("specContainer");
+            var componentContainer = document.getElementById("componentContainer");
+            componentContainer.style.visibility = "hidden";
+            specContainer.style.display = "block";
+        };
+
     } else {};
 }
 
@@ -58,5 +87,14 @@ function clickEANSearch() {
         var ean_input = document.getElementById("search-field-typebox");
         ean_input.value = "";
         ean_input.placeholder = "EAN";
+
+        const specTable = document.getElementById("spec-search-result-table");
+        if (isTableEmpty(specTable) == false) {
+            var specContainer = document.getElementById("specContainer");
+            var componentContainer = document.getElementById("componentContainer");
+            componentContainer.style.visibility = "hidden";
+            specContainer.style.display = "block";
+        };
+
     } else {};
 }
