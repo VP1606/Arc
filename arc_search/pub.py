@@ -42,6 +42,10 @@ parfetts_driver = parfetts_login()
 def get_parfetts_driver():
     return parfetts_driver
 
+@app.get('/favicon.ico', include_in_schema=False)
+async def favicon():
+    return FileResponse(Path("static/favicon.ico"))
+
 @app.get("/")
 async def read_main():
     html_file_path = Path("static/mainpage.html")

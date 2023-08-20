@@ -23,6 +23,10 @@ res_unavailable_message = json.dumps({
     "message": "Item Not Found (from PUB)"
 })
 
+@app.get('/favicon.ico', include_in_schema=False)
+async def favicon():
+    return FileResponse(Path("static/favicon.ico"))
+
 @app.get("/")
 async def read_main():
     html_file_path = Path("static/mainpage.html")
