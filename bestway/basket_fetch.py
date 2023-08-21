@@ -29,6 +29,13 @@ class BasketItem:
         self.bk_unit_price = 0.0
         self.bk_total = 0.0
 
+        self.pf_instock = None
+        self.pf_product_code = ''
+        self.pf_pack_size = ''
+
+        self.pf_unit_price = 0.0
+        self.pf_total = 0.0
+
     def show_console(self):
         attributes = vars(self)
         print("------------------------")

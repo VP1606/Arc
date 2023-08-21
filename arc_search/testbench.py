@@ -1,13 +1,15 @@
 from bestway_handler import bestway_login
+from parfetts_handler import parfetts_login
 import importlib
 import os, sys
 
 import basket_operator
 
 def do_op():
-    basket_operator.run(bw_driver=driver)
+    basket_operator.run(bw_driver=bw_driver, pf_driver=pf_driver)
 
-driver = bestway_login()
+bw_driver = bestway_login()
+pf_driver = parfetts_login()
 print("ready!")
 
 while True:
