@@ -2,12 +2,10 @@ from bestway_handler import bestway_login
 import importlib
 import os, sys
 
-parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-sys.path.append(os.path.join(parent_dir, 'bestway'))
-import basket_fetch
+import basket_operator
 
 def do_op():
-    basket_fetch.get_basket(driver=driver)
+    basket_operator.run(bw_driver=driver)
 
 driver = bestway_login()
 print("ready!")
@@ -18,7 +16,7 @@ while True:
         break
     else:
         try:
-            importlib.reload(basket_fetch)
+            importlib.reload(basket_operator)
             do_op()
 
         except Exception as e:
