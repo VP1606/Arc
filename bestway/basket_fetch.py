@@ -17,10 +17,17 @@ class BasketItem:
         self.bw_product_code = product_code
         self.bw_extension = extension
         self.bw_pack_size = pack_size
-
         self.bw_instock = instock
+
         self.bw_unit_price = 0.0
         self.bw_total = 0.0
+
+        self.bk_instock = None
+        self.bk_product_code = ''
+        self.bk_pack_size = ''
+
+        self.bk_unit_price = 0.0
+        self.bk_total = 0.0
 
     def show_console(self):
         attributes = vars(self)
