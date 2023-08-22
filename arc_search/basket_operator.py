@@ -4,8 +4,8 @@
 # - Then do a further extract using the EAN on Booker (7.8s) [x]
 # & Parfetts [x]
 # Form pack quantities. [x]
+# Show ALL in table. [x]
 # Verify & Match/Adjust pack quantities for same overall qty.
-# Show ALL in table.
 # Highlight best supplier.
 
 # Scanning Bestway... |████████████████████████████████████████| 8/8 [100%] in 18.8s (0.42/s) 
@@ -15,6 +15,7 @@
 import os, sys
 from typing import List
 from alive_progress import alive_bar
+from tabulate import tabulate
 
 from bestway_handler import bestway_login
 from booker_handler import booker_collector
@@ -73,5 +74,20 @@ def run(bw_driver, pf_driver):
                 
             bar()
 
+    table = [
+        ['Supplier', 'Name', 'EAN', 'qty', 'formed_qty', 'Unit Price', 'Total Price', 'Delta to BW']
+    ]
+
     for item in basket:
-        item.show_console()
+        table.append(['Bestway', item.name, item.ean, item.quantity, item.bw_pack_qty, item.bw_unit_price, item.bw_total, 0.0])
+        
+        if item.bk_instock:
+            table.append(['Booker', '', '', '', item.bk_pack_qty, item.bk_unit_price, item.bk_total, round((item.bk_total - item.bw_total), 2)])
+
+        if item.pf_instock:
+            table.append(['Parfetts', '', '', '', item.pf_pack_qty, item.pf_unit_price, item.pf_total, round((item.pf_total - item.bw_total), 2)])
+
+        table.append(['-----', '-----', '-----', '-----', '-----', '-----', '-----', '-----'])
+
+    form_table = tabulate(table[1:], headers=table[0], tablefmt="pretty")
+    print(form_table)
