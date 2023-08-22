@@ -5,6 +5,7 @@ from pathlib import Path
 from extract_search import extract_search_main
 import mysql.connector
 import json
+import basket_operator
 import time
 
 # NAME TIME: 0.030276060104370117
@@ -26,6 +27,7 @@ async def favicon():
 @app.get("/")
 async def read_main():
     html_file_path = Path("static/mainpage.html")
+    # html_file_path = Path("static/basket_mode/basket_element.html")
     return FileResponse(html_file_path)
 
 @app.get("/search_ean")
@@ -53,6 +55,17 @@ async def search_name(id: str, query: str):
     else:
         return Response(content='False', media_type="application/json")
     
+@app.get("/operate_basket")
+async def operate_basket(id: str, key: str):
+    if key == "keyword" and id == pub_id:
+        try:
+            res = basket_operator.run_wrapper()
+            return Response(content=json.dumps(res), media_type="application/json")
+        except:
+            return Response(content=res_unavailable_message, media_type="application/json")
+    else:
+        return Response(content=json.dumps(False), media_type="application/json")
+
 @app.on_event("shutdown")
 async def shutdown_event():
     # mydb.close()

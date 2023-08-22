@@ -9,6 +9,7 @@ from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 from sql_save import process_results as sql_process
 from extract_search import extract_search_main
+import basket_operator
 
 app = FastAPI()
 pub_id = "iahfiasfdosai2313212**7613"
@@ -132,6 +133,17 @@ async def search_ean(id: str, query: str):
             return Response(content=res_unavailable_message, media_type="application/json")
     else:
         return Response(content='False', media_type="application/json")
+    
+@app.get("/operate_basket")
+async def operate_basket(id: str, key: str):
+    if key == "keyword" and id == pub_id:
+        try:
+            res = basket_operator.run_wrapper()
+            return Response(content=json.dumps(res), media_type="application/json")
+        except:
+            return Response(content=res_unavailable_message, media_type="application/json")
+    else:
+        return Response(content=json.dumps(False), media_type="application/json")
 
 @app.on_event("shutdown")
 async def shutdown_event():
