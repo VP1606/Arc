@@ -42,6 +42,10 @@ class BasketItem:
 
         self.form_bw_pack_qty()
 
+        self.best_supplier = ''
+        self.best_price = 0.0
+        self.delta_to_bw = 0.0
+
     def form_bw_pack_qty(self):
         raw = self.bw_pack_size
         parts = raw.split('×', 1)
@@ -83,7 +87,24 @@ class BasketItem:
 
         self.pf_pack_qty = total_qty
         return total_qty
-
+    
+    def find_best_supplier(self):
+        _best_sup = 'bestway'
+        _best_price = self.bw_total
+        
+        if self.bk_instock:
+            if self.bk_total < _best_price:
+                _best_price = self.bk_total
+                _best_sup = 'booker'
+        
+        if self.pf_instock:
+            if self.pf_total < _best_price:
+                _best_price = self.pf_total
+                _best_sup = 'parfetts'
+        
+        self.best_price = _best_price
+        self.best_supplier = _best_sup
+        self.delta_to_bw = round((self.bw_total - _best_price), 2)
 
     def show_console(self):
         attributes = vars(self)

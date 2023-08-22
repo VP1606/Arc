@@ -5,8 +5,8 @@
 # & Parfetts [x]
 # Form pack quantities. [x]
 # Show ALL in table. [x]
-# Verify & Match/Adjust pack quantities for same overall qty.
-# Highlight best supplier.
+# Verify & Match/Adjust pack quantities for same overall qty. [?]; passed.
+# Highlight best supplier. [x]
 
 # Scanning Bestway... |████████████████████████████████████████| 8/8 [100%] in 18.8s (0.42/s) 
 # Scanning Booker... |████████████████████████████████████████| 8/8 [100%] in 7.1s (1.13/s) 
@@ -79,6 +79,8 @@ def run(bw_driver, pf_driver):
     ]
 
     for item in basket:
+        item.find_best_supplier()
+
         table.append(['Bestway', item.name, item.ean, item.quantity, item.bw_pack_qty, item.bw_unit_price, item.bw_total, 0.0])
         
         if item.bk_instock:
@@ -87,6 +89,10 @@ def run(bw_driver, pf_driver):
         if item.pf_instock:
             table.append(['Parfetts', '', '', '', item.pf_pack_qty, item.pf_unit_price, item.pf_total, round((item.pf_total - item.bw_total), 2)])
 
+        table.append(['- - - - - -', '- - - - - -', '- - - - - -', '- - - - - -', '- - - - - -', '- - - - - -', '- - - - - -', '- - - - - -'])
+        table.append(['Best Supplier:', item.best_supplier, '', '', '', '', '', ''])
+        table.append(['Best Price:', item.best_price, '', '', '', '', '', ''])
+        table.append(['Delta to BW:', item.delta_to_bw, '', '', '', '', '', ''])
         table.append(['-----', '-----', '-----', '-----', '-----', '-----', '-----', '-----'])
 
     form_table = tabulate(table[1:], headers=table[0], tablefmt="pretty")
