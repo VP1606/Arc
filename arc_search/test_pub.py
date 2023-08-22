@@ -5,13 +5,9 @@ from pathlib import Path
 from extract_search import extract_search_main
 import mysql.connector
 import json
+import time
 
-mydb = mysql.connector.connect(
-        host="192.168.1.180",
-        user="mpos",
-        password="mpospass",
-        database="mpos"
-    )
+# NAME TIME: 0.030276060104370117
 
 app = FastAPI()
 pub_id = "iahfiasfdosai2313212**7613"
@@ -36,7 +32,7 @@ async def read_main():
 async def search_ean(id: str, query: str):
     if pub_id == id:
         try:
-            res = extract_search_main(mydb=mydb, query=query, mode="ean")
+            res = extract_search_main(query=query, mode="ean")
             return Response(content=json.dumps(res), media_type="application/json")
         except:
             return Response(content=res_unavailable_message, media_type="application/json")
@@ -47,7 +43,10 @@ async def search_ean(id: str, query: str):
 async def search_name(id: str, query: str):
     if pub_id == id:
         try:
-            res = extract_search_main(mydb=mydb, query=query, mode="name")
+            start = time.time()
+            res = extract_search_main(query=query, mode="name")
+            end = time.time()
+            print(f"NAME TIME (NS): {end - start}")
             return Response(content=json.dumps(res), media_type="application/json")
         except:
             return Response(content=res_unavailable_message, media_type="application/json")
@@ -56,4 +55,5 @@ async def search_name(id: str, query: str):
     
 @app.on_event("shutdown")
 async def shutdown_event():
-    mydb.close()
+    # mydb.close()
+    pass

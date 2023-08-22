@@ -9,14 +9,6 @@ from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 from sql_save import process_results as sql_process
 from extract_search import extract_search_main
-import mysql.connector
-
-mydb = mysql.connector.connect(
-        host="192.168.1.180",
-        user="mpos",
-        password="mpospass",
-        database="mpos"
-    )
 
 app = FastAPI()
 pub_id = "iahfiasfdosai2313212**7613"
@@ -123,7 +115,7 @@ async def search_all(id: str, ean: str, product_name: str, bw_driver = Depends(g
 async def search_name(id: str, query: str):
     if pub_id == id:
         try:
-            res = extract_search_main(mydb=mydb, query=query, mode="name")
+            res = extract_search_main(query=query, mode="name")
             return Response(content=json.dumps(res), media_type="application/json")
         except:
             return Response(content=res_unavailable_message, media_type="application/json")
@@ -134,7 +126,7 @@ async def search_name(id: str, query: str):
 async def search_ean(id: str, query: str):
     if pub_id == id:
         try:
-            res = extract_search_main(mydb=mydb, query=query, mode="ean")
+            res = extract_search_main(query=query, mode="ean")
             return Response(content=json.dumps(res), media_type="application/json")
         except:
             return Response(content=res_unavailable_message, media_type="application/json")
@@ -145,4 +137,3 @@ async def search_ean(id: str, query: str):
 async def shutdown_event():
     bestway_driver.quit()
     parfetts_driver.quit()
-    mydb.close()
