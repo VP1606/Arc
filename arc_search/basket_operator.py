@@ -12,6 +12,8 @@
 # Scanning Booker... |████████████████████████████████████████| 8/8 [100%] in 7.1s (1.13/s) 
 # Scanning Parfetts... |████████████████████████████████████████| 8/8 [100%] in 5.7s (1.41/s) 
 
+# On test pub: 44.50s from Postman.
+
 import os, sys, json
 from typing import List
 from alive_progress import alive_bar
