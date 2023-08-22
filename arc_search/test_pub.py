@@ -5,6 +5,7 @@ from pathlib import Path
 from extract_search import extract_search_main
 import mysql.connector
 import json
+import basket_operator
 
 mydb = mysql.connector.connect(
         host="192.168.1.180",
@@ -54,6 +55,17 @@ async def search_name(id: str, query: str):
     else:
         return Response(content='False', media_type="application/json")
     
+@app.get("/operate_basket")
+async def operate_basket(key: str):
+    if key == "keyword":
+        try:
+            res = basket_operator.run_wrapper()
+            return Response(content=json.dumps(res), media_type="application/json")
+        except:
+            return Response(content=res_unavailable_message, media_type="application/json")
+    else:
+        return Response(content='False', media_type="application/json")
+
 @app.on_event("shutdown")
 async def shutdown_event():
     mydb.close()
