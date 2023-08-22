@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/basket_mode/basket_style.css">
+    </head>
+    <body>
+        <div class="flex vstack" style="background-color: rgba(0, 0, 0, 0.03);">
+            <div style="padding-left: 20px; padding-right: 20px;">
+                <div class="flex hstack">
+                    <div class="flex vstack">
+                        <div class="flex hstack">
+                            <p class="text_bold">[NAME]</p>
+                            <p class="text_normal" style="padding-left: 25px;">QTY: [QTY]</p>
+                        </div>
+                        <p class="text_normal" style="font-weight: 300;">[EAN]</p>
+                    </div>
+                    <div class="spacer"></div>
+                    <p class="text_bold" style="font-size: 20px;">BEST: [BEST_SUP]</p>
+                </div>
+                
+                <table id="search-result-table" style="width: 100%; padding-bottom: 10px; background-color: green; border-collapse: collapse;">
+                    <tr>
+                        <th style="width: 45px;"></th>
+                        <th class="text_normal" style="text-align: left; font-size: 15px; padding-left: 30px;">In Stock</th>
+                        <th class="text_normal" style="font-size: 15px; text-align: left;">Pack Size</th>
+                        <th class="text_bold" style="font-weight: 800; font-size: 15px;">Unit Price</th>
+                        <th class="text_bold" style="font-weight: 800; text-align: right; font-size: 15px;">Total Price</th>
+                    </tr>
+
+                    <tr>
+                        <td style="height: 45px; padding-bottom: 15px;">
+                            <img src="/static/supplier_logos/bestway-logo.png" class="supplier_icon" style="width: 45px; height: 45px; display: block;">
+                            <img src="/static/supplier_logos/booker-logo.png" class="supplier_icon" style="width: 45px; height: 45px; display: none;">
+                            <img src="/static/supplier_logos/parfetts-logo.png" class="supplier_icon" style="width: 45px; height: 45px; display: none;">
+                        </td>
+                        <td class="text_normal" style="text-align: left; font-size: 15px; padding-left: 30px;">[INSTOCK]</td>
+                        <td class="text_normal" style="text-align: left; font-size: 15px;">[PCKZ]</td>
+                        <td class="text_bold" style="text-align: center; font-size: 15px;">[UNP]</td>
+                        <td class="text_bold" style="text-align: right; font-size: 15px;">[TLP]</td>
+                    </tr>
+    
+                </table>
+
+            </div>
+        </div>
+    </body>
+</html>
