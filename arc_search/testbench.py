@@ -5,6 +5,11 @@ import os, sys
 
 import basket_operator
 
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(os.path.join(parent_dir, 'bestway'))
+
+import basket_fetch
+
 def do_op():
     basket_operator.run(bw_driver=bw_driver, pf_driver=pf_driver)
 
@@ -18,6 +23,7 @@ while True:
         break
     else:
         try:
+            importlib.reload(basket_fetch)
             importlib.reload(basket_operator)
             do_op()
 

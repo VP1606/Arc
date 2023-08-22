@@ -3,7 +3,8 @@
 # - Whilst doing so, collect prices. [x]
 # - Then do a further extract using the EAN on Booker (7.8s) [x]
 # & Parfetts [x]
-# Verify & Match pack sizes for same overall qty.
+# Form pack quantities. [x]
+# Verify & Match/Adjust pack quantities for same overall qty.
 # Show ALL in table.
 # Highlight best supplier.
 
@@ -49,7 +50,7 @@ def run(bw_driver, pf_driver):
                 item.bk_pack_size = res["wholesale_unit_size"]
                 item.bk_unit_price = float(res["wholesale_price"].replace('£', ''))
                 item.bk_total = item.bk_unit_price * item.quantity
-
+                item.form_bk_pack_qty()
                 item.bk_instock = True
             except:
                 item.bk_instock = False
@@ -65,7 +66,7 @@ def run(bw_driver, pf_driver):
                 item.pf_pack_size = res["wholesale_unit_size"]
                 item.pf_unit_price = float(res["wholesale_price"].replace('£', ''))
                 item.pf_total = item.pf_unit_price * item.quantity
-
+                item.form_pf_pack_qty()
                 item.pf_instock = True
             except:
                 item.pf_instock = False

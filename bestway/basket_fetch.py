@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from typing import List
+import re
 
 def tester():
     print("y")
@@ -17,6 +18,7 @@ class BasketItem:
         self.bw_product_code = product_code
         self.bw_extension = extension
         self.bw_pack_size = pack_size
+        self.bw_pack_qty = 0
         self.bw_instock = instock
 
         self.bw_unit_price = 0.0
@@ -25,6 +27,7 @@ class BasketItem:
         self.bk_instock = None
         self.bk_product_code = ''
         self.bk_pack_size = ''
+        self.bk_pack_qty = 0
 
         self.bk_unit_price = 0.0
         self.bk_total = 0.0
@@ -32,9 +35,55 @@ class BasketItem:
         self.pf_instock = None
         self.pf_product_code = ''
         self.pf_pack_size = ''
+        self.pf_pack_qty = 0
 
         self.pf_unit_price = 0.0
         self.pf_total = 0.0
+
+        self.form_bw_pack_qty()
+
+    def form_bw_pack_qty(self):
+        raw = self.bw_pack_size
+        parts = raw.split('×', 1)
+
+        result = parts[1].strip()
+        if '\n' in result:
+            result = result.split('\n', 1)[0]
+
+        parts = result.split('×')
+        cleaned_parts = [part.strip() for part in parts]
+
+        total_qty = 1
+        for part in cleaned_parts:
+            total_qty = total_qty * int(part)
+        
+        self.bw_pack_qty = total_qty
+        return total_qty
+    
+    def form_bk_pack_qty(self):
+        input_string = self.bk_pack_size
+        try:
+            match = re.search(r'\d+', input_string)
+            if match:
+                number = int(match.group())
+                self.bk_pack_qty = number
+            else:
+                self.bk_pack_qty = 1
+        except:
+            self.bk_pack_qty = 1
+    
+    def form_pf_pack_qty(self):
+        raw = self.pf_pack_size
+        parts = raw.split('x')
+        cleaned_parts = [part.strip() for part in parts]
+
+        total_qty = 1
+        for part in cleaned_parts:
+            total_qty = total_qty * int(part)
+
+        self.pf_pack_qty = total_qty
+        return total_qty
+
 
     def show_console(self):
         attributes = vars(self)
