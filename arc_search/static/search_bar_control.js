@@ -58,6 +58,9 @@ function clickExactEAN() {
             specContainer.style.display = "none";
         };
 
+        var basketContainer = document.getElementById("basketContainer");
+        basketContainer.style.display = 'none';
+
     } else {};
 }
 
@@ -79,6 +82,9 @@ function clickNameSearch() {
             componentContainer.style.visibility = "hidden";
             specContainer.style.display = "block";
         };
+
+        var basketContainer = document.getElementById("basketContainer");
+        basketContainer.style.display = 'none';
 
     } else {};
 }
@@ -102,6 +108,9 @@ function clickEANSearch() {
             specContainer.style.display = "block";
         };
 
+        var basketContainer = document.getElementById("basketContainer");
+        basketContainer.style.display = 'none';
+
     } else {};
 }
 
@@ -116,13 +125,8 @@ function clickBasketMode() {
         ean_input.value = "";
         ean_input.placeholder = "Key Phrase";
 
-        // const specTable = document.getElementById("spec-search-result-table");
-        // if (isTableEmpty(specTable) == false) {
-        //     var specContainer = document.getElementById("specContainer");
-        //     var componentContainer = document.getElementById("componentContainer");
-        //     componentContainer.style.visibility = "hidden";
-        //     specContainer.style.display = "block";
-        // };
+        var basketContainer = document.getElementById("basketContainer");
+        basketContainer.style.display = 'block';
 
     } else {};
 }
