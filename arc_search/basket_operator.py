@@ -54,6 +54,8 @@ def run(bw_driver, pf_driver):
     # bw_driver = bestway_login()
     basket: List[basket_fetch.BasketItem] = basket_fetch.get_basket(driver=bw_driver)
 
+    start = time.time()
+
     with alive_bar(len(basket), title="Scanning Bestway...", force_tty=True) as bar:
         for _, item in enumerate(basket):
             ext = item.bw_extension.split("/")[-1]
@@ -64,6 +66,11 @@ def run(bw_driver, pf_driver):
             item.bw_total = item.bw_unit_price * item.quantity
 
             bar()
+
+    finish = time.time()
+    print(f"Bestway Time: {finish - start}")
+
+    start = time.time()
 
     with alive_bar(len(basket), title="Scanning Booker...", force_tty=True) as bar:
         for _, item in enumerate(basket):
@@ -80,6 +87,11 @@ def run(bw_driver, pf_driver):
                 item.bk_instock = False
 
             bar()
+    
+    finish = time.time()
+    print(f"Booker Time: {finish - start}")
+
+    start = time.time()
 
     with alive_bar(len(basket), title="Scanning Parfetts...", force_tty=True) as bar:
         for _, item in enumerate(basket):
@@ -96,6 +108,9 @@ def run(bw_driver, pf_driver):
                 item.pf_instock = False
                 
             bar()
+
+    finish = time.time()
+    print(f"Parfetts Time: {finish - start}")
 
     # table = [
     #     ['Supplier', 'Name', 'EAN', 'qty', 'formed_qty', 'Unit Price', 'Total Price', 'Delta to BW']
@@ -119,10 +134,15 @@ def run(bw_driver, pf_driver):
     # form_table = tabulate(table[1:], headers=table[0], tablefmt="pretty")
     # print(form_table)
 
+    start = time.time()
+
     dump_array = []
     for item in basket:
         item.find_best_supplier()
         dump_array.append(item.to_dict())
+
+    finish = time.time()
+    print(f"Cleanup Prep Time: {finish - start}")
     
     # print(json.dumps(dump_array))
     return dump_array
