@@ -50,7 +50,40 @@ def run_wrapper():
     print(f"RES Wrapper Time: {finish - start}")
     return res
 
+def booker_operating_sys(basket):
+    main_res = []
+    start = time.time()
+
+    for index, item in enumerate(basket):
+        try:
+            res = booker_collector(ean=item.ean, product_name=item.name)
+            main_res.append((index, True, res))
+        except:
+            main_res.append((index, False, []))
+
+    finish = time.time()
+    print(f"Booker Operator Time: {finish - start}")
+
+    return main_res
+
+def parfetts_operating_sys(basket, pf_driver):
+    main_res = []
+    start = time.time()
+
+    for index, item in enumerate(basket):
+        try:
+            res = parfetts_collector(ean=item.ean, name=item.name, driver=pf_driver)
+            main_res.append((index, True, res))
+        except:
+            main_res.append((index, False, []))
+    
+    finish = time.time()
+    print(f"Parfetts Operator Time: {finish - start}")
+
+    return main_res
+
 def run(bw_driver, pf_driver):
+    MAIN_TIME = time.time()
     # bw_driver = bestway_login()
     basket: List[basket_fetch.BasketItem] = basket_fetch.get_basket(driver=bw_driver)
 
@@ -70,47 +103,44 @@ def run(bw_driver, pf_driver):
     finish = time.time()
     print(f"Bestway Time: {finish - start}")
 
-    start = time.time()
+    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+        bk_future = executor.submit(booker_operating_sys, basket)
+        pf_future = executor.submit(parfetts_operating_sys, basket, pf_driver)
 
-    with alive_bar(len(basket), title="Scanning Booker...", force_tty=True) as bar:
-        for _, item in enumerate(basket):
-            try:
-                res = booker_collector(ean=item.ean, product_name=item.name)
+        bk_raw_res = bk_future.result()
+        pf_raw_res = pf_future.result()
 
+    for block in bk_raw_res:
+        index, status, res = block
+        item = basket[index]
+        if status == True:
+            if 'status' in res:
+                item.bk_instock = False
+            else:
                 item.bk_product_code = res["supplier_code"]
                 item.bk_pack_size = res["wholesale_unit_size"]
                 item.bk_unit_price = float(res["wholesale_price"].replace('£', ''))
                 item.bk_total = item.bk_unit_price * item.quantity
                 item.form_bk_pack_qty()
                 item.bk_instock = True
-            except:
-                item.bk_instock = False
+        else:
+            item.bk_instock = False
 
-            bar()
-    
-    finish = time.time()
-    print(f"Booker Time: {finish - start}")
-
-    start = time.time()
-
-    with alive_bar(len(basket), title="Scanning Parfetts...", force_tty=True) as bar:
-        for _, item in enumerate(basket):
-            try:
-                res = parfetts_collector(ean=item.ean, name=item.name, driver=pf_driver)
-
+    for block in pf_raw_res:
+        index, status, res = block
+        item = basket[index]
+        if status == True:
+            if 'status' in res:
+                item.pf_instock = False
+            else:
                 item.pf_product_code = res["supplier_code"]
                 item.pf_pack_size = res["wholesale_unit_size"]
                 item.pf_unit_price = float(res["wholesale_price"].replace('£', ''))
                 item.pf_total = item.pf_unit_price * item.quantity
                 item.form_pf_pack_qty()
                 item.pf_instock = True
-            except:
-                item.pf_instock = False
-                
-            bar()
-
-    finish = time.time()
-    print(f"Parfetts Time: {finish - start}")
+        else:
+            item.pf_instock = False
 
     # table = [
     #     ['Supplier', 'Name', 'EAN', 'qty', 'formed_qty', 'Unit Price', 'Total Price', 'Delta to BW']
@@ -143,6 +173,9 @@ def run(bw_driver, pf_driver):
 
     finish = time.time()
     print(f"Cleanup Prep Time: {finish - start}")
+
+    MAIN_FINISH = time.time()
+    print(f"MAIN TIME: {MAIN_FINISH - MAIN_TIME}")
     
     # print(json.dumps(dump_array))
     return dump_array
