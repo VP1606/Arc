@@ -29,11 +29,25 @@ sys.path.append(os.path.join(parent_dir, 'bestway'))
 import basket_fetch
 import get_item, bway_item
 
-def run_wrapper():
-    bw_driver = bestway_login()
-    pf_driver = parfetts_login()
+import time
+import concurrent.futures
 
+def run_wrapper():
+    start = time.time()
+    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+        bw_future = executor.submit(bestway_login)
+        pf_future = executor.submit(parfetts_login)
+
+        bw_driver = bw_future.result()
+        pf_driver = pf_future.result()
+
+    finish = time.time()
+    print(f"Driver Gen: {finish - start}")
+
+    start = time.time()
     res = run(bw_driver=bw_driver, pf_driver=pf_driver)
+    finish = time.time()
+    print(f"RES Wrapper Time: {finish - start}")
     return res
 
 def run(bw_driver, pf_driver):
