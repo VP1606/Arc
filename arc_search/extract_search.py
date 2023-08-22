@@ -3,7 +3,14 @@ import mysql.connector
 # ['3057640100833', 7.65, 'Volvic Natural Mineral Water 6 x 1.5L', '2023-08-14 16:47:22', 31.14, 0.2, {'bestway': True, 'booker': False}]
 # '3057640111983': ['Volvic Natural Mineral Water 6 x 500ml', 'BESTWAY', 'BESTWAY']
 
-def extract_search_main(mydb: mysql.connector.MySQLConnection, query: str, mode: str):
+def extract_search_main(query: str, mode: str):
+
+    mydb = mysql.connector.connect(
+        host="192.168.1.180",
+        user="mpos",
+        password="mpospass",
+        database="mpos"
+    )
 
     search_key = "description"
     if mode == "ean":
@@ -23,6 +30,7 @@ def extract_search_main(mydb: mysql.connector.MySQLConnection, query: str, mode:
     mycursor.execute(query_sql)
     rows = mycursor.fetchall()
     mycursor.close()
+    mydb.close()
 
     post_rows = new_post(raw=rows)
     return post_rows
