@@ -5,6 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from typing import List
 import re
+import json
 
 def tester():
     print("y")
@@ -15,7 +16,7 @@ class BasketItem:
         self.quantity = int(quantity)
         self.ean = ''
 
-        self.bw_product_code = product_code
+        self.bw_product_code = product_code.replace('\n', '')
         self.bw_extension = extension
         self.bw_pack_size = pack_size
         self.bw_pack_qty = 0
@@ -112,6 +113,9 @@ class BasketItem:
         for attr, value in attributes.items():
             print(f"{attr}: {value}")
         print("------------------------")
+
+    def to_dict(self):
+        return self.__dict__
 
 def get_basket(driver: webdriver.Chrome):
     print("----------------")

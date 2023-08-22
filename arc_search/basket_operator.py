@@ -12,20 +12,27 @@
 # Scanning Booker... |████████████████████████████████████████| 8/8 [100%] in 7.1s (1.13/s) 
 # Scanning Parfetts... |████████████████████████████████████████| 8/8 [100%] in 5.7s (1.41/s) 
 
-import os, sys
+import os, sys, json
 from typing import List
 from alive_progress import alive_bar
 from tabulate import tabulate
 
 from bestway_handler import bestway_login
 from booker_handler import booker_collector
-from parfetts_handler import parfetts_collector
+from parfetts_handler import parfetts_collector, parfetts_login
 
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(os.path.join(parent_dir, 'bestway'))
 
 import basket_fetch
 import get_item, bway_item
+
+def run_wrapper():
+    bw_driver = bestway_login()
+    pf_driver = parfetts_login()
+
+    res = run(bw_driver=bw_driver, pf_driver=pf_driver)
+    return res
 
 def run(bw_driver, pf_driver):
     # bw_driver = bestway_login()
@@ -74,26 +81,32 @@ def run(bw_driver, pf_driver):
                 
             bar()
 
-    table = [
-        ['Supplier', 'Name', 'EAN', 'qty', 'formed_qty', 'Unit Price', 'Total Price', 'Delta to BW']
-    ]
+    # table = [
+    #     ['Supplier', 'Name', 'EAN', 'qty', 'formed_qty', 'Unit Price', 'Total Price', 'Delta to BW']
+    # ]
 
+    # for item in basket:
+    #     table.append(['Bestway', item.name, item.ean, item.quantity, item.bw_pack_qty, item.bw_unit_price, item.bw_total, 0.0])
+        
+    #     if item.bk_instock:
+    #         table.append(['Booker', '', '', '', item.bk_pack_qty, item.bk_unit_price, item.bk_total, round((item.bk_total - item.bw_total), 2)])
+
+    #     if item.pf_instock:
+    #         table.append(['Parfetts', '', '', '', item.pf_pack_qty, item.pf_unit_price, item.pf_total, round((item.pf_total - item.bw_total), 2)])
+
+    #     table.append(['- - - - - -', '- - - - - -', '- - - - - -', '- - - - - -', '- - - - - -', '- - - - - -', '- - - - - -', '- - - - - -'])
+    #     table.append(['Best Supplier:', item.best_supplier, '', '', '', '', '', ''])
+    #     table.append(['Best Price:', item.best_price, '', '', '', '', '', ''])
+    #     table.append(['Delta to BW:', item.delta_to_bw, '', '', '', '', '', ''])
+    #     table.append(['-----', '-----', '-----', '-----', '-----', '-----', '-----', '-----'])
+
+    # form_table = tabulate(table[1:], headers=table[0], tablefmt="pretty")
+    # print(form_table)
+
+    dump_array = []
     for item in basket:
         item.find_best_supplier()
-
-        table.append(['Bestway', item.name, item.ean, item.quantity, item.bw_pack_qty, item.bw_unit_price, item.bw_total, 0.0])
-        
-        if item.bk_instock:
-            table.append(['Booker', '', '', '', item.bk_pack_qty, item.bk_unit_price, item.bk_total, round((item.bk_total - item.bw_total), 2)])
-
-        if item.pf_instock:
-            table.append(['Parfetts', '', '', '', item.pf_pack_qty, item.pf_unit_price, item.pf_total, round((item.pf_total - item.bw_total), 2)])
-
-        table.append(['- - - - - -', '- - - - - -', '- - - - - -', '- - - - - -', '- - - - - -', '- - - - - -', '- - - - - -', '- - - - - -'])
-        table.append(['Best Supplier:', item.best_supplier, '', '', '', '', '', ''])
-        table.append(['Best Price:', item.best_price, '', '', '', '', '', ''])
-        table.append(['Delta to BW:', item.delta_to_bw, '', '', '', '', '', ''])
-        table.append(['-----', '-----', '-----', '-----', '-----', '-----', '-----', '-----'])
-
-    form_table = tabulate(table[1:], headers=table[0], tablefmt="pretty")
-    print(form_table)
+        dump_array.append(item.to_dict())
+    
+    # print(json.dumps(dump_array))
+    return dump_array
