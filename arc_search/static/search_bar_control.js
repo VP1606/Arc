@@ -1,11 +1,13 @@
 var eanExact = true;
 var nameSearch = false;
 var eanSearch = false;
+var basketMode = false
 
 const searchButtonImages = {
     'exact-ean-btn': ['/static/search_btn_images/exact_ean_off.png', '/static/search_btn_images/exact_ean_on.png'],
     'name-search-btn': ['/static/search_btn_images/name_search_off.png', '/static/search_btn_images/name_search_on.png'],
-    'ean-search-btn': ['/static/search_btn_images/ean_search_off.png', '/static/search_btn_images/ean_search_on.png']
+    'ean-search-btn': ['/static/search_btn_images/ean_search_off.png', '/static/search_btn_images/ean_search_on.png'],
+    'basket-btn': ['/static/search_btn_images/basket_off.png', '/static/search_btn_images/basket_on.png']
 };
 
 function setSearchImage(key, value) {
@@ -23,6 +25,7 @@ function updateAllSearchImages() {
     setSearchImage('exact-ean-btn', eanExact);
     setSearchImage('name-search-btn', nameSearch);
     setSearchImage('ean-search-btn', eanSearch);
+    setSearchImage('basket-btn', basketMode);
 };
 
 function isTableEmpty(table) {
@@ -41,6 +44,7 @@ function clickExactEAN() {
         eanExact = true;
         nameSearch = false;
         eanSearch = false;
+        basketMode = false;
         updateAllSearchImages();
         var ean_input = document.getElementById("search-field-typebox");
         ean_input.value = "";
@@ -62,6 +66,7 @@ function clickNameSearch() {
         eanExact = false;
         nameSearch = true;
         eanSearch = false;
+        basketMode = false;
         updateAllSearchImages();
         var ean_input = document.getElementById("search-field-typebox");
         ean_input.value = "";
@@ -83,6 +88,7 @@ function clickEANSearch() {
         eanExact = false;
         nameSearch = false;
         eanSearch = true;
+        basketMode = false;
         updateAllSearchImages();
         var ean_input = document.getElementById("search-field-typebox");
         ean_input.value = "";
@@ -95,6 +101,28 @@ function clickEANSearch() {
             componentContainer.style.visibility = "hidden";
             specContainer.style.display = "block";
         };
+
+    } else {};
+}
+
+function clickBasketMode() {
+    if (basketMode == false) {
+        eanExact = false;
+        nameSearch = false;
+        eanSearch = false;
+        basketMode = true;
+        updateAllSearchImages();
+        var ean_input = document.getElementById("search-field-typebox");
+        ean_input.value = "";
+        ean_input.placeholder = "Key Phrase";
+
+        // const specTable = document.getElementById("spec-search-result-table");
+        // if (isTableEmpty(specTable) == false) {
+        //     var specContainer = document.getElementById("specContainer");
+        //     var componentContainer = document.getElementById("componentContainer");
+        //     componentContainer.style.visibility = "hidden";
+        //     specContainer.style.display = "block";
+        // };
 
     } else {};
 }
