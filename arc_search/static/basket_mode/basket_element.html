@@ -3,85 +3,87 @@
         <link rel="stylesheet" type="text/css" href="/static/basket_mode/basket_style.css">
     </head>
     <body>
-        <div class="flex vstack" style="background-color: rgba(0, 0, 0, 0.03);">
-            <div style="padding-left: 20px; padding-right: 20px;">
-                <div class="flex hstack">
-                    <div class="flex vstack">
-                        <div class="flex hstack">
-                            <p class="text_bold">[NAME]</p>
-                            <p class="text_normal" style="padding-left: 25px;">QTY: [QTY]</p>
+        <div class="basket-main-container">
+            <div class="flex vstack" style="background-color: rgba(0, 0, 0, 0.03); width: 95%; max-width: 1500px;">
+                <div style="padding-left: 20px; padding-right: 20px;">
+                    <div class="flex hstack">
+                        <div class="flex vstack">
+                            <div class="flex hstack">
+                                <p class="text_bold">[NAME]</p>
+                                <p class="text_normal" style="padding-left: 25px;">QTY: [QTY]</p>
+                            </div>
+                            <p class="text_normal" style="font-weight: 300;">[EAN]</p>
                         </div>
-                        <p class="text_normal" style="font-weight: 300;">[EAN]</p>
+                        <div class="spacer"></div>
+                        <p class="text_bold" style="font-size: 20px;">BEST: [BEST_SUP]</p>
                     </div>
-                    <div class="spacer"></div>
-                    <p class="text_bold" style="font-size: 20px;">BEST: [BEST_SUP]</p>
+                    
+                    <table id="basket-table" style="width: 100%; padding-bottom: 10px; border-collapse: collapse;">
+                        <tr>
+                            <th style="width: 45px;"></th>
+                            <th class="text_normal" style="text-align: left; font-size: 15px; padding-left: 30px;">In Stock</th>
+                            <th class="text_normal" style="font-size: 15px; text-align: left;">Pack Size</th>
+                            <th class="text_bold" style="font-weight: 800; font-size: 15px;">Unit Price</th>
+                            <th class="text_bold" style="font-weight: 800; text-align: right; font-size: 15px;">Total Price</th>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div style="height: 15px"></div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="height: 45px;">
+                                <img src="/static/supplier_logos/bestway-logo.png" class="supplier_icon" style="width: 45px; height: 45px; display: block;">
+                            </td>
+                            <td class="text_normal" style="text-align: left; font-size: 15px; padding-left: 30px;">[BW-INSTOCK]</td>
+                            <td class="text_normal" style="text-align: left; font-size: 15px;">[BW-PCKZ]</td>
+                            <td class="text_bold" style="text-align: center; font-size: 15px;">[BW-UNP]</td>
+                            <td class="text_bold" style="text-align: right; font-size: 15px;">[BW-TLP]</td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div style="height: 15px"></div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="height: 45px;">
+                                <img src="/static/supplier_logos/booker-logo.png" class="supplier_icon" style="width: 45px; height: 45px; display: block;">
+                            </td>
+                            <td class="text_normal" style="text-align: left; font-size: 15px; padding-left: 30px;">[BK-INSTOCK]</td>
+                            <td class="text_normal" style="text-align: left; font-size: 15px;">[BK-PCKZ]</td>
+                            <td class="text_bold" style="text-align: center; font-size: 15px;">[BK-UNP]</td>
+                            <td class="text_bold" style="text-align: right; font-size: 15px;">[BK-TLP]</td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div style="height: 15px"></div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="height: 45px;">
+                                <img src="/static/supplier_logos/parfetts-logo.png" class="supplier_icon" style="width: 45px; height: 45px; display: block;">
+                            </td>
+                            <td class="text_normal" style="text-align: left; font-size: 15px; padding-left: 30px;">[PF-INSTOCK]</td>
+                            <td class="text_normal" style="text-align: left; font-size: 15px;">[PF-PCKZ]</td>
+                            <td class="text_bold" style="text-align: center; font-size: 15px;">[PF-UNP]</td>
+                            <td class="text_bold" style="text-align: right; font-size: 15px;">[PF-TLP]</td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div style="height: 15px"></div>
+                            </td>
+                        </tr>
+        
+                    </table>
+
                 </div>
-                
-                <table id="search-result-table" style="width: 100%; padding-bottom: 10px; border-collapse: collapse;">
-                    <tr>
-                        <th style="width: 45px;"></th>
-                        <th class="text_normal" style="text-align: left; font-size: 15px; padding-left: 30px;">In Stock</th>
-                        <th class="text_normal" style="font-size: 15px; text-align: left;">Pack Size</th>
-                        <th class="text_bold" style="font-weight: 800; font-size: 15px;">Unit Price</th>
-                        <th class="text_bold" style="font-weight: 800; text-align: right; font-size: 15px;">Total Price</th>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div style="height: 15px"></div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td style="height: 45px;">
-                            <img src="/static/supplier_logos/bestway-logo.png" class="supplier_icon" style="width: 45px; height: 45px; display: block;">
-                        </td>
-                        <td class="text_normal" style="text-align: left; font-size: 15px; padding-left: 30px;">[BW-INSTOCK]</td>
-                        <td class="text_normal" style="text-align: left; font-size: 15px;">[BW-PCKZ]</td>
-                        <td class="text_bold" style="text-align: center; font-size: 15px;">[BW-UNP]</td>
-                        <td class="text_bold" style="text-align: right; font-size: 15px;">[BW-TLP]</td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div style="height: 15px"></div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td style="height: 45px;">
-                            <img src="/static/supplier_logos/booker-logo.png" class="supplier_icon" style="width: 45px; height: 45px; display: block;">
-                        </td>
-                        <td class="text_normal" style="text-align: left; font-size: 15px; padding-left: 30px;">[BK-INSTOCK]</td>
-                        <td class="text_normal" style="text-align: left; font-size: 15px;">[BK-PCKZ]</td>
-                        <td class="text_bold" style="text-align: center; font-size: 15px;">[BK-UNP]</td>
-                        <td class="text_bold" style="text-align: right; font-size: 15px;">[BK-TLP]</td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div style="height: 15px"></div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td style="height: 45px;">
-                            <img src="/static/supplier_logos/parfetts-logo.png" class="supplier_icon" style="width: 45px; height: 45px; display: block;">
-                        </td>
-                        <td class="text_normal" style="text-align: left; font-size: 15px; padding-left: 30px;">[PF-INSTOCK]</td>
-                        <td class="text_normal" style="text-align: left; font-size: 15px;">[PF-PCKZ]</td>
-                        <td class="text_bold" style="text-align: center; font-size: 15px;">[PF-UNP]</td>
-                        <td class="text_bold" style="text-align: right; font-size: 15px;">[PF-TLP]</td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div style="height: 15px"></div>
-                        </td>
-                    </tr>
-    
-                </table>
-
             </div>
         </div>
     </body>
