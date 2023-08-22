@@ -5,7 +5,9 @@
         <!-- <link rel="stylesheet" type="text/css" href="main_styling.css"> -->
         <script>
             function filterNonNumeric(input) {
-              if (nameSearch == false) {
+              if (nameSearch == true || basketMode == true) {
+                //PASS
+              } else {
                 input.value = input.value.replace(/\D/g, '');
               };
             }
@@ -29,6 +31,9 @@
                 } else if (eanSearch == true) {
                     console.log("EAN SEARCH");
                     do_ean_search();
+                } else if (basketMode == true) {
+                    console.log("BASKET MODE");
+                    do_basket_search();
                 } else {};
             }
 
@@ -49,6 +54,7 @@
         <script src="/static/operator.js"></script>
         <script src="/static/search_bar_control.js"></script>
         <script src="/static/spec_search_handler.js"></script>
+        <script src="/static/basket_handler.js"></script>
     </head>
     <body>
         <div class="centre-container" id="main-title-stack">
