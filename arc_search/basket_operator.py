@@ -51,15 +51,28 @@ def run_wrapper():
     print(f"Driver Gen: {finish - start}")
 
     start = time.time()
-    res = run(bw_driver=bw_driver, pf_driver=pf_driver)
+    res = run(bw_driver=bw_driver, bw_two_driver=bw_two_driver, pf_driver=pf_driver)
     finish = time.time()
     print(f"RES Wrapper Time: {finish - start}")
+
+    bw_driver.quit()
+    bw_two_driver.quit()
+    pf_driver.quit()
+
     return res
 
-def bestway_operating_sys(bw_driver, item):
-    ext = item.bw_extension.split("/")[-1]
-    remote_item_bw: bway_item.BestwayItem = get_item.GET_ITEM_selenium(link_code=ext, driver=bw_driver, collect_pricing=True)
-    return remote_item_bw
+def bestway_operating_sys(driver, basket, indicies, _bar):
+    main_res = []
+    with _bar as bar:
+        for index in indicies:
+            item = basket[index]
+            ext = item.bw_extension.split("/")[-1]
+            remote_item_bw: bway_item.BestwayItem = get_item.GET_ITEM_selenium(link_code=ext, driver=driver, collect_pricing=True)
+            main_res.append((index, remote_item_bw))
+
+            bar()
+
+    return main_res
 
 def booker_operating_sys(basket):
     main_res = []
@@ -93,21 +106,35 @@ def parfetts_operating_sys(basket, pf_driver):
 
     return main_res
 
-def run(bw_driver, pf_driver):
+def run(bw_driver, bw_two_driver, pf_driver):
     MAIN_TIME = time.time()
     # bw_driver = bestway_login()
     basket: List[basket_fetch.BasketItem] = basket_fetch.get_basket(driver=bw_driver)
-
+    print(f"Number of Items: {len(basket)}")
     start = time.time()
 
-    with alive_bar(len(basket), title="Scanning Bestway...", force_tty=True) as bar:
-        for _, item in enumerate(basket):
-            remote_item_bw = bestway_operating_sys(bw_driver=bw_driver, item=item)
+    middle_index = len(basket) // 2
+    bw_first_half_indices = list(range(0, middle_index))
+    bw_second_half_indices = list(range(middle_index, len(basket)))
+
+    bw_one_bar = alive_bar(len(bw_first_half_indices), bar='blocks')
+    bw_two_bar = alive_bar(len(bw_second_half_indices), bar='blocks')
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+        bw_one = executor.submit(bestway_operating_sys, bw_driver, basket, bw_first_half_indices, bw_one_bar)
+        bw_two = executor.submit(bestway_operating_sys, bw_two_driver, basket, bw_second_half_indices, bw_two_bar)
+
+        bw_one_result = bw_one.result()
+        bw_two_result = bw_two.result()
+        bw_pre_post = bw_one_result + bw_two_result
+
+        for block in bw_pre_post:
+            index, remote_item_bw = block
+            item = basket[index]
+
             item.ean = remote_item_bw.ean
             item.bw_unit_price = float(remote_item_bw.b_price.replace('£', ''))
             item.bw_total = item.bw_unit_price * item.quantity
-
-            bar()
 
     finish = time.time()
     print(f"Bestway Time: {finish - start}")

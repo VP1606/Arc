@@ -12,7 +12,7 @@ sys.path.append(os.path.join(parent_dir, 'bestway'))
 import basket_fetch
 
 def do_op():
-    basket_operator.run(bw_driver=bw_driver, pf_driver=pf_driver)
+    basket_operator.run(bw_driver=bw_driver, bw_two_driver=bw_two_driver, pf_driver=pf_driver)
 
 def do_driver_gen():
     start = time.time()
@@ -22,11 +22,10 @@ def do_driver_gen():
     bw_driver.quit()
     bw_two_future.quit()
     pf_driver.quit()
-    
+
     print(f"Driver Gen: {finish - start}")
 
-bw_driver = bestway_login()
-pf_driver = parfetts_login()
+bw_driver, bw_two_driver, pf_driver = basket_operator.driver_gen()
 print("ready!")
 
 while True:
