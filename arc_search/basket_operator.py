@@ -33,17 +33,19 @@ import time
 import concurrent.futures
 
 def driver_gen():
-    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
         bw_future = executor.submit(bestway_login)
+        bw_two_future = executor.submit(bestway_login)
         pf_future = executor.submit(parfetts_login)
 
         bw_driver = bw_future.result()
+        bw_two_driver = bw_two_future.result()
         pf_driver = pf_future.result()
-        return bw_driver, pf_driver
+        return bw_driver, bw_two_driver, pf_driver
 
 def run_wrapper():
     start = time.time()
-    bw_driver, pf_driver = driver_gen()
+    bw_driver, bw_two_driver, pf_driver = driver_gen()
 
     finish = time.time()
     print(f"Driver Gen: {finish - start}")
@@ -53,6 +55,11 @@ def run_wrapper():
     finish = time.time()
     print(f"RES Wrapper Time: {finish - start}")
     return res
+
+def bestway_operating_sys(bw_driver, item):
+    ext = item.bw_extension.split("/")[-1]
+    remote_item_bw: bway_item.BestwayItem = get_item.GET_ITEM_selenium(link_code=ext, driver=bw_driver, collect_pricing=True)
+    return remote_item_bw
 
 def booker_operating_sys(basket):
     main_res = []
@@ -95,9 +102,7 @@ def run(bw_driver, pf_driver):
 
     with alive_bar(len(basket), title="Scanning Bestway...", force_tty=True) as bar:
         for _, item in enumerate(basket):
-            ext = item.bw_extension.split("/")[-1]
-            remote_item_bw: bway_item.BestwayItem = get_item.GET_ITEM_selenium(link_code=ext, driver=bw_driver, collect_pricing=True)
-
+            remote_item_bw = bestway_operating_sys(bw_driver=bw_driver, item=item)
             item.ean = remote_item_bw.ean
             item.bw_unit_price = float(remote_item_bw.b_price.replace('£', ''))
             item.bw_total = item.bw_unit_price * item.quantity

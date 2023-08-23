@@ -2,6 +2,7 @@ from bestway_handler import bestway_login
 from parfetts_handler import parfetts_login
 import importlib
 import os, sys
+import time
 
 import basket_operator
 
@@ -13,6 +14,17 @@ import basket_fetch
 def do_op():
     basket_operator.run(bw_driver=bw_driver, pf_driver=pf_driver)
 
+def do_driver_gen():
+    start = time.time()
+    bw_driver, bw_two_future, pf_driver = basket_operator.driver_gen()
+    finish = time.time()
+
+    bw_driver.quit()
+    bw_two_future.quit()
+    pf_driver.quit()
+    
+    print(f"Driver Gen: {finish - start}")
+
 bw_driver = bestway_login()
 pf_driver = parfetts_login()
 print("ready!")
@@ -21,6 +33,19 @@ while True:
     cmd = input("COMMAND: ")
     if cmd == "q":
         break
+
+    elif cmd == "d":
+        print("Driver Gen")
+        try:
+            importlib.reload(basket_fetch)
+            importlib.reload(basket_operator)
+            do_driver_gen()
+
+        except Exception as e:
+            print("An error occurred:", e)
+            import traceback
+            traceback.print_exc()
+
     else:
         try:
             importlib.reload(basket_fetch)
