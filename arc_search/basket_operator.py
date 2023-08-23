@@ -32,14 +32,18 @@ import get_item, bway_item
 import time
 import concurrent.futures
 
-def run_wrapper():
-    start = time.time()
+def driver_gen():
     with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
         bw_future = executor.submit(bestway_login)
         pf_future = executor.submit(parfetts_login)
 
         bw_driver = bw_future.result()
         pf_driver = pf_future.result()
+        return bw_driver, pf_driver
+
+def run_wrapper():
+    start = time.time()
+    bw_driver, pf_driver = driver_gen()
 
     finish = time.time()
     print(f"Driver Gen: {finish - start}")
