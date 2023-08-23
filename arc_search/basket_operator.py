@@ -7,6 +7,8 @@
 # Show ALL in table. [x]
 # Verify & Match/Adjust pack quantities for same overall qty. [?]; passed.
 # Highlight best supplier. [x]
+# Check if item is in SQL Table for today's date before searching.
+# Add live telemetry showing.
 
 # Scanning Bestway... |████████████████████████████████████████| 8/8 [100%] in 18.8s (0.42/s) 
 # Scanning Booker... |████████████████████████████████████████| 8/8 [100%] in 7.1s (1.13/s) 
@@ -63,14 +65,14 @@ def run_wrapper():
 
 def bestway_operating_sys(driver, basket, indicies, _bar):
     main_res = []
-    with _bar as bar:
-        for index in indicies:
-            item = basket[index]
-            ext = item.bw_extension.split("/")[-1]
-            remote_item_bw: bway_item.BestwayItem = get_item.GET_ITEM_selenium(link_code=ext, driver=driver, collect_pricing=True)
-            main_res.append((index, remote_item_bw))
+    # with _bar as bar:
+    for index in indicies:
+        item = basket[index]
+        ext = item.bw_extension.split("/")[-1]
+        remote_item_bw: bway_item.BestwayItem = get_item.GET_ITEM_selenium(link_code=ext, driver=driver, collect_pricing=True)
+        main_res.append((index, remote_item_bw))
 
-            bar()
+            # bar()
 
     return main_res
 
@@ -117,12 +119,12 @@ def run(bw_driver, bw_two_driver, pf_driver):
     bw_first_half_indices = list(range(0, middle_index))
     bw_second_half_indices = list(range(middle_index, len(basket)))
 
-    bw_one_bar = alive_bar(len(bw_first_half_indices), bar='blocks')
-    bw_two_bar = alive_bar(len(bw_second_half_indices), bar='blocks')
+    # bw_one_bar = alive_bar(len(bw_first_half_indices), bar='blocks')
+    # bw_two_bar = alive_bar(len(bw_second_half_indices), bar='blocks')
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
-        bw_one = executor.submit(bestway_operating_sys, bw_driver, basket, bw_first_half_indices, bw_one_bar)
-        bw_two = executor.submit(bestway_operating_sys, bw_two_driver, basket, bw_second_half_indices, bw_two_bar)
+        bw_one = executor.submit(bestway_operating_sys, bw_driver, basket, bw_first_half_indices, '') #bw_one_bar
+        bw_two = executor.submit(bestway_operating_sys, bw_two_driver, basket, bw_second_half_indices, '') #bw_two_bar
 
         bw_one_result = bw_one.result()
         bw_two_result = bw_two.result()
