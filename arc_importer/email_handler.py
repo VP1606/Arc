@@ -1,5 +1,6 @@
 import email
 import os
+import csv_handler
 
 approved_senders = ["vcpremakantha@gmail.com"]
 
@@ -29,6 +30,8 @@ def handle(message):
             if found is False:
                 print("Cannot find CSV!")
                 return
+            
+            csv_handler.handle()
 
         else:
             print("NOT MULTIPART --- Cannot find attachment!")
