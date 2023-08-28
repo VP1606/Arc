@@ -15,10 +15,10 @@ def get_mail_client(email_address):
     return mail
 
 mail = get_mail_client("arcsys.importer@gmail.com")
-mail.select("inbox")
 
 while True:
     print("SCAN")
+    mail.select("inbox")
     result, data = mail.search(None, "UNSEEN")  # Search for unread messages
     
     if result == "OK":
