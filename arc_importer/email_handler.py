@@ -1,10 +1,11 @@
 import email
 import os
 import csv_handler
-
-approved_senders = ["vcpremakantha@gmail.com", "vpremaraj@yahoo.com"]
+import config_holder
 
 def handle(message):
+    approved_senders = config_holder.fetch_configs()
+    print(approved_senders)
     if (email.utils.parseaddr(message["from"])[1]) in approved_senders:
         print("From Approved Sender!")
         if message.is_multipart():

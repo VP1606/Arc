@@ -2,7 +2,7 @@ import imaplib
 import email
 import time
 import importlib
-import email_handler, csv_handler
+import email_handler, csv_handler, config_holder
 
 def get_mail_client(email_address):
     SMTP_SERVER = "imap.gmail.com"
@@ -21,6 +21,7 @@ mail = get_mail_client("arcsys.importer@gmail.com")
 while True:
     importlib.reload(email_handler)
     importlib.reload(csv_handler)
+    importlib.reload(config_holder)
     print("SCAN")
     mail.select("inbox")
     result, data = mail.search(None, "UNSEEN")  # Search for unread messages
