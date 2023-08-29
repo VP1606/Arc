@@ -2,7 +2,7 @@ import email
 import os
 import csv_handler
 
-approved_senders = ["vcpremakantha@gmail.com"]
+approved_senders = ["vcpremakantha@gmail.com", "vpremaraj@yahoo.com"]
 
 def handle(message):
     if (email.utils.parseaddr(message["from"])[1]) in approved_senders:
@@ -31,7 +31,9 @@ def handle(message):
                 print("Cannot find CSV!")
                 return
             
-            csv_handler.handle()
+            final_result = csv_handler.handle()
+            print(final_result)
+            return
 
         else:
             print("NOT MULTIPART --- Cannot find attachment!")
