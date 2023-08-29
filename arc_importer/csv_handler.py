@@ -8,7 +8,7 @@ expected_columns = ['Cust_Code','transaction_number','Date_transaction','Cust_co
 # Return Shape: (BOOL, STR, ANY)
 # Status (Bool), Consise Reason, Additional Info ('' if not available)
 
-def handle():
+def handle(sql_url: str):
 
     validate_result = validate()
     if validate_result[0] is False:
@@ -19,7 +19,7 @@ def handle():
 
     error = [False, None]
     try:
-        save_to_sql(file=file)
+        save_to_sql(file=file, sql_url=sql_url)
         error[0] = False
 
     except Exception as e:
@@ -49,9 +49,10 @@ def validate():
     except Exception as e:
         return (False, 'Error while validating file!', e)
 
-def save_to_sql(file: pd.DataFrame):
+def save_to_sql(file: pd.DataFrame, sql_url: str):
+    print(f"SQL URL: {sql_url}")
     mydb = mysql.connector.connect(
-        host="rainford.dyndns.org",
+        host=sql_url,
         user="mpos",
         password="mpospass",
         database="mpos"

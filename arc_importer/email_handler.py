@@ -32,7 +32,7 @@ def handle(message):
                 print("Cannot find CSV!")
                 return
             
-            final_result = csv_handler.handle()
+            final_result = csv_handler.handle(sql_url=approved_senders[email.utils.parseaddr(message["from"])[1]])
             print(final_result)
             return
 
