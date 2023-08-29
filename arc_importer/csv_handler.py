@@ -51,7 +51,7 @@ def validate():
 
 def save_to_sql(file: pd.DataFrame):
     mydb = mysql.connector.connect(
-        host="192.168.1.180",
+        host="rainford.dyndns.org",
         user="mpos",
         password="mpospass",
         database="mpos"
