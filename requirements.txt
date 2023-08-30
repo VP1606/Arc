@@ -1,10 +1,9 @@
-requests
-bs4
-beautifulsoup4
-mysql-connector-python
-schedule
 alive_progress
-Flask
+beautifulsoup4
 fastapi
-uvicorn
+mysql_connector_repackaged
+pandas
+Requests
+schedule
 selenium
+tabulate
