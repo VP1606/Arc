@@ -37,7 +37,7 @@ def handle(message):
                 responder.send_response(reciever=sender, subject='ARC Importer: No attachment!', message=response)
                 return
             
-            final_result = csv_handler.handle(sql_url=approved_senders[email.utils.parseaddr(message["from"])[1]])
+            final_result = csv_handler.handle(sql_urls=approved_senders[email.utils.parseaddr(message["from"])[1]])
             print(final_result)
 
             if final_result[0] is True:

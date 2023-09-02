@@ -8,7 +8,7 @@ expected_columns = ['Cust_Code','transaction_number','Date_transaction','Cust_co
 # Return Shape: (BOOL, STR, ANY)
 # Status (Bool), Consise Reason, Additional Info ('' if not available)
 
-def handle(sql_url: str):
+def handle(sql_urls: [str]):
 
     validate_result = validate()
     if validate_result[0] is False:
@@ -18,14 +18,15 @@ def handle(sql_url: str):
     _, _, file = validate_result
 
     error = [False, None]
-    try:
-        save_to_sql(file=file, sql_url=sql_url)
-        error[0] = False
+    for sql_url in sql_urls:
+        try:
+            save_to_sql(file=file, sql_url=sql_url)
+            error[0] = False
 
-    except Exception as e:
-        print(f"SQL Error! ::: {e}")
-        error = [True, e]
-    
+        except Exception as e:
+            print(f"SQL Error! ::: {e}")
+            error = [True, e]
+        
     if error[0] is True:
         return (False, 'SQL Commiting Error', error[1])
     else:

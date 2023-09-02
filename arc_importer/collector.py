@@ -17,13 +17,15 @@ def get_mail_client(email_address):
     return mail
 
 mail = get_mail_client("arcsys.importer@gmail.com")
+print("Launched!")
+print("")
 
 while True:
     importlib.reload(email_handler)
     importlib.reload(csv_handler)
     importlib.reload(config_holder)
     importlib.reload(responder)
-    print("SCAN")
+    # print("SCAN")
     mail.select("inbox")
     result, data = mail.search(None, "UNSEEN")  # Search for unread messages
     
