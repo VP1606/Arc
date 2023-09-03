@@ -58,13 +58,13 @@ def text_processor(raw: str, ean: str):
         elif line == '':
             remaining_lines.remove(line)
         elif ean in line:
-            remaining_lines.remove(ean)
+            remaining_lines.remove(line)
         else:
             pass
     
-    print(og_lines)
-    print(lines)
-    print(remaining_lines)
+    # print(og_lines)
+    # print(lines)
+    # print(remaining_lines)
 
     for line in remaining_lines:
         if line.isdigit() is False:
