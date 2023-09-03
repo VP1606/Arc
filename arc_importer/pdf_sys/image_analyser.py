@@ -1,6 +1,25 @@
 from PIL import Image
 from pyzbar.pyzbar import decode
 import pytesseract
+from datetime import datetime
+
+def extract_date(image: Image):
+    cropped = image.crop((0, 80, 1000, 170))
+    text = pytesseract.image_to_string(cropped)
+
+    words = text.split(' ')
+    date = ''
+    for word in words:
+        if '/' in word:
+            date = word
+            break
+    
+    day, month, year = map(int, date.split('/'))
+    month_str = f'{month:02d}'
+    day_str = f'{day:02d}'
+
+    date_object = datetime.strptime(f'{day_str}/{month_str}/{str(year)}', '%d/%m/%y').date()
+    return date_object
 
 def extract_barcodes(image: Image):
     barcodes = decode(image)

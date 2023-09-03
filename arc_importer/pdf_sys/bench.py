@@ -8,12 +8,18 @@ import sql_uploader
 
 # export DYLD_LIBRARY_PATH=/opt/homebrew/lib
 # Brew Installed: zbar, poppler, tesseract
+# https://pixspy.com
 
 path = "test_14.pdf"
 
 pdf_images = convert_from_path(path)
 
 book_images = list()
+
+operating_date = None
+for page_num, image in enumerate(pdf_images):
+    operating_date = image_analyser.extract_date(image=image)
+    break
 
 for page_num, image in enumerate(pdf_images):
     print(f"Page {page_num + 1}:")
@@ -72,5 +78,5 @@ print(f"Len of Final RES: {len(main_result)}")
 
 print("")
 print("Uploading MySQL...")
-sql_uploader.upload_blocks(blocks=main_result)
+sql_uploader.upload_blocks(blocks=main_result, date=operating_date)
 print("DONE")
