@@ -62,9 +62,12 @@ def text_processor(raw: str, ean: str):
         else:
             pass
     
+    # print("-->")
+    # print(raw)
     # print(og_lines)
     # print(lines)
     # print(remaining_lines)
+    # print("<--")
 
     for line in remaining_lines:
         if line.isdigit() is False:

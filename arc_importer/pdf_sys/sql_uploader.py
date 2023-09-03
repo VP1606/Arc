@@ -18,7 +18,20 @@ def upload_blocks(blocks: list, date):
           "VALUES (%s,%s,%s,%s,%s,%s)"
 
     for block in blocks:
-        rrp = float(block[1].replace("£", ""))
+        print(block)
+        rrp = 0.0
+        try:
+            rrp = float(block[1].replace("£", ""))
+        except:
+            if block[1] == '':
+                rrp = 0.0
+            elif '£' in block[1]:
+                parts = block[1].split()
+                for part in parts:
+                    if '£' in part:
+                        rrp = float(part.replace("£", ""))
+                        break
+
         vals = [block[3], block[0], rrp, block[4], block[2], date]
         mycursor.execute(sql, vals)
     
