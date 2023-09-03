@@ -19,3 +19,21 @@ def extract_barcodes(image: Image):
 def extract_text_tesseract(image: Image):
     text = pytesseract.image_to_string(image)
     return text
+
+def text_processor(raw: str, ean: str):
+    lines = raw.splitlines()
+
+    name = rrp = plof = size = ''
+
+    for line in lines:
+        if '£' in line:
+            rrp = line
+        elif 'PLOF' in line:
+            plof = line.replace('PLOF-', '')
+        elif line == '':
+            pass
+
+    name = lines[0]
+    size = lines[(len(lines)-1)]
+
+    return (name, rrp, ean, plof, size)
