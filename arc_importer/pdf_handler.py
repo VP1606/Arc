@@ -5,13 +5,16 @@ import pdf_sys.sql_uploader as sql_uploader
 from pdf2image import convert_from_path
 import time
 
-# V1 STATS :::
+# V1 STATS ON M1 MAX :::
 
 # Total Time Taken: 2.837
 # Average Assumed TPI (14): 0.20263
 
 # Total Time Taken: 5.296
 # Average Assumed TPI (35): 0.15132
+
+# Total Time Taken: 16.16
+# Average Assumed TPI (119): 0.1358
 
 path = "pdf_sys/test_files/test_119.pdf"
 
