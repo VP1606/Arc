@@ -1,11 +1,13 @@
 from pdf2image import convert_from_path
 from PIL import Image
 from pyzbar.pyzbar import decode
+import time
 
 import image_helper
+import pytesseract
 
 # export DYLD_LIBRARY_PATH=/opt/homebrew/lib
-# Brew Installed: zbar, poppler
+# Brew Installed: zbar, poppler, tesseract
 
 path = "test_35.pdf"
 
@@ -29,19 +31,32 @@ del book_images
 
 print(f"Refined List: {len(refined_book)}")
 
-barcodes_found = list()
-for image in refined_book:
-    barcodes = decode(image)
-    for barcode in barcodes:
-        barcode_data = barcode.data.decode('utf-8')
-        barcode_type = barcode.type
+# barcodes_found = list()
+# for image in refined_book:
+#     barcodes = decode(image)
+#     for barcode in barcodes:
+#         barcode_data = barcode.data.decode('utf-8')
+#         barcode_type = barcode.type
 
-        block = [barcode_data, barcode_type]
-        barcodes_found.append(block)
-        del block
+#         block = [barcode_data, barcode_type]
+#         barcodes_found.append(block)
+#         del block
 
-print(f"Barcodes Found: {len(barcodes_found)}")
+# print(f"Barcodes Found: {len(barcodes_found)}")
 
-for block in barcodes_found:
-    data, type = block[0], block[1]
-    print(data, type)
+# for block in barcodes_found:
+#     data, type = block[0], block[1]
+#     print(data, type)
+
+start_time = time.time()
+for num, image in enumerate(refined_book):
+    text = pytesseract.image_to_string(image)
+    print(f"Image N{num + 1}")
+    print(f"Text -->")
+    print(text)
+    print("------")
+
+duration_tesseract = time.time() - start_time
+average_time = duration_tesseract / len(refined_book)
+
+print(f"Average Tesseract Time Per Item: {round(average_time, 3)}")
