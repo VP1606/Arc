@@ -4,7 +4,7 @@ from pyzbar.pyzbar import decode
 import time
 
 import image_helper, image_analyser
-import pytesseract
+import sql_uploader
 
 # export DYLD_LIBRARY_PATH=/opt/homebrew/lib
 # Brew Installed: zbar, poppler, tesseract
@@ -53,8 +53,9 @@ for num, image in enumerate(refined_book):
     ean = str(barcodes_found[num][0])
     text = image_analyser.extract_text_tesseract(image=image)
     print(f"Image N{num + 1}")
-    print(f"Text -->")
-    print(text)
+    print(f"EAN Sending: -->{ean}<--")
+    # print(f"Text -->")
+    # print(text)
     print("PROCESSOR::::")
     processor_res = image_analyser.text_processor(raw=text, ean=ean)
     print(processor_res)
@@ -68,3 +69,8 @@ print("-------------------------")
 print(f"Average Tesseract Time Per Item: {round(average_time, 3)}")
 print("-------------------------")
 print(f"Len of Final RES: {len(main_result)}")
+
+print("")
+print("Uploading MySQL...")
+sql_uploader.upload_blocks(blocks=main_result)
+print("DONE")

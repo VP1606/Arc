@@ -21,19 +21,35 @@ def extract_text_tesseract(image: Image):
     return text
 
 def text_processor(raw: str, ean: str):
-    lines = raw.splitlines()
+    name = rrp = plof = size = _ean = ''
 
-    name = rrp = plof = size = ''
+    lines = raw.splitlines()
+    og_lines = lines.copy()
+    name = lines[0] + lines[1]
+    lines = lines[2:]
+    remaining_lines = lines.copy()
 
     for line in lines:
         if '£' in line:
             rrp = line
+            remaining_lines.remove(line)
         elif 'PLOF' in line:
             plof = line.replace('PLOF-', '')
+            remaining_lines.remove(line)
         elif line == '':
+            remaining_lines.remove(line)
+        elif ean in line:
+            remaining_lines.remove(ean)
+        else:
             pass
+    
+    print(og_lines)
+    print(lines)
+    print(remaining_lines)
 
-    name = lines[0]
-    size = lines[(len(lines)-1)]
+    for line in remaining_lines:
+        if line.isdigit() is False:
+            size = line
+            break
 
     return (name, rrp, ean, plof, size)
