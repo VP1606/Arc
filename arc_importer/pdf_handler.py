@@ -5,7 +5,15 @@ import pdf_sys.sql_uploader as sql_uploader
 from pdf2image import convert_from_path
 import time
 
-path = "pdf_sys/test_14.pdf"
+# V1 STATS :::
+
+# Total Time Taken: 2.837
+# Average Assumed TPI (14): 0.20263
+
+# Total Time Taken: 5.296
+# Average Assumed TPI (35): 0.15132
+
+path = "pdf_sys/test_files/test_35.pdf"
 
 class DataBlock:
     def __init__(self, _image) -> None:
@@ -67,5 +75,25 @@ def handle():
 
     sql_uploader.upload_blocks(blocks=main_result, date=operating_date)
     print("DONE")
+    return (True, len(main_list))
 
-handle()
+
+def handle_wrapper():
+    start_time = time.time()
+    res = None
+    try:
+        res = handle()
+    except Exception as e:
+        print("")
+        print(f"Error Occured! ::: {str(e)}")
+        res = (False, 1)
+
+    end_time = time.time()
+    print("-------------------------")
+    print("-------------------------")
+    print(f"Total Time Taken: {round((end_time - start_time), 3)}")
+    print(f"Average Assumed TPI ({res[1]}): {round(((end_time - start_time) / res[1]), 5)}")
+    print("-------------------------")
+    print("-------------------------")
+
+handle_wrapper()
