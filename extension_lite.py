@@ -1,8 +1,9 @@
 import mysql.connector
 import os
 
+home_db_address = str(os.environ.get("HOME_SQL"))
 home_db = mysql.connector.connect(
-    host="milecross.dyndns.org",
+    host=home_db_address,
     user="mpos",
     password="mpospass",
     database="mpos"

@@ -5,6 +5,7 @@ import time
 import get_by_search_threaded
 import json
 import sys
+import os
 
 cookies = {
     '.ASPXAUTH': '33CDC131F6B53F37F4CD7574642D835967A51D82D8A6590D9458E4A03B4E7A0865957038CCCDE8C81BF535CF43D10906E2E68CC5C5F753A1FFE61CB700FD9FF078ED772AF4E3BFA0D599EF6E357E59BDDAF20FA62473875654F8F4BABD6C07017C7BACFEFCC502ABC2364A2C04FC31B345A332373010DE4489159EA264C44AFC3FEF3C2B16CD024C200CED0B5908933933E9ACCB12F01ACD090D34668872344C',
@@ -35,35 +36,9 @@ headers = {
     'Connection': 'keep-alive',
 }
 
-# mydbs = [mysql.connector.connect(
-#         host="milecross.dyndns.org",
-#         user="mpos",
-#         password="mpospass",
-#         database="mpos"
-#     ), mysql.connector.connect(
-#         host="netherly1.dyndns.org",
-#         user="mpos",
-#         password="mpospass",
-#         database="mpos"
-#     ), mysql.connector.connect(
-#         host="runcorn.dyndns.org",
-#         user="mpos",
-#         password="mpospass",
-#         database="mpos"
-#     ), mysql.connector.connect(
-#         host="rathbone.dyndns.org",
-#         user="mpos",
-#         password="mpospass",
-#         database="mpos"
-#     ),
-#     mysql.connector.connect(
-#         host="breezehill1.dyndns.org",
-#         user="mpos",
-#         password="mpospass",
-#         database="mpos"
-#     )]
+home_db_address = str(os.environ.get("HOME_SQL"))
 mydbs = [mysql.connector.connect(
-        host="milecross.dyndns.org",
+        host=home_db_address,
         user="mpos",
         password="mpospass",
         database="mpos"

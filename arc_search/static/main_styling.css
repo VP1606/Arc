@@ -1,0 +1,135 @@
+@font-face {
+    font-family: "Avenir-Black"; /* Font name that you will use later in CSS */
+    src: url("/static/Avenir-Black.ttf") format("truetype"); /* Path to your TTF font file */
+}
+
+@font-face {
+    font-family: "Avenir-Medium"; /* Font name that you will use later in CSS */
+    src: url("/static/Avenir-Medium.ttf") format("truetype"); /* Path to your TTF font file */
+}
+
+#main-title {
+    color: #000;
+    font-family: Avenir;
+    font-weight: 900;
+    font-size: 20px;
+    line-height: normal;
+    letter-spacing: 20px;
+}
+
+#descriptor-title {
+    color: #000;
+    font-family: Avenir-Medium;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.centre-container {
+    display: flex;
+    justify-content: center; /* Horizontally center the content */
+    align-items: center; /* Vertically center the content */
+    height: 30px; /* Set the container height as needed */
+}
+
+#main-title-stack {
+    height: 27px;
+    margin-top: 40px;
+}
+
+#descriptor-stack {
+    height: 23px;
+    margin-top: 65px;
+}
+
+#search-container {
+    position: relative;
+    height: 70px;
+    margin-top: 40px;
+}
+
+#search-field-stack {
+    height: 70px;
+    position: absolute;
+    bottom: 0;
+}
+
+#search-field-text {
+    height: 70px;
+    position: absolute;
+    top: 0;
+}
+
+#search-field-entry {
+    color: #000;
+    font-family: Avenir;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+
+    display: inline-block;
+    outline: none;
+    position: absolute;
+    top: 0;
+    height: 70px;
+    padding-top: 15px;
+    white-space: nowrap;
+}
+
+#search-field-typebox {
+    position: absolute;
+    top: 0;
+
+    padding-top: 15px;
+
+    background: none;
+    border: none;
+    outline: none;
+    text-align: center;
+
+    color: #000;
+    font-family: Avenir;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+}
+
+#search-button-stack {
+    height: 60px;
+    margin-top: 40px;
+}
+
+#return-dump {
+    padding-top: 100px;
+}
+
+.loader {
+    border: 10px solid #f3f3f3;
+    border-top: 10px solid #000000;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .v-stack {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally within VStack */
+}
+
+.return-component {
+    padding-bottom: 30px;
+}
+
+.search_btn_image {
+    width: 85px;  height: 94px;
+}
