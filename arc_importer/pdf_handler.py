@@ -86,17 +86,18 @@ def handle_wrapper():
     start_time = time.time()
     res = None
     try:
-        res = handle()
+        _res = handle()
+        res = (_res[0], '', _res[1])
     except Exception as e:
         print("")
         print(f"Error Occured! ::: {str(e)}")
-        res = (False, 1)
+        res = (False, str(e), 1)
 
     end_time = time.time()
     print("-------------------------")
     print("-------------------------")
     print(f"Total Time Taken: {round((end_time - start_time), 3)}")
-    print(f"Average Assumed TPI ({res[1]}): {round(((end_time - start_time) / res[1]), 5)}")
+    print(f"Average Assumed TPI ({res[1]}): {round(((end_time - start_time) / res[2]), 5)}")
     print("-------------------------")
     print("-------------------------")
     return res

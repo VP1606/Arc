@@ -56,8 +56,7 @@ def handle(message):
             
             if PDF_Mode:
                 print("PDF MODE...")
-                local_result = pdf_handler.handle_wrapper()
-                final_result = (local_result[0], '', local_result[1])
+                final_result = pdf_handler.handle_wrapper()
             else:
                 final_result = csv_handler.handle(sql_urls=approved_senders[email.utils.parseaddr(message["from"])[1]][0])
                 print(final_result)
@@ -66,12 +65,17 @@ def handle(message):
                 response = 'Good Day User, \n Your email submission was processed sucessfully! \n Thanks'
                 responder.send_response(reciever=sender, subject='ARC Importer: Success!', message=response)
             else:
-                if final_result[1] == 'SQL Commiting Error':
-                    response = f'Hello User, \n There was an error in the SQL saving process, so we have been unable to log your invoice onto the server. \n Here is the raw error: \n {str(final_result[2])} \n Please share this with the Administrator. \n Sorry for the inconvenience.'
-                    responder.send_response(reciever=sender, subject='ARC Importer: SQL Error!', message=response)
+                if PDF_Mode is True:
+                    response = f'Hello User, \n An error occurred when processing the PDF file you submitted. Here is the raw output: \n {final_result[1]}. \n Thanks!'
+                    responder.send_response(reciever=sender, subject='ARC Importer: PDF Error!', message=response)
+
                 else:
-                    response = 'Hello User, \n There was an error in validating the CSV file you attached to the email; there were some rows that we were expecting to be there, however they were not included. \n Please re-check the file and try again. \n Thanks!'
-                    responder.send_response(reciever=sender, subject='ARC Importer: CSV Error!', message=response)
+                    if final_result[1] == 'SQL Commiting Error':
+                        response = f'Hello User, \n There was an error in the SQL saving process, so we have been unable to log your invoice onto the server. \n Here is the raw error: \n {str(final_result[2])} \n Please share this with the Administrator. \n Sorry for the inconvenience.'
+                        responder.send_response(reciever=sender, subject='ARC Importer: SQL Error!', message=response)
+                    else:
+                        response = 'Hello User, \n There was an error in validating the CSV file you attached to the email; there were some rows that we were expecting to be there, however they were not included. \n Please re-check the file and try again. \n Thanks!'
+                        responder.send_response(reciever=sender, subject='ARC Importer: CSV Error!', message=response)
 
             return
 
