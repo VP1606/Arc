@@ -18,7 +18,7 @@ def upload_blocks(blocks: list, date):
           "VALUES (%s,%s,%s,%s,%s,%s)"
 
     for block in blocks:
-        print(block)
+        # print(block)
         rrp = 0.0
         try:
             rrp = float(block[1].replace("£", ""))

@@ -28,7 +28,7 @@ class DataBlock:
 
         self.processor_result = None
 
-def handle():
+def handle(verbose=False):
     pdf_images = convert_from_path(path)
     operating_date = None
     for _, image in enumerate(pdf_images):
@@ -57,13 +57,20 @@ def handle():
     start_time = time.time()
     for num, block in enumerate(main_list):
         text = image_analyser.extract_text_tesseract(image=block.image)
-        print(f"Image N{num + 1}")
-        print(f"EAN Sending: -->{block.barcode}<--")
-        print("PROCESSOR::::")
+
+        if verbose:
+            print(f"Image N{num + 1}")
+            print(f"EAN Sending: -->{block.barcode}<--")
+            print("PROCESSOR::::")
+
         processor_res = image_analyser.text_processor(raw=text, ean=block.barcode)
-        print(processor_res)
+        if verbose:
+            print(processor_res)
+
         block.processor_result = processor_res
-        print("------")
+        if verbose:
+            print("------")
+        
 
     duration_tesseract = time.time() - start_time
     average_time = duration_tesseract / len(main_list)
@@ -82,11 +89,11 @@ def handle():
     return (True, len(main_list))
 
 
-def handle_wrapper():
+def handle_wrapper_verbose():
     start_time = time.time()
     res = None
     try:
-        _res = handle()
+        _res = handle(verbose=True)
         res = (_res[0], '', _res[1])
     except Exception as e:
         print("")
@@ -102,4 +109,14 @@ def handle_wrapper():
     print("-------------------------")
     return res
 
-# handle_wrapper()
+def handle_wrapper():
+    res = None
+    try:
+        _res = handle()
+        res = (_res[0], '', _res[1])
+    except Exception as e:
+        print("")
+        print(f"Error Occured! ::: {str(e)}")
+        res = (False, str(e), 1)
+
+    return res
