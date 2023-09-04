@@ -17,6 +17,11 @@ import os
 # Total Time Taken: 16.16
 # Average Assumed TPI (119): 0.1358
 
+# V1 STATS ON SERVER :::
+
+# Total Time Taken: 8.338
+# Average Assumed TPI (): 0.59556
+
 path = os.path.join('../temp/collected.pdf')
 
 class DataBlock:
