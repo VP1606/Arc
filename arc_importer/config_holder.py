@@ -6,7 +6,7 @@ def fetch_configs():
         "vpremaraj@gmail.com": [["rainford.dyndns.org", "thestore3.dyndns.org"], ["csv"]],
         "manove@gmail.com": [["rainford.dyndns.org", "thestore3.dyndns.org"], ["csv"]],
         "manove@yahoo.com": [["rainford.dyndns.org", "thestore3.dyndns.org"], ["csv"]],
-        "vp1606@outlook.com": [["rainford.dyndns.org", "milecross.dyndns.org"], ["csv"]]
+        "vp1606@outlook.com": [["rainford.dyndns.org", "milecross.dyndns.org"], ["csv", "pdf"]]
     }
 
     return approved_senders

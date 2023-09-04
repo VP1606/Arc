@@ -1,8 +1,14 @@
 import mysql.connector
 
-def upload_blocks(blocks: list, date):
+def upload_blocks(blocks: list, date, testing=False):
+
+    if testing is True:
+        host = 'milecross.dyndns.org'
+    else:
+        host = 'thestore3.dyndns.org'
+
     mydb = mysql.connector.connect(
-        host="milecross.dyndns.org",
+        host=host,
         user="mpos",
         password="mpospass",
         database="mpos"

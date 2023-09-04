@@ -33,7 +33,7 @@ class DataBlock:
 
         self.processor_result = None
 
-def handle(verbose=False):
+def handle(verbose=False, testing=False):
     pdf_images = convert_from_path(path)
     operating_date = None
     for _, image in enumerate(pdf_images):
@@ -89,16 +89,16 @@ def handle(verbose=False):
     for block in main_list:
         main_result.append(block.processor_result)
 
-    sql_uploader.upload_blocks(blocks=main_result, date=operating_date)
+    sql_uploader.upload_blocks(blocks=main_result, date=operating_date, testing=testing)
     print("DONE")
     return (True, len(main_list))
 
 
-def handle_wrapper_verbose():
+def handle_wrapper_verbose(testing=False):
     start_time = time.time()
     res = None
     try:
-        _res = handle(verbose=True)
+        _res = handle(verbose=True, testing=testing)
         res = (_res[0], '', _res[1])
     except Exception as e:
         print("")
@@ -114,10 +114,10 @@ def handle_wrapper_verbose():
     print("-------------------------")
     return res
 
-def handle_wrapper():
+def handle_wrapper(testing=False):
     res = None
     try:
-        _res = handle()
+        _res = handle(testing=testing)
         res = (_res[0], '', _res[1])
     except Exception as e:
         print("")

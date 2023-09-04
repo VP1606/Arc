@@ -56,7 +56,11 @@ def handle(message):
             
             if PDF_Mode:
                 print("PDF MODE...")
-                final_result = pdf_handler.handle_wrapper()
+                if 'vcpremakantha' in email.utils.parseaddr(message["from"])[1]:
+                    print("TEST MODE!")
+                    final_result = pdf_handler.handle_wrapper_verbose(testing=True)
+                else:
+                    final_result = pdf_handler.handle_wrapper(testing=False)
             else:
                 final_result = csv_handler.handle(sql_urls=approved_senders[email.utils.parseaddr(message["from"])[1]][0])
                 print(final_result)
