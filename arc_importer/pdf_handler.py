@@ -4,6 +4,7 @@ import pdf_sys.sql_uploader as sql_uploader
 
 from pdf2image import convert_from_path
 import time
+import os
 
 # V1 STATS ON M1 MAX :::
 
@@ -16,7 +17,7 @@ import time
 # Total Time Taken: 16.16
 # Average Assumed TPI (119): 0.1358
 
-path = "pdf_sys/test_files/test_119.pdf"
+path = os.path.join('../temp/collected.pdf')
 
 class DataBlock:
     def __init__(self, _image) -> None:
@@ -98,5 +99,6 @@ def handle_wrapper():
     print(f"Average Assumed TPI ({res[1]}): {round(((end_time - start_time) / res[1]), 5)}")
     print("-------------------------")
     print("-------------------------")
+    return res
 
-handle_wrapper()
+# handle_wrapper()

@@ -3,6 +3,7 @@ import os
 import csv_handler
 import config_holder
 import responder
+import pdf_handler
 
 def handle(message):
 
@@ -11,8 +12,11 @@ def handle(message):
 
     if (email.utils.parseaddr(message["from"])[1]) in approved_senders:
         print("From Approved Sender!")
+        approved_types = approved_senders[email.utils.parseaddr(message["from"])[1]][1]
+
         if message.is_multipart():
             found = False
+            PDF_Mode = False
             for part in message.walk():
                 if part.get_content_maintype() == 'multipart':
                     continue
@@ -30,6 +34,19 @@ def handle(message):
                     fp.close()
 
                     break
+                elif bool(fileName) and '.pdf' in fileName:
+                    print(f"Found PDF! {fileName}")
+                    if 'pdf' in approved_types:
+                        found = True
+                        PDF_Mode = True
+                        filePath = os.path.join('../temp/collected.pdf')
+                        fp = open(filePath, 'wb')
+                        fp.write(part.get_payload(decode=True))
+                        fp.close()
+                    else:
+                        print("Sender Not allowed to send PDF!")
+                        found = False
+                    break
                 
             if found is False:
                 print("Cannot find CSV!")
@@ -37,8 +54,13 @@ def handle(message):
                 responder.send_response(reciever=sender, subject='ARC Importer: No attachment!', message=response)
                 return
             
-            final_result = csv_handler.handle(sql_urls=approved_senders[email.utils.parseaddr(message["from"])[1]])
-            print(final_result)
+            if PDF_Mode:
+                print("PDF MODE...")
+                local_result = pdf_handler.handle_wrapper()
+                final_result = (local_result[0], '', local_result[1])
+            else:
+                final_result = csv_handler.handle(sql_urls=approved_senders[email.utils.parseaddr(message["from"])[1]][0])
+                print(final_result)
 
             if final_result[0] is True:
                 response = 'Good Day User, \n Your email submission was processed sucessfully! \n Thanks'
