@@ -66,7 +66,10 @@ def handle(message):
                 print(final_result)
 
             if final_result[0] is True:
-                response = 'Good Day User, \n Your email submission was processed sucessfully! \n Thanks'
+                if PDF_Mode:
+                    response = 'Good Day User, \n Your PDF email submission was processed sucessfully! \n Thanks'
+                else:
+                    response = 'Good Day User, \n Your CSV email submission was processed sucessfully! \n Thanks'
                 responder.send_response(reciever=sender, subject='ARC Importer: Success!', message=response)
             else:
                 if PDF_Mode is True:
