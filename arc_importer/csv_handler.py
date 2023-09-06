@@ -35,7 +35,7 @@ def handle(sql_urls: [str]):
 
 def validate():
     try:
-        file = pd.read_csv(file_path)
+        file = pd.read_csv(file_path, dtype=str)
         missing_columns = expected_columns.copy()
         for col in file.columns:
             if col in missing_columns:
