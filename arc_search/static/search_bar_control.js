@@ -65,6 +65,11 @@ function clickExactEAN() {
         var basketContainer = document.getElementById("basketContainer");
         basketContainer.style.display = 'none';
 
+        var scanContainer = document.getElementById("scanContainer");
+        scanContainer.style.display = 'none';
+
+        Operate_SC_Content();
+
     } else {};
 }
 
@@ -90,6 +95,11 @@ function clickNameSearch() {
 
         var basketContainer = document.getElementById("basketContainer");
         basketContainer.style.display = 'none';
+
+        var scanContainer = document.getElementById("scanContainer");
+        scanContainer.style.display = 'none';
+
+        Operate_SC_Content();
 
     } else {};
 }
@@ -117,6 +127,11 @@ function clickEANSearch() {
         var basketContainer = document.getElementById("basketContainer");
         basketContainer.style.display = 'none';
 
+        var scanContainer = document.getElementById("scanContainer");
+        scanContainer.style.display = 'none';
+
+        Operate_SC_Content();
+
     } else {};
 }
 
@@ -135,6 +150,11 @@ function clickBasketMode() {
         var basketContainer = document.getElementById("basketContainer");
         basketContainer.style.display = 'block';
 
+        var scanContainer = document.getElementById("scanContainer");
+        scanContainer.style.display = 'none';
+
+        Operate_SC_Content();
+
     } else {};
 }
 
@@ -146,6 +166,33 @@ function clickScanMode() {
         basketMode = false;
         scanMode = true
         updateAllSearchImages();
+
+        var specContainer = document.getElementById("specContainer");
+        var componentContainer = document.getElementById("componentContainer");
+        var basketContainer = document.getElementById("basketContainer");
+
+        componentContainer.style.visibility = "hidden";
+        specContainer.style.display = "none";
+        basketContainer.style.display = 'none';
+
+        var scanContainer = document.getElementById("scanContainer");
+        scanContainer.style.display = 'block';
+
+        Operate_SC_Content();
         
     } else {};
+}
+
+function Operate_SC_Content() {
+    var scanContainer = document.getElementById("scanContainer");
+    if (scanMode == true) {
+        console.log("Going to Build QR");
+        const new_inner = '<iframe src="static/barcode_scan/test.html" frameborder="0" width="100%" height="100%"></iframe>';
+        scanContainer.innerHTML = new_inner;
+    }
+
+    else {
+        console.log("Going to Reset QR");
+        scanContainer.innerHTML = '';
+    };
 }
