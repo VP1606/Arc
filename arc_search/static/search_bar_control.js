@@ -1,13 +1,15 @@
 var eanExact = true;
 var nameSearch = false;
 var eanSearch = false;
-var basketMode = false
+var basketMode = false;
+var scanMode = false;
 
 const searchButtonImages = {
     'exact-ean-btn': ['/static/search_btn_images/exact_ean_off.png', '/static/search_btn_images/exact_ean_on.png'],
     'name-search-btn': ['/static/search_btn_images/name_search_off.png', '/static/search_btn_images/name_search_on.png'],
     'ean-search-btn': ['/static/search_btn_images/ean_search_off.png', '/static/search_btn_images/ean_search_on.png'],
-    'basket-btn': ['/static/search_btn_images/basket_off.png', '/static/search_btn_images/basket_on.png']
+    'basket-btn': ['/static/search_btn_images/basket_off.png', '/static/search_btn_images/basket_on.png'],
+    'scan-btn': ['/static/search_btn_images/scan_off.png', '/static/search_btn_images/scan_on.png']
 };
 
 function setSearchImage(key, value) {
@@ -26,6 +28,7 @@ function updateAllSearchImages() {
     setSearchImage('name-search-btn', nameSearch);
     setSearchImage('ean-search-btn', eanSearch);
     setSearchImage('basket-btn', basketMode);
+    setSearchImage('scan-btn', scanMode);
 };
 
 function isTableEmpty(table) {
@@ -45,6 +48,7 @@ function clickExactEAN() {
         nameSearch = false;
         eanSearch = false;
         basketMode = false;
+        scanMode = false;
         updateAllSearchImages();
         var ean_input = document.getElementById("search-field-typebox");
         ean_input.value = "";
@@ -70,6 +74,7 @@ function clickNameSearch() {
         nameSearch = true;
         eanSearch = false;
         basketMode = false;
+        scanMode = false;
         updateAllSearchImages();
         var ean_input = document.getElementById("search-field-typebox");
         ean_input.value = "";
@@ -95,6 +100,7 @@ function clickEANSearch() {
         nameSearch = false;
         eanSearch = true;
         basketMode = false;
+        scanMode = false;
         updateAllSearchImages();
         var ean_input = document.getElementById("search-field-typebox");
         ean_input.value = "";
@@ -120,6 +126,7 @@ function clickBasketMode() {
         nameSearch = false;
         eanSearch = false;
         basketMode = true;
+        scanMode = false;
         updateAllSearchImages();
         var ean_input = document.getElementById("search-field-typebox");
         ean_input.value = "";
@@ -128,5 +135,17 @@ function clickBasketMode() {
         var basketContainer = document.getElementById("basketContainer");
         basketContainer.style.display = 'block';
 
+    } else {};
+}
+
+function clickScanMode() {
+    if (scanMode == false) {
+        eanExact = false;
+        nameSearch = false;
+        eanSearch = false;
+        basketMode = false;
+        scanMode = true
+        updateAllSearchImages();
+        
     } else {};
 }
