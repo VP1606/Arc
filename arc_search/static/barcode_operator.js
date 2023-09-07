@@ -12,3 +12,12 @@ function HitBarcodeConfirm(ean) {
     ean_input.value = ean;
     search_button.click();
 };
+
+function RetryBarcode() {
+    var parentWindow = window.parent;
+    var exact_ean_button = parentWindow.document.getElementById("exact-ean-btn");
+    var scan_button = parentWindow.document.getElementById("scan-btn");
+
+    exact_ean_button.click();
+    scan_button.click();
+}
