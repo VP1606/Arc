@@ -29,6 +29,19 @@ function updateAllSearchImages() {
     setSearchImage('ean-search-btn', eanSearch);
     setSearchImage('basket-btn', basketMode);
     setSearchImage('scan-btn', scanMode);
+
+    var searchField = document.getElementById("search-container");
+    var searchButton = document.getElementById("search-button-clicker");
+
+    if (scanMode == true) {
+        searchField.style.visibility = 'hidden';
+        searchButton.style.display = 'none';
+        console.log("SC OFF");
+    } else {
+        searchField.style.visibility = 'visible';
+        searchButton.style.display = 'block';
+        console.log("SC ON");
+    };
 };
 
 function isTableEmpty(table) {
