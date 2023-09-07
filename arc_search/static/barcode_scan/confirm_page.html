@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/barcode_scan/barcode_styles.css">
+    </head>
+    <body>
+        <center>
+            <p>SCANNED EAN</p>
+        </center>
+        <center>
+            <p style="font-weight: 900; font-size: 30px; margin-top: 0px;">{result}</p>
+        </center>
+
+        <center>
+            <div class="centre-container" id="search-button-stack" style="margin-top: 50px;">
+                <img src="/static/search_btn.png" alt="Image description" onclick="HitBarcodeConfirm('{result}')" id="scan-find-button" style="display: block;">
+            </div>
+
+            <div class="centre-container" id="search-button-stack" style="margin-top: 0px;">
+                <img src="/static/retry_btn.png" alt="Image description" onclick="RetryBarcode()" id="scan-find-button" style="display: block;">
+            </div>
+        </center>
+    </body>
+</html>

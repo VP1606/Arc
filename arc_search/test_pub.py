@@ -28,6 +28,7 @@ async def favicon():
 async def read_main():
     html_file_path = Path("static/mainpage.html")
     # html_file_path = Path("static/basket_mode/basket_element.html")
+    # html_file_path = Path("static/barcode_scan/scan_interface.html")
     return FileResponse(html_file_path)
 
 @app.get("/search_ean")

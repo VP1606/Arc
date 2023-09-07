@@ -1,13 +1,15 @@
 var eanExact = true;
 var nameSearch = false;
 var eanSearch = false;
-var basketMode = false
+var basketMode = false;
+var scanMode = false;
 
 const searchButtonImages = {
     'exact-ean-btn': ['/static/search_btn_images/exact_ean_off.png', '/static/search_btn_images/exact_ean_on.png'],
     'name-search-btn': ['/static/search_btn_images/name_search_off.png', '/static/search_btn_images/name_search_on.png'],
     'ean-search-btn': ['/static/search_btn_images/ean_search_off.png', '/static/search_btn_images/ean_search_on.png'],
-    'basket-btn': ['/static/search_btn_images/basket_off.png', '/static/search_btn_images/basket_on.png']
+    'basket-btn': ['/static/search_btn_images/basket_off.png', '/static/search_btn_images/basket_on.png'],
+    'scan-btn': ['/static/search_btn_images/scan_off.png', '/static/search_btn_images/scan_on.png']
 };
 
 function setSearchImage(key, value) {
@@ -26,6 +28,20 @@ function updateAllSearchImages() {
     setSearchImage('name-search-btn', nameSearch);
     setSearchImage('ean-search-btn', eanSearch);
     setSearchImage('basket-btn', basketMode);
+    setSearchImage('scan-btn', scanMode);
+
+    var searchField = document.getElementById("search-container");
+    var searchButton = document.getElementById("search-button-clicker");
+
+    if (scanMode == true) {
+        searchField.style.visibility = 'hidden';
+        searchButton.style.display = 'none';
+        console.log("SC OFF");
+    } else {
+        searchField.style.visibility = 'visible';
+        searchButton.style.display = 'block';
+        console.log("SC ON");
+    };
 };
 
 function isTableEmpty(table) {
@@ -45,6 +61,7 @@ function clickExactEAN() {
         nameSearch = false;
         eanSearch = false;
         basketMode = false;
+        scanMode = false;
         updateAllSearchImages();
         var ean_input = document.getElementById("search-field-typebox");
         ean_input.value = "";
@@ -61,6 +78,11 @@ function clickExactEAN() {
         var basketContainer = document.getElementById("basketContainer");
         basketContainer.style.display = 'none';
 
+        var scanContainer = document.getElementById("scanContainer");
+        scanContainer.style.display = 'none';
+
+        Operate_SC_Content();
+
     } else {};
 }
 
@@ -70,6 +92,7 @@ function clickNameSearch() {
         nameSearch = true;
         eanSearch = false;
         basketMode = false;
+        scanMode = false;
         updateAllSearchImages();
         var ean_input = document.getElementById("search-field-typebox");
         ean_input.value = "";
@@ -86,6 +109,11 @@ function clickNameSearch() {
         var basketContainer = document.getElementById("basketContainer");
         basketContainer.style.display = 'none';
 
+        var scanContainer = document.getElementById("scanContainer");
+        scanContainer.style.display = 'none';
+
+        Operate_SC_Content();
+
     } else {};
 }
 
@@ -95,6 +123,7 @@ function clickEANSearch() {
         nameSearch = false;
         eanSearch = true;
         basketMode = false;
+        scanMode = false;
         updateAllSearchImages();
         var ean_input = document.getElementById("search-field-typebox");
         ean_input.value = "";
@@ -111,6 +140,11 @@ function clickEANSearch() {
         var basketContainer = document.getElementById("basketContainer");
         basketContainer.style.display = 'none';
 
+        var scanContainer = document.getElementById("scanContainer");
+        scanContainer.style.display = 'none';
+
+        Operate_SC_Content();
+
     } else {};
 }
 
@@ -120,6 +154,7 @@ function clickBasketMode() {
         nameSearch = false;
         eanSearch = false;
         basketMode = true;
+        scanMode = false;
         updateAllSearchImages();
         var ean_input = document.getElementById("search-field-typebox");
         ean_input.value = "";
@@ -128,5 +163,49 @@ function clickBasketMode() {
         var basketContainer = document.getElementById("basketContainer");
         basketContainer.style.display = 'block';
 
+        var scanContainer = document.getElementById("scanContainer");
+        scanContainer.style.display = 'none';
+
+        Operate_SC_Content();
+
     } else {};
+}
+
+function clickScanMode() {
+    if (scanMode == false) {
+        eanExact = false;
+        nameSearch = false;
+        eanSearch = false;
+        basketMode = false;
+        scanMode = true
+        updateAllSearchImages();
+
+        var specContainer = document.getElementById("specContainer");
+        var componentContainer = document.getElementById("componentContainer");
+        var basketContainer = document.getElementById("basketContainer");
+
+        componentContainer.style.visibility = "hidden";
+        specContainer.style.display = "none";
+        basketContainer.style.display = 'none';
+
+        var scanContainer = document.getElementById("scanContainer");
+        scanContainer.style.display = 'block';
+
+        Operate_SC_Content();
+        
+    } else {};
+}
+
+function Operate_SC_Content() {
+    var scanContainer = document.getElementById("scanContainer");
+    if (scanMode == true) {
+        console.log("Going to Build QR");
+        const new_inner = '<iframe src="static/barcode_scan/test.html" frameborder="0" width="100%" height="100%"></iframe>';
+        scanContainer.innerHTML = new_inner;
+    }
+
+    else {
+        console.log("Going to Reset QR");
+        scanContainer.innerHTML = '';
+    };
 }
