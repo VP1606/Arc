@@ -41,23 +41,22 @@
     
         function success(result) {
 
-            fetch('/static/barcode_scan/confirm_page.html')
-            .then(response => response.text())
-            .then(data => {
-                data = data.replace("{result}", result);
-                data = data.replace("{result}", result);
-                document.getElementById('result').innerHTML = data;
-            })
-            .catch(error => {
-                console.error('Error fetching component:', error);
-            });
-
+            // fetch('/static/barcode_scan/confirm_page.html')
+            // .then(response => response.text())
+            // .then(data => {
+            //     data = data.replace("{result}", result);
+            //     data = data.replace("{result}", result);
+            //     document.getElementById('result').innerHTML = data;
+            // })
+            // .catch(error => {
+            //     console.error('Error fetching component:', error);
+            // });
             scanner.clear();
             // Clears scanning instance
-    
             document.getElementById('reader').remove();
             // Removes reader element from DOM since no longer needed
-        
+            
+            HitBarcodeConfirm(result);
         }
     
         function error(err) {
