@@ -7,6 +7,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import user_manager.user_handler
 
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(parent_dir)
@@ -14,7 +15,17 @@ from parfetts.ean_search_sys import search_ean
 
 def generate_parfetts_drivers():
     collection = {}
-    collection[0] = parfetts_login()
+    users = user_manager.user_handler.fetch_users()
+    for user in users:
+        user_id = user[0]
+        try:
+            username, password = user_manager.user_handler.fetch_creds(type="bw", user_id=user_id)
+            collection[user_id] = parfetts_login(username=username, password=password)
+        except Exception as e:
+            print(e)
+            print("No BW Login available...")
+            collection[user_id] = None
+
     return collection
 
 def parfetts_login(username=secret_jar.parfetts_username, password=secret_jar.parfetts_password):

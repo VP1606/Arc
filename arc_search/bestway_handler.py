@@ -8,6 +8,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+import user_manager.user_handler
 
 # class BestwayItem(
 #     name: Any,
@@ -22,7 +23,18 @@ from selenium.common.exceptions import TimeoutException
 
 def generate_bestway_drivers():
     collection = {}
-    collection[0] = bestway_login()
+
+    users = user_manager.user_handler.fetch_users()
+    for user in users:
+        user_id = user[0]
+        try:
+            account_number, password = user_manager.user_handler.fetch_creds(type="bw", user_id=user_id)
+            collection[user_id] = bestway_login(account_number=account_number, password=password)
+        except Exception as e:
+            print(e)
+            print("No BW Login available...")
+            collection[user_id] = None
+
     return collection
 
 def bestway_login(account_number=secret_jar.bestway_acc_num, password=secret_jar.bestway_acc_pass):

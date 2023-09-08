@@ -60,3 +60,32 @@ def upload_login_creds(type, user_id, username, password):
     cursor.close()
     db.close()
     return
+
+def fetch_creds(type, user_id):
+    db = mysql.connector.connect(
+        host="192.168.1.180",
+        user="mpos",
+        password="mpospass",
+        database="mpos"
+    )
+
+    cursor = db.cursor()
+
+    if type == "bw":
+        sql = f'SELECT account_number, pw FROM arc_users_bw_details WHERE user_id = {user_id};'
+    elif type == "pf":
+        sql = f'SELECT username, pw FROM arc_users_pf_details WHERE user_id = {user_id};'
+    else:
+        print("UNKNOWN!!!")
+        return
+    
+    cursor.execute(sql)
+
+    res = cursor.fetchall()[0]
+    cursor.close()
+    db.close()
+
+    return res
+
+# print(fetch_creds("pf", 2))
+# upload_login_creds("pf", 3, "manove@gmail.com", "aRiOq58h")
