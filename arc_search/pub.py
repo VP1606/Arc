@@ -37,7 +37,8 @@ def get_parfetts_drivers():
 
 def quit_drivers(collection: dict):
     for key in collection:
-        collection[key].quit()
+        if collection[key] is not None:
+            collection[key].quit()
 
 @app.get('/favicon.ico', include_in_schema=False)
 async def favicon():
@@ -91,7 +92,7 @@ async def search_all(id: str, ean: str, product_name: str, bw_drivers = Depends(
         search_name = product_name
         main_res = {}
 
-        keyID = 0
+        keyID = 3
 
         try:
             bestway_result = bestway_collector(ean=ean, driver=bw_drivers[keyID])

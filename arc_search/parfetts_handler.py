@@ -19,7 +19,7 @@ def generate_parfetts_drivers():
     for user in users:
         user_id = user[0]
         try:
-            username, password = user_manager.user_handler.fetch_creds(type="bw", user_id=user_id)
+            username, password = user_manager.user_handler.fetch_creds(type="pf", user_id=user_id)
             collection[user_id] = parfetts_login(username=username, password=password)
         except Exception as e:
             print(e)
