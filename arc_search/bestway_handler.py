@@ -20,7 +20,7 @@ from selenium.common.exceptions import TimeoutException
 #     ean: Any | str,
 #     vat_rate: Any | str
 
-def bestway_login():
+def bestway_login(account_number=secret_jar.bestway_acc_num, password=secret_jar.bestway_acc_pass):
     chrome_options = Options()
     chrome_options.add_argument("--headless")
 
@@ -46,7 +46,7 @@ def bestway_login():
     account_num_entry = driver.find_element(By.XPATH, cookie_jar.bestway_account_numer_entry_xpath)
     acc_enter_button = driver.find_element(By.XPATH, cookie_jar.bestway_acc_next_button)
 
-    account_num_entry.send_keys(secret_jar.bestway_acc_num)
+    account_num_entry.send_keys(account_number)
     acc_enter_button.click()
     
     _ = WebDriverWait(driver, 5).until(EC.presence_of_element_located((
@@ -56,7 +56,7 @@ def bestway_login():
     acc_password_entry = driver.find_element(By.XPATH, cookie_jar.bestway_acc_password_xpath)
     acc_login_button = driver.find_element(By.XPATH, cookie_jar.bestway_login_button_xpath)
 
-    acc_password_entry.send_keys(secret_jar.bestway_acc_pass)
+    acc_password_entry.send_keys(password)
     acc_login_button.click()
     
     _ = WebDriverWait(driver, 5).until(EC.presence_of_element_located((
