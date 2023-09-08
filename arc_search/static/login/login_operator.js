@@ -42,7 +42,7 @@ function CreateUserIcons() {
       var img = document.createElement("img");
       img.src = `/static/login/user_icons/${obj[1]}_off.png`;
       img.setAttribute('data-name', obj[1])
-      img.style.cssText = 'width: 70px;  height: 70px; margin: 40px;';
+      img.style.cssText = 'width: 60px;  height: 60px; margin: 40px;';
 
       img.onclick = function() {
         ClickUserIcon(this);
