@@ -89,12 +89,12 @@ async def search_parfetts(id: str, ean: str, product_name: str=""):
         return Response(content='False', media_type="application/json")
     
 @app.get("/search_all")
-async def search_all(id: str, ean: str, product_name: str, bw_drivers = Depends(get_bestway_drivers), p_drivers = Depends(get_parfetts_drivers)):
+async def search_all(id: str, ean: str, product_name: str, key_id: str, bw_drivers = Depends(get_bestway_drivers), p_drivers = Depends(get_parfetts_drivers)):
     if pub_id == id:
         search_name = product_name
         main_res = {}
 
-        keyID = 3
+        keyID = int(key_id)
 
         try:
             bestway_result = bestway_collector(ean=ean, driver=bw_drivers[keyID])

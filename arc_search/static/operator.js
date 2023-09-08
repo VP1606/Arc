@@ -18,7 +18,7 @@ function do_search() {
     specContainer.style.display = "none";
     resetTable();
 
-    var url = `/search_all?id=iahfiasfdosai2313212**7613&ean=${encodeURIComponent(searchEAN)}&product_name=?`
+    var url = `/search_all?id=iahfiasfdosai2313212**7613&ean=${encodeURIComponent(searchEAN)}&product_name=n&key_id=${UserID}`
 
     fetch(url, {
         method: "GET"
