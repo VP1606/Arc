@@ -197,4 +197,11 @@ function DummyMake() {
   );
 
   componentContainer.style.visibility = "visible";
-}
+};
+
+var UserID = 999;
+function setUserID() {
+  const selected_user = window.parent.selectedUser;
+  const userIconMap = window.parent.userIconMap;
+  UserID = userIconMap[selected_user];
+};
