@@ -1,11 +1,11 @@
 function verify_otp() {
+  const code = document.getElementById("search-field-typebox").value;
 
-    const username = "demo";
-    const code = document.getElementById("search-field-typebox").value;
-
+  if (code != '' && selectedUser != '') {
+    const userID = userIconMap[selectedUser];
     console.log("LOGGING IN");
 
-    var url = `/login/verify_otp?username=${encodeURIComponent(username)}&otp=${encodeURIComponent(code)}`;
+    var url = `/login/verify_otp?user_id=${encodeURIComponent(userID)}&otp=${encodeURIComponent(code)}`;
 
     fetch(url, {
         method: "GET"
@@ -22,4 +22,47 @@ function verify_otp() {
         };
 
       });
+  } else {
+    console.log("EMPTY FIELDS");
+  };
 };
+
+var userIconMap = {};
+var selectedUser = '';
+
+function CreateUserIcons() {
+  var url = '/login/get_users';
+  fetch(url).then(res=> res.json()).then(data => {
+
+    var holder = document.getElementById("user-icon-holder");
+
+    for (const obj of data) {
+      userIconMap[obj[1]] = obj[0];
+
+      var img = document.createElement("img");
+      img.src = `/static/login/user_icons/${obj[1]}_off.png`;
+      img.setAttribute('data-name', obj[1])
+      img.style.cssText = 'width: 70px;  height: 70px; margin: 40px;';
+
+      img.onclick = function() {
+        ClickUserIcon(this);
+      };
+
+      holder.appendChild(img);
+    };
+
+  });
+};
+
+function ClickUserIcon(img) {
+  var imageContainer = document.getElementById("user-icon-holder");
+  var images = imageContainer.querySelectorAll("img");
+  images.forEach(function(target) {
+    const target_name = target.getAttribute("data-name");
+      target.src = `/static/login/user_icons/${target_name}_off.png`;
+  });
+
+  const name = img.getAttribute("data-name");
+  img.src = `/static/login/user_icons/${name}_on.png`;
+  selectedUser = name;
+}

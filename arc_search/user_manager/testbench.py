@@ -8,8 +8,9 @@ mydb = mysql.connector.connect(
         database="mpos"
     )
 
-# user_handler.make_new_user("demo", mydb)
+# user_handler.make_new_user("demo2", "flower", mydb)
+# user_handler.make_new_user("demo3", "bolt", mydb)
 
-while True:
-    code = int(input())
-    print(otp_handler.check_otp(username='demo', code=code, db=mydb))
+# while True:
+#     code = int(input())
+#     print(otp_handler.check_otp(username='demo', code=code, db=mydb))

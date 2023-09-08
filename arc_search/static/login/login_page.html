@@ -2,13 +2,16 @@
     <head>
         <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" type="text/css" href="/static/main_styling.css">
+        <script src="/static/login/login_operator.js"></script>
+
         <script>
             function filterNonNumeric(input) {
                 input.value = input.value.replace(/\D/g, '');
             }
-        </script>
 
-        <script src="/static/login/login_operator.js"></script>
+            document.addEventListener("DOMContentLoaded", CreateUserIcons);
+
+        </script>
 
     </head>
     <body>
@@ -16,12 +19,12 @@
             <h1 id="main-title">ARC SEARCH</h1>
         </div>
 
-        <div style="display:flex; flex-direction: row; justify-content: center; align-items: center; height: 94px; padding-top: 81px;">
-            <img style="width: 85px;  height: 94px; padding-right: 50px;" id="exact-ean-btn" class="search_btn_image" src="/static/search_btn_images/exact_ean_off.png" onclick="clickExactEAN()">
+        <div style="display:flex; flex-direction: row; justify-content: center; align-items: center; height: 94px; padding-top: 81px;" id="user-icon-holder">
+            <!-- <img style="width: 85px;  height: 94px; padding-right: 50px;" id="exact-ean-btn" class="search_btn_image" src="/static/search_btn_images/exact_ean_off.png" onclick="clickExactEAN()">
             <img style="width: 85px;  height: 94px;" id="name-search-btn" class="search_btn_image" src="/static/search_btn_images/name_search_off.png" onclick="clickNameSearch()">
             <img style="width: 85px;  height: 94px; padding-left: 50px;" id="ean-search-btn" class="search_btn_image" src="/static/search_btn_images/ean_search_off.png" onclick="clickEANSearch()">
             <img style="width: 85px;  height: 94px; padding-left: 50px;" id="scan-btn" class="search_btn_image" src="/static/search_btn_images/scan_off.png" onclick="clickScanMode()">
-            <img style="width: 85px;  height: 94px; padding-left: 50px;" id="basket-btn" class="search_btn_image" src="/static/search_btn_images/basket_off.png" onclick="clickBasketMode()">
+            <img style="width: 85px;  height: 94px; padding-left: 50px;" id="basket-btn" class="search_btn_image" src="/static/search_btn_images/basket_off.png" onclick="clickBasketMode()"> -->
         </div>
         
         <div class="centre-container" id="search-container">
