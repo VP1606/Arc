@@ -2,7 +2,7 @@ import imaplib
 import email
 import time
 import importlib
-import email_handler, csv_handler, config_holder, responder
+import email_handler, csv_handler, config_holder, responder, pdf_handler
 
 def get_mail_client(email_address):
     print("Connecting IMAP...")
@@ -27,6 +27,7 @@ while True:
     importlib.reload(csv_handler)
     importlib.reload(config_holder)
     importlib.reload(responder)
+    importlib.reload(pdf_handler)
     # print("SCAN")
 
     try:

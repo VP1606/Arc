@@ -4,3 +4,4 @@ venv/
 arc_search/secret_jar.py
 arc_importer/imap_cred.txt
 temp/collected.csv
+temp/collected.pdf
