@@ -12,6 +12,11 @@ parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(parent_dir)
 from parfetts.ean_search_sys import search_ean
 
+def generate_parfetts_drivers():
+    collection = {}
+    collection[0] = parfetts_login()
+    return collection
+
 def parfetts_login(username=secret_jar.parfetts_username, password=secret_jar.parfetts_password):
     chrome_options = Options()
     chrome_options.add_argument("--headless")

@@ -20,6 +20,11 @@ from selenium.common.exceptions import TimeoutException
 #     ean: Any | str,
 #     vat_rate: Any | str
 
+def generate_bestway_drivers():
+    collection = {}
+    collection[0] = bestway_login()
+    return collection
+
 def bestway_login(account_number=secret_jar.bestway_acc_num, password=secret_jar.bestway_acc_pass):
     chrome_options = Options()
     chrome_options.add_argument("--headless")
