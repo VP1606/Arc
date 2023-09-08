@@ -10,6 +10,8 @@ from pathlib import Path
 from sql_save import process_results as sql_process
 from extract_search import extract_search_main
 import basket_operator
+from user_manager import otp_handler
+import user_manager.user_handler
 
 app = FastAPI()
 pub_id = "iahfiasfdosai2313212**7613"
@@ -46,7 +48,7 @@ async def favicon():
 
 @app.get("/")
 async def read_main():
-    html_file_path = Path("static/mainpage.html")
+    html_file_path = Path("static/login/login_page.html")
     return FileResponse(html_file_path)
 
 @app.get("/test")
@@ -151,6 +153,16 @@ async def operate_basket(id: str, key: str):
             return Response(content=res_unavailable_message, media_type="application/json")
     else:
         return Response(content=json.dumps(False), media_type="application/json")
+    
+@app.get("/login/verify_otp")
+async def verify_otp(user_id: str, otp: str):
+    res = otp_handler.check_otp(user_id=int(user_id), code=int(otp))
+    return Response(content=json.dumps(res), media_type="application/json")
+
+@app.get("/login/get_users")
+async def get_users():
+    res = user_manager.user_handler.fetch_users()
+    return Response(content=json.dumps(res), media_type="application/json") 
 
 @app.on_event("shutdown")
 async def shutdown_event():
