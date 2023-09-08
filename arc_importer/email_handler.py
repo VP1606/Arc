@@ -17,6 +17,7 @@ def handle(message):
         if message.is_multipart():
             found = False
             PDF_Mode = False
+            CSV_Found = False
             for part in message.walk():
                 if part.get_content_maintype() == 'multipart':
                     continue
@@ -33,7 +34,9 @@ def handle(message):
                     fp.write(part.get_payload(decode=True).decode("utf-8"))
                     fp.close()
 
+                    CSV_Found = True
                     break
+
                 elif bool(fileName) and '.pdf' in fileName:
                     print(f"Found PDF! {fileName}")
                     if 'pdf' in approved_types:
@@ -46,7 +49,10 @@ def handle(message):
                     else:
                         print("Sender Not allowed to send PDF!")
                         found = False
-                    break
+
+            if CSV_Found:
+                PDF_Mode = False
+                print("Overruling PDF - CSV Found.")
                 
             if found is False:
                 print("Cannot find CSV!")
