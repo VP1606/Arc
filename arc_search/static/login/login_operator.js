@@ -15,7 +15,9 @@ function verify_otp() {
         console.log(json);
 
         if (json == false) {
-            console.log("Login Failed!");
+            console.log("Login Failed 22!");
+            var message = document.getElementById("auth_fail_message");
+            message.style.visibility = "visible";
         } else {
             const new_inner = '<iframe src="/static/mainpage.html" frameborder="0" width="100%" height="100%"></iframe>';
             document.body.innerHTML = new_inner;

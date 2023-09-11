@@ -53,5 +53,11 @@
             <img src="/static/login_btn.png" alt="Image description" onclick="verify_otp()" id="search-button-clicker" style="display: block; width: 330px; height: 90px;">
             <div class="loader" id="loader-wheel" style="display: none;"></div>
         </div>
+
+        <div style="display:flex; flex-direction: row; justify-content: center; align-items: center; padding-top: 50px; visibility: hidden;" id="auth_fail_message">
+            <img src="/static/xmark_icon.png" style="width: 30px; height: 30px; padding-right: 30px; padding-bottom: 1px;">
+            <p style="color: #000; font-family: Avenir; font-size: 20px; font-style: normal; font-weight: 900;">Your code was invalid, please try again.</p>
+        </div>
+
     </body>
 </html>
