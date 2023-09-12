@@ -8,26 +8,20 @@
         <script>
             // Function to toggle the dropdown content
             function toggleDropdown() {
-                console.log("CLICKKK2");
                 var dropdownContent = document.getElementById("dropdown-content");
-                dropdownContent.classList.toggle("show");
-
                 var backdrop = document.getElementById("backdrop");
-                if (backdrop.style.display === "none" || backdrop.style.display === "") {
+
+                if (dropdownContent.style.opacity != 1) {
+                    dropdownContent.style.opacity = 1;
+                    dropdownContent.style.maxHeight = '300px';
                     backdrop.style.display = "block";
                 } else {
-                    backdrop.style.display = "none";
-                };
-            }
-
-            function closeDropViaBackdrop() {
-                var dropdownContent = document.getElementById("dropdown-content");
-                dropdownContent.classList.remove("show");
-                var backdrop = document.getElementById("backdrop");
-                if (backdrop.style.display === "none" || backdrop.style.display === "") {
-                    backdrop.style.display = "block";
-                } else {
-                    backdrop.style.display = "none";
+                    dropdownContent.style.opacity = 0;
+                    setTimeout(function() {
+                        dropdownContent.style.maxHeight = '0px';
+                        backdrop.style.display = "none";
+                    }, 300);
+                    
                 };
             };
 
@@ -37,7 +31,7 @@
     <body style="background-color: black;">
         <div class="zstack" style="width: 100%; height: 100%;">
 
-            <div id="backdrop" style="width: 100%; height: 100%; background-color: rgba(0,0,0,0.2); -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px); z-index: 1; display: none;" onclick="closeDropViaBackdrop()"></div>
+            <div id="backdrop" style="width: 100%; height: 100%; background-color: rgba(0,0,0,0.2); -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px); z-index: 1; display: none;" onclick="toggleDropdown()"></div>
 
             <div style="width: 100%; height: 100%;">
                 <center>
@@ -54,7 +48,7 @@
                                 <div id="mode_select_title">Exact EAN</div>
                             </div>
 
-                            <div class="dropdown-content" id="dropdown-content" style="padding-top: 70px;">
+                            <div class="dropdown-content" id="dropdown-content" style="position: absolute; display: block; z-index: 2; padding-top: 70px; overflow: hidden; max-height: 0px; opacity: 0.0; transition: opacity 0.3s ease-in-out;">
                                 <div class="zstack" style="max-width: 200px; height: var(--mode-select-box-height); z-index: 2;">
                                     <img src="/static/UI2/img_assets/mode_select_border.png" style="width: 100%; height: var(--mode-select-box-height);">
                                     <div class="flex hstack" style="width: 100%;">

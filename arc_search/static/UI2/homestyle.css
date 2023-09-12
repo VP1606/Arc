@@ -85,28 +85,6 @@
   display: inline-block;
 }
 
-/* Style the dropdown button */
-/* .dropdown-button {
-  background-color: #3498db;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  cursor: pointer;
-} */
-
-/* Style the dropdown content (initially hidden) */
-.dropdown-content {
-  position: absolute;
-  display: none;
-  z-index: 2;
-  padding-top: 10px;
-}
-
 .dropdown-content .zstack {
   padding-top: 15px;
-}
-
-/* Show the dropdown content when the button is clicked */
-.show {
-  display: block;
 }
