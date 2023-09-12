@@ -4,11 +4,40 @@
         <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" type="text/css" href="/static/UI2/homestyle.css">
         <link rel="stylesheet" type="text/css" href="/static/UI2/stacks.css">
+
+        <script>
+            // Function to toggle the dropdown content
+            function toggleDropdown() {
+                console.log("CLICKKK2");
+                var dropdownContent = document.getElementById("dropdown-content");
+                dropdownContent.classList.toggle("show");
+
+                var backdrop = document.getElementById("backdrop");
+                if (backdrop.style.display === "none" || backdrop.style.display === "") {
+                    backdrop.style.display = "block";
+                } else {
+                    backdrop.style.display = "none";
+                };
+            }
+
+            function closeDropViaBackdrop() {
+                var dropdownContent = document.getElementById("dropdown-content");
+                dropdownContent.classList.remove("show");
+                var backdrop = document.getElementById("backdrop");
+                if (backdrop.style.display === "none" || backdrop.style.display === "") {
+                    backdrop.style.display = "block";
+                } else {
+                    backdrop.style.display = "none";
+                };
+            };
+
+        </script>
+
     </head>
     <body style="background-color: black;">
         <div class="zstack" style="width: 100%; height: 100%;">
 
-            <!-- <div id="backdrop" style="width: 100%; height: 100%; background-color: rgba(0,0,0,0.2); -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px); z-index: 1;"></div> -->
+            <div id="backdrop" style="width: 100%; height: 100%; background-color: rgba(0,0,0,0.2); -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px); z-index: 1; display: none;" onclick="closeDropViaBackdrop()"></div>
 
             <div style="width: 100%; height: 100%;">
                 <center>
@@ -17,17 +46,58 @@
 
                 <center>
                     <div class="flex hstack" style="width: calc(100% - 34px); max-width: 530px; padding-top: 50px;">
-                        <div class="zstack" style="max-width: 200px; height: var(--mode-select-box-height); z-index: 2;">
+                        <div class="zstack" style="max-width: 200px; height: var(--mode-select-box-height); z-index: 2;" onclick="toggleDropdown()">
                             <img src="/static/UI2/img_assets/mode_select_border.png" style="width: 100%; height: var(--mode-select-box-height);">
                             <div class="flex hstack" style="width: 100%;">
-                                <img src="/static/UI2/img_assets/mode_icons/name_search.png" style="height: 17px; padding-left: 10px;">
+                                <img src="/static/UI2/img_assets/mode_icons/exact_ean.png" style="height: 17px; padding-left: 10px;">
                                 <div class="spacer"></div>
-                                <div id="mode_select_title">Name Search</div>
+                                <div id="mode_select_title">Exact EAN</div>
                             </div>
+
+                            <div class="dropdown-content" id="dropdown-content" style="padding-top: 70px;">
+                                <div class="zstack" style="max-width: 200px; height: var(--mode-select-box-height); z-index: 2;">
+                                    <img src="/static/UI2/img_assets/mode_select_border.png" style="width: 100%; height: var(--mode-select-box-height);">
+                                    <div class="flex hstack" style="width: 100%;">
+                                        <img src="/static/UI2/img_assets/mode_icons/name_search.png" style="height: 17px; padding-left: 10px;">
+                                        <div class="spacer"></div>
+                                        <div id="mode_select_title">Name Search</div>
+                                    </div>
+                                </div>
+    
+                                <div class="zstack" style="max-width: 200px; height: var(--mode-select-box-height); z-index: 2;">
+                                    <img src="/static/UI2/img_assets/mode_select_border.png" style="width: 100%; height: var(--mode-select-box-height);">
+                                    <div class="flex hstack" style="width: 100%;">
+                                        <img src="/static/UI2/img_assets/mode_icons/ean_search.png" style="height: 17px; padding-left: 10px;">
+                                        <div class="spacer"></div>
+                                        <div id="mode_select_title">EAN Search</div>
+                                    </div>
+                                </div>
+    
+                                <div class="zstack" style="max-width: 200px; height: var(--mode-select-box-height); z-index: 2;">
+                                    <img src="/static/UI2/img_assets/mode_select_border.png" style="width: 100%; height: var(--mode-select-box-height);">
+                                    <div class="flex hstack" style="width: 100%;">
+                                        <img src="/static/UI2/img_assets/mode_icons/scan.png" style="height: 17px; padding-left: 10px;">
+                                        <div class="spacer"></div>
+                                        <div id="mode_select_title">Scan</div>
+                                    </div>
+                                </div>
+
+                                <div class="zstack" style="max-width: 200px; height: var(--mode-select-box-height); z-index: 2;">
+                                    <img src="/static/UI2/img_assets/mode_select_border.png" style="width: 100%; height: var(--mode-select-box-height);">
+                                    <div class="flex hstack" style="width: 100%;">
+                                        <img src="/static/UI2/img_assets/mode_icons/basket.png" style="height: 17px; padding-left: 10px;">
+                                        <div class="spacer"></div>
+                                        <div id="mode_select_title">Basket</div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                         <div class="spacer"></div>
                         <p id="user-welcome-message">Welcome, Snowflake</p>
+
                     </div>
+
                 </center>
 
                 <center>
