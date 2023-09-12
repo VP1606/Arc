@@ -8,6 +8,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+import user_manager.user_handler
 
 # class BestwayItem(
 #     name: Any,
@@ -20,7 +21,23 @@ from selenium.common.exceptions import TimeoutException
 #     ean: Any | str,
 #     vat_rate: Any | str
 
-def bestway_login():
+def generate_bestway_drivers():
+    collection = {}
+
+    users = user_manager.user_handler.fetch_users()
+    for user in users:
+        user_id = user[0]
+        try:
+            account_number, password = user_manager.user_handler.fetch_creds(type="bw", user_id=user_id)
+            collection[user_id] = bestway_login(account_number=account_number, password=password)
+        except Exception as e:
+            print(e)
+            print("No BW Login available...")
+            collection[user_id] = None
+
+    return collection
+
+def bestway_login(account_number=secret_jar.bestway_acc_num, password=secret_jar.bestway_acc_pass):
     chrome_options = Options()
     chrome_options.add_argument("--headless")
 
@@ -46,7 +63,7 @@ def bestway_login():
     account_num_entry = driver.find_element(By.XPATH, cookie_jar.bestway_account_numer_entry_xpath)
     acc_enter_button = driver.find_element(By.XPATH, cookie_jar.bestway_acc_next_button)
 
-    account_num_entry.send_keys(secret_jar.bestway_acc_num)
+    account_num_entry.send_keys(account_number)
     acc_enter_button.click()
     
     _ = WebDriverWait(driver, 5).until(EC.presence_of_element_located((
@@ -56,7 +73,7 @@ def bestway_login():
     acc_password_entry = driver.find_element(By.XPATH, cookie_jar.bestway_acc_password_xpath)
     acc_login_button = driver.find_element(By.XPATH, cookie_jar.bestway_login_button_xpath)
 
-    acc_password_entry.send_keys(secret_jar.bestway_acc_pass)
+    acc_password_entry.send_keys(password)
     acc_login_button.click()
     
     _ = WebDriverWait(driver, 5).until(EC.presence_of_element_located((

@@ -7,6 +7,8 @@ import mysql.connector
 import json
 import basket_operator
 import time
+import user_manager.otp_handler as otp_handler
+import user_manager.user_handler
 
 # NAME TIME: 0.030276060104370117
 
@@ -26,10 +28,21 @@ async def favicon():
 
 @app.get("/")
 async def read_main():
-    html_file_path = Path("static/mainpage.html")
+    # html_file_path = Path("static/mainpage.html")
     # html_file_path = Path("static/basket_mode/basket_element.html")
     # html_file_path = Path("static/barcode_scan/scan_interface.html")
+    html_file_path = Path("static/login/login_page.html")
     return FileResponse(html_file_path)
+
+@app.get("/login/verify_otp")
+async def verify_otp(user_id: str, otp: str):
+    res = otp_handler.check_otp(user_id=int(user_id), code=int(otp))
+    return Response(content=json.dumps(res), media_type="application/json")
+
+@app.get("/login/get_users")
+async def get_users():
+    res = user_manager.user_handler.fetch_users()
+    return Response(content=json.dumps(res), media_type="application/json") 
 
 @app.get("/search_ean")
 async def search_ean(id: str, query: str):

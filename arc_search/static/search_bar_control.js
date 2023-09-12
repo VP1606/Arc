@@ -199,8 +199,8 @@ function clickScanMode() {
 function Operate_SC_Content() {
     var scanContainer = document.getElementById("scanContainer");
     if (scanMode == true) {
-        console.log("Going to Build QR");
-        const new_inner = '<iframe src="static/barcode_scan/test.html" frameborder="0" width="100%" height="100%"></iframe>';
+        console.log("Going to Build QR2");
+        const new_inner = '<iframe src="/static/barcode_scan/test.html" frameborder="0" width="100%" height="100%"></iframe>';
         scanContainer.innerHTML = new_inner;
     }
 
