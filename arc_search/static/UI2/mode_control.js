@@ -11,6 +11,7 @@ const modeIconBindings = {
     'basket-btn': ['/static/UI2/img_assets/mode_icons/basket.png', 'Basket', false],
     'scan-btn': ['/static/UI2/img_assets/mode_icons/scan.png', 'Scan', false]
 };
+
 function ClickMode(sender) {
     var main_mode_show = document.getElementById("main_mode_show");
     const binding = modeIconBindings[sender.id];

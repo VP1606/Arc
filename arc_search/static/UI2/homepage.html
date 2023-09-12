@@ -32,6 +32,22 @@
               };
             };
 
+            function searchRouter() {
+                if (eanExact == true) {
+                    console.log("EXACT EAN");
+                    // do_search();
+                } else if (nameSearch == true) {
+                    console.log("NAME SEARCH");
+                    // do_name_search();
+                } else if (eanSearch == true) {
+                    console.log("EAN SEARCH");
+                    // do_ean_search();
+                } else if (basketMode == true) {
+                    console.log("BASKET MODE");
+                    // do_basket_search();
+                } else {};
+            };
+
         </script>
 
         <script src="/static/UI2/mode_control.js"></script>
