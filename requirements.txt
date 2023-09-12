@@ -3,6 +3,12 @@ beautifulsoup4
 fastapi
 mysql_connector_repackaged
 pandas
+pdf2image
+Pillow
+Pillow
+pyotp
+pytesseract
+pyzbar
 Requests
 schedule
 selenium
