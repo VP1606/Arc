@@ -25,7 +25,7 @@
             };
 
             function filterNonNumeric(input) {
-              if (nameSearch == true || basketMode == true) {
+              if (modeIconBindings['name-search-btn'][2] == true || modeIconBindings['basket-btn'][2] == true) {
                 //PASS
               } else {
                 input.value = input.value.replace(/\D/g, '');
