@@ -1,8 +1,23 @@
 <html>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <head>
-
+        <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" type="text/css" href="/static/UI2/homestyle.css">
+        <link rel="stylesheet" type="text/css" href="/static/UI2/stacks.css">
     </head>
     <body style="background-color: black;">
-        
+        <center>
+            <img src="/static/UI2/img_assets/header_icons.png" style="height: 51px; padding-top: 5px;">
+        </center>
+        <center>
+            <div class="zstack" style="width: calc(100% - 34px); max-width: 530px; height: 50px; padding-top: 50px;">
+                <img src="/static/UI2/img_assets/search_box.png" id="search_box">
+                <div class="flex hstack" id="search_stack">
+                    <input type="text" name="ean-code" id="search-field-typebox" placeholder="EAN" oninput="filterNonNumeric(this)">
+                    <div class="spacer"></div>
+                    <img src="/static/UI2/img_assets/search_button.png" id="search_button">
+                </div>
+            </div>
+        </center>
     </body>
 </html>
