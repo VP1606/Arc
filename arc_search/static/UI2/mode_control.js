@@ -18,4 +18,15 @@ function ClickMode(sender) {
     document.getElementById("main_mode_image").src = binding[0];
     main_mode_show.querySelector('#mode_select_title').textContent = binding[1];
     modeIconBindings[sender.id][2] = true;
+
+    var search_box = document.getElementById("search-field-typebox");
+    search_box.value = "";
+
+    if (sender.id == 'exact-ean-btn' || sender.id == 'ean-search-btn') {
+        search_box.placeholder = "EAN";
+    } else if (sender.id == 'name-search-btn') {
+        search_box.placeholder = "Name";
+    } else if (sender.id == 'basket-btn') {
+        search_box.placeholder = "Key Phrase";
+    } else {};
 };
