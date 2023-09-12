@@ -6,34 +6,41 @@
         <link rel="stylesheet" type="text/css" href="/static/UI2/stacks.css">
     </head>
     <body style="background-color: black;">
-        <center>
-            <img src="/static/UI2/img_assets/header_icons.png" style="height: 51px; padding-top: 5px;">
-        </center>
+        <div class="zstack" style="width: 100%; height: 100%;">
 
-        <center>
-            <div class="flex hstack" style="width: calc(100% - 34px); max-width: 530px; padding-top: 50px;">
-                <div class="zstack" style="max-width: 200px; height: var(--mode-select-box-height);">
-                    <img src="/static/UI2/img_assets/mode_select_border.png" style="width: 100%; height: var(--mode-select-box-height);">
-                    <div class="flex hstack" style="width: 100%;">
-                        <img src="/static/UI2/img_assets/mode_icons/name_search.png" style="height: 17px; padding-left: 10px;">
+            <!-- <div id="backdrop" style="width: 100%; height: 100%; background-color: rgba(0,0,0,0.2); -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px); z-index: 1;"></div> -->
+
+            <div style="width: 100%; height: 100%;">
+                <center>
+                    <img src="/static/UI2/img_assets/header_icons.png" style="height: 51px; padding-top: 5px;">
+                </center>
+
+                <center>
+                    <div class="flex hstack" style="width: calc(100% - 34px); max-width: 530px; padding-top: 50px;">
+                        <div class="zstack" style="max-width: 200px; height: var(--mode-select-box-height); z-index: 2;">
+                            <img src="/static/UI2/img_assets/mode_select_border.png" style="width: 100%; height: var(--mode-select-box-height);">
+                            <div class="flex hstack" style="width: 100%;">
+                                <img src="/static/UI2/img_assets/mode_icons/name_search.png" style="height: 17px; padding-left: 10px;">
+                                <div class="spacer"></div>
+                                <div id="mode_select_title">Name Search</div>
+                            </div>
+                        </div>
                         <div class="spacer"></div>
-                        <div id="mode_select_title">Name Search</div>
+                        <p id="user-welcome-message">Welcome, Snowflake</p>
                     </div>
-                </div>
-                <div class="spacer"></div>
-                <p id="user-welcome-message">Welcome, Snowflake</p>
-            </div>
-        </center>
+                </center>
 
-        <center>
-            <div class="zstack" style="width: calc(100% - 34px); max-width: 530px; height: 50px; padding-top: 50px;">
-                <img src="/static/UI2/img_assets/search_box.png" id="search_box">
-                <div class="flex hstack" id="search_stack">
-                    <input type="text" name="ean-code" id="search-field-typebox" placeholder="EAN" oninput="filterNonNumeric(this)">
-                    <div class="spacer"></div>
-                    <img src="/static/UI2/img_assets/search_button.png" id="search_button">
-                </div>
+                <center>
+                    <div class="zstack" style="width: calc(100% - 34px); max-width: 530px; height: 50px; padding-top: 50px;">
+                        <img src="/static/UI2/img_assets/search_box.png" id="search_box">
+                        <div class="flex hstack" id="search_stack">
+                            <input type="text" name="ean-code" id="search-field-typebox" placeholder="EAN" oninput="filterNonNumeric(this)">
+                            <div class="spacer"></div>
+                            <img src="/static/UI2/img_assets/search_button.png" id="search_button">
+                        </div>
+                    </div>
+                </center>
             </div>
-        </center>
+        </div>
     </body>
 </html>
