@@ -6,11 +6,11 @@ function do_search() {
 
     const UserID = 2;
 
-    // var loaderUI = document.getElementById("loader-wheel");
+    var loaderUI = document.getElementById("loader-wheel");
     var searchButton = document.getElementById("search_button");
     var specContainer = document.getElementById("spec-search-container");
 
-    // loaderUI.style.display = "block";
+    loaderUI.style.display = "block";
     searchButton.style.display = "none";
     // specContainer.style.display = "none";
     specContainer.innerHTML = '';
@@ -70,7 +70,7 @@ function do_search() {
             });
         
 
-        // loaderUI.style.display = "none";
+        loaderUI.style.display = "none";
         searchButton.style.display = "block";
     });
 };
