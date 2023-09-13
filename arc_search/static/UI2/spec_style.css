@@ -40,4 +40,8 @@
 
 #spec-search-box > *:not(:last-child) {
     margin-bottom: 25px;
-  }
+}
+
+#spec-search-desc-box > *:not(:last-child) {
+    margin-bottom: 25px;
+}

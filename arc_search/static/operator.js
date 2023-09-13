@@ -32,32 +32,32 @@ function do_search() {
             .then(response => response.text())
             .then(data => {
                 specContainer.innerHTML = data;
+
+                const bestway = json.bestway;
+                if ("status" in bestway) {
+                    console.log("Error detected in Bestway.")
+                } else {
+                    var b_price = bestway.wholesale_price;
+                    if (b_price == "£0.00") {
+                        b_price = "-";
+                    };
+                    MakeSpecRow("bestway", bestway.ean, bestway.supplier_code, bestway.rsp, bestway.wholesale_unit_size, b_price, bestway.item_name);
+                };
+
+                const booker = json.booker;
+                if ("status" in booker) {
+                    console.log("Error detected in Booker.")
+                } else {
+                    MakeSpecRow("booker", booker.ean, booker.supplier_code, booker.rsp, booker.wholesale_unit_size, booker.wholesale_price, booker.item_name);
+                };
+
+                const parfetts = json.parfetts;
+                if ("status" in parfetts) {
+                    console.log("Error detected in Parfetts.")
+                } else {
+                    MakeSpecRow("parfetts", parfetts.ean, parfetts.supplier_code, parfetts.rsp, parfetts.wholesale_unit_size, parfetts.wholesale_price, parfetts.item_name);
+                };
             });
-        
-        const bestway = json.bestway;
-        if ("status" in bestway) {
-            console.log("Error detected in Bestway.")
-        } else {
-            var b_price = bestway.wholesale_price;
-            if (b_price == "£0.00") {
-                b_price = "-";
-            };
-            MakeSpecRow("bestway", bestway.ean, bestway.supplier_code, bestway.rsp, bestway.wholesale_unit_size, b_price);
-        };
-
-        const booker = json.booker;
-        if ("status" in booker) {
-            console.log("Error detected in Booker.")
-        } else {
-            MakeSpecRow("booker", booker.ean, booker.supplier_code, booker.rsp, booker.wholesale_unit_size, booker.wholesale_price);
-        };
-
-        const parfetts = json.parfetts;
-        if ("status" in parfetts) {
-            console.log("Error detected in Parfetts.")
-        } else {
-            MakeSpecRow("parfetts", parfetts.ean, parfetts.supplier_code, parfetts.rsp, parfetts.wholesale_unit_size, parfetts.wholesale_price);
-        };
         
 
         // loaderUI.style.display = "none";
@@ -65,7 +65,7 @@ function do_search() {
     });
 };
 
-function MakeSpecRow(source, ean, code, rrp, pack_size, wholesale_price) {
+function MakeSpecRow(source, ean, code, rrp, pack_size, wholesale_price, name) {
     fetch('/static/spec_search/spec_row.html')
             .then(response => response.text())
             .then(data => {
@@ -78,6 +78,16 @@ function MakeSpecRow(source, ean, code, rrp, pack_size, wholesale_price) {
 
                 var main_box = document.getElementById('spec-search-box');
                 main_box.innerHTML = main_box.innerHTML + ' ' + data;
+            });
+
+    fetch('/static/spec_search/spec_desc_row.html')
+            .then(response => response.text())
+            .then(data => {
+                data = data.replace("[SUPPLIER-ICON]", `"/static/supplier_logos/${source}-logo.png"`);
+                data = data.replace("[NAME]", name);
+
+                var desc_box = document.getElementById('spec-search-desc-box');
+                desc_box.innerHTML = desc_box.innerHTML + ' ' + data;
             });
 };
 
