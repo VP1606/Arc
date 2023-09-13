@@ -31,6 +31,16 @@ function do_search() {
         fetch('/static/spec_search/spec_page.html')
             .then(response => response.text())
             .then(data => {
+
+                var showing_desc_val = "flex";
+                if (OnMobile == true) {
+                    showing_desc_val = "flex";
+                } else {
+                    showing_desc_val = "none";
+                };
+
+                data = data.replace("[SHOWING-DESC-HEADER]", showing_desc_val);
+
                 specContainer.innerHTML = data;
 
                 const bestway = json.bestway;
@@ -75,12 +85,23 @@ function MakeSpecRow(source, ean, code, rrp, pack_size, wholesale_price, name) {
                 data = data.replace("[RRP]", rrp);
                 data = data.replace("[PCKZ]", pack_size);
                 data = data.replace("[WHP]", wholesale_price);
+                data = data.replace("[NAME]", name);
+
+                var showing_name_val = "none";
+                if (OnMobile == true) {
+                    showing_name_val = "none";
+                } else {
+                    showing_name_val = "block";
+                };
+
+                data = data.replace("[SHOWING-SPEC-NAME]", showing_name_val);
 
                 var main_box = document.getElementById('spec-search-box');
                 main_box.innerHTML = main_box.innerHTML + ' ' + data;
             });
 
-    fetch('/static/spec_search/spec_desc_row.html')
+    if (OnMobile == true) {
+        fetch('/static/spec_search/spec_desc_row.html')
             .then(response => response.text())
             .then(data => {
                 data = data.replace("[SUPPLIER-ICON]", `"/static/supplier_logos/${source}-logo.png"`);
@@ -89,6 +110,7 @@ function MakeSpecRow(source, ean, code, rrp, pack_size, wholesale_price, name) {
                 var desc_box = document.getElementById('spec-search-desc-box');
                 desc_box.innerHTML = desc_box.innerHTML + ' ' + data;
             });
+    };
 };
 
 var dummySpecData = {

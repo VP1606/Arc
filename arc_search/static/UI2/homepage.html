@@ -49,6 +49,18 @@
                 } else {};
             };
 
+            var OnMobile = true;
+            function checkMobile() {
+                return window.innerWidth < 501;
+            }
+
+            function startup() {
+                OnMobile = checkMobile();
+                // console.log(`On Mobile: ${OnMobile}`);
+            };
+
+            document.addEventListener("DOMContentLoaded", startup);
+
         </script>
 
         <script src="/static/UI2/mode_control.js"></script>
