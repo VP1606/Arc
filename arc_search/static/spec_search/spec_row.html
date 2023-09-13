@@ -1,13 +1,16 @@
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="/static/spec_search/table_styles.css">
-        <script src="/static/spec_search_handler.js"></script>
-    </head>
-
-    <td style="text-align: left;">[NAME]</td>
-    <td style="padding-left: 20px;" id="[ROW-EAN-ID]">[EAN]</td>
-    <td style="padding-left: 20px;">
-        <img src="/static/small-select-btn.png" style="width: 45px; height: 45px;" onclick='specSelectHit("[ROW-EAN-ID]")'>
-    </td>
-    
-</html>
+<div class="spec-search-row" style="width: 100%; display: flex; align-items: center; justify-content: space-between;">
+    <img src="/static/supplier_logos/bestway-logo.png" style="height: 100%;">
+    <div>
+        <p>[PCKZ]</p>
+        <!-- <div style="height: auto; background-color: orange;">&zwnj;</div> -->
+        <p tel="false">[EAN]&zwnj;</p>
+    </div>
+    <div>
+        <p style="font-weight: 900;">RRP: [RRP]</p>
+        <p>[CODE]</p>
+    </div>
+    <div>
+        <p style="text-align: right; opacity: 0.45; font-style: italic; font-size: 15px;">SUPPLY</p>
+        <p style="text-align: right; font-size: var(--major-text-size); font-weight: 900;">[WHP]</p>
+    </div>
+</div>
