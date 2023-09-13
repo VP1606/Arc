@@ -37,3 +37,7 @@
     text-decoration: none;
     vertical-align: top;
 }
+
+#spec-search-box > *:not(:last-child) {
+    margin-bottom: 25px;
+  }
