@@ -4,7 +4,7 @@ var eanSearch = false;
 var basketMode = false;
 var scanMode = false;
 
-const modeIconBindings = {
+var modeIconBindings = {
     'exact-ean-btn': ['/static/UI2/img_assets/mode_icons/exact_ean.png', 'Exact EAN', true],
     'name-search-btn': ['/static/UI2/img_assets/mode_icons/name_search.png', 'Name Search', false],
     'ean-search-btn': ['/static/UI2/img_assets/mode_icons/ean_search.png', 'EAN Search', false],

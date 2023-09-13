@@ -1,0 +1,39 @@
+:root {
+    --row-height: 50px;
+    --minor-text-size: 15px;
+    --major-text-size: 22px;
+}
+  
+  /* Media query for screens with a maximum width of 768px (typical for mobile devices) */
+@media (max-width: 500px) {
+    :root {
+        --row-height: 50px;
+        --minor-text-size: 15px;
+        --major-text-size: 22px;
+    }
+}
+  
+  /* Media query for screens with a minimum width of 769px (typical for desktop) */
+@media (min-width: 501px) {
+    :root {
+        --row-height: 60px;
+        --minor-text-size: 17px;
+        --major-text-size: 25px;
+    }
+}
+
+.spec-search-row {
+    height: var(--row-height);
+}
+
+.spec-search-row div p {
+    text-align: left;
+    color: white;
+    font-family: Avenir;
+    font-size: var(--minor-text-size);
+    font-style: normal;
+    font-weight: 400;
+    margin: 0;
+    text-decoration: none;
+    vertical-align: top;
+}
