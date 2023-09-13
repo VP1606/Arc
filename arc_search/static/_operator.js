@@ -1,0 +1,207 @@
+function do_search() {
+    var searchEAN = document.getElementById("search-field-typebox").value;
+    // searchEAN = "5024993732477";
+    // console.log(searchEAN);
+
+    var returnDumper = document.getElementById("return-dump");
+    returnDumper.textContent = "-----LOADING-----";
+
+    var loaderUI = document.getElementById("loader-wheel");
+    var searchButton = document.getElementById("search-button-clicker");
+    var componentContainer = document.getElementById("componentContainer");
+    var specContainer = document.getElementById("specContainer");
+
+    loaderUI.style.display = "block";
+    searchButton.style.display = "none";
+    // document.getElementById('componentContainer').innerHTML = '';
+    componentContainer.style.visibility = "hidden";
+    specContainer.style.display = "none";
+    resetTable();
+
+    var url = `/search_all?id=iahfiasfdosai2313212**7613&ean=${encodeURIComponent(searchEAN)}&product_name=n&key_id=${UserID}`
+
+    fetch(url, {
+        method: "GET"
+    })
+    .then((response) => response.json())
+    .then((json) => {
+        console.log(json);
+        returnDumper.textContent = JSON.stringify(json);
+
+        jsonHandler(json);
+
+        componentContainer.style.visibility = "visible";
+        loaderUI.style.display = "none";
+        searchButton.style.display = "block";
+    });
+}
+
+function jsonHandler(data) {
+    // BESTWAY
+    const bestway = data.bestway;
+    if ("status" in bestway) {
+        console.log("Error detected in Bestway.")
+    } else {
+        var b_price = bestway.wholesale_price;
+        if (b_price == "£0.00") {
+          b_price = "-";
+        };
+
+        createRow(
+            "Bestway", "OK", bestway.item_name, bestway.ean, bestway.supplier_code, bestway.rsp, 
+            bestway.wholesale_unit_size, b_price
+        );
+    }
+
+    // BOOKER
+    const booker = data.booker;
+    if ("status" in booker) {
+        console.log("Error detected in Booker.")
+    } else {
+        createRow(
+            "Booker", "OK", booker.item_name, booker.ean, booker.supplier_code, booker.rsp, 
+            booker.wholesale_unit_size, booker.wholesale_price
+        );
+    }
+
+    // PARFETTS
+    const parfetts = data.parfetts;
+    if ("status" in parfetts) {
+        console.log("Error detected in Parfetts.")
+    } else {
+        createRow(
+            "Parfetts", "OK", parfetts.item_name, parfetts.ean, parfetts.supplier_code, parfetts.rsp,
+            parfetts.wholesale_unit_size, parfetts.wholesale_price
+        );
+    }
+
+}
+
+// source, status, name, ean, code, rrp, pack_size, wholesale_price
+
+function createComponent(source, status, name, ean, code, rrp, pack_size, wholesale_price) {
+    fetch('/static/search_result.html')
+      .then(response => response.text())
+      .then(data => {
+
+        data = data.replace("[SOURCE]", source);
+        data = data.replace("[STATUS]", status);
+        data = data.replace("[NAME]", name);
+        data = data.replace("[EAN]", ean);
+        data = data.replace("[CODE]", code);
+        data = data.replace("[RRP]", rrp);
+        data = data.replace("[PCKZ]", pack_size);
+        data = data.replace("[WHP]", wholesale_price);
+
+        const component = document.createElement("div");
+        component.classList.add("return-component");
+        component.innerHTML = data;
+
+        document.getElementById('componentContainer').appendChild(component);
+      })
+      .catch(error => {
+        console.error('Error fetching component:', error);
+      });
+}
+
+function createTable() {
+    fetch('/static/search_result_tabular.html')
+      .then(response => response.text())
+      .then(data => {
+        const component = document.createElement("div");
+        component.classList.add("return-table-component");
+        component.innerHTML = data;
+
+        document.getElementById('componentContainer').appendChild(component);
+      })
+      .catch(error => {
+        console.error('Error fetching component:', error);
+      });
+}
+
+function createRow(source, status, name, ean, code, rrp, pack_size, wholesale_price) {
+    fetch('/static/search_result_row.html')
+      .then(response => response.text())
+      .then(data => {
+
+        const bway_logo = '<img src="/static/supplier_logos/bestway-logo.png" class="supplier_icon" style="width: 45px; height: 45px; display: none;">';
+        const booker_logo = ' <img src="/static/supplier_logos/booker-logo.png" class="supplier_icon" style="width: 45px; height: 45px; display: none;">';
+        const parfetts_logo = '<img src="/static/supplier_logos/parfetts-logo.png" class="supplier_icon" style="width: 45px; height: 45px; display: none;">';
+
+        if (source == "Bestway") {
+          data = data.replace(bway_logo, bway_logo.replace("none", "block"));
+        };
+
+        if (source == "Booker") {
+          data = data.replace(booker_logo, booker_logo.replace("none", "block"));
+        };
+
+        if (source == "Parfetts") {
+          data = data.replace(parfetts_logo, parfetts_logo.replace("none", "block"));
+        };
+
+        data = data.replace("[STATUS]", status);
+        data = data.replace("[NAME]", name);
+        data = data.replace("[EAN]", ean);
+        data = data.replace("[CODE]", code);
+        data = data.replace("[RRP]", rrp);
+        data = data.replace("[PCKZ]", pack_size);
+        data = data.replace("[WHP]", wholesale_price);
+
+        // const component = document.createElement("tr");
+        // component.innerHTML = data;
+
+        var table = document.getElementById('search-result-table');
+        var newRow = table.insertRow(-1);
+        newRow.classList.add("search-return-row");
+        newRow.innerHTML = data;
+        
+      })
+      .catch(error => {
+        console.error('Error fetching component:', error);
+      });
+}
+
+function resetTable() {
+  // const container = document.getElementById('componentContainer');
+  // container.style.display = "none";
+
+  const className = "search-return-row";
+  const rowsToDelete = document.querySelectorAll(`.${className}`);
+
+    // Get the reference to the table's <tbody> element
+  const tableBody = document.getElementById("search-result-table").getElementsByTagName("tbody")[0];
+
+    // Loop through the rows to delete and remove each row from the table
+  rowsToDelete.forEach(row => {
+    tableBody.removeChild(row);
+  });
+}
+
+function DummyMake() {
+  resetTable();
+
+  createRow(
+    "Booker", "OK", "Volvic Touch of Fruit Kiwi & Lime 1.5L", "3057640577888", "814666", "£1.69",
+    "1.5Ltr × 6 × 1", "£4.99"
+  );
+
+  createRow(
+    "Bestway", "OK", "Volvic Touch of Fruit Low Sugar Summer Fruits Natural Flavoured Water 1.5", "3057640577888", "814666", "£1.69",
+    "1.5Ltr × 6 × 1", "£4.99"
+  );
+
+  createRow(
+    "Parfetts", "OK", "Volvic Touch of Fruit Kiwi & Lime 1.5L", "3057640577888", "814666", "£1.69",
+    "1.5Ltr × 6 × 1", "£4.99"
+  );
+
+  componentContainer.style.visibility = "visible";
+};
+
+var UserID = 999;
+function setUserID() {
+  const selected_user = window.parent.selectedUser;
+  const userIconMap = window.parent.userIconMap;
+  UserID = userIconMap[selected_user];
+};
