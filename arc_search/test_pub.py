@@ -80,6 +80,10 @@ async def operate_basket(id: str, key: str):
             return Response(content=res_unavailable_message, media_type="application/json")
     else:
         return Response(content=json.dumps(False), media_type="application/json")
+    
+@app.get("/test")
+async def test():
+    return Response(content=json.dumps('TEST!'), media_type="application/json")
 
 @app.on_event("shutdown")
 async def shutdown_event():

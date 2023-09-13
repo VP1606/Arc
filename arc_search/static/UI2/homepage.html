@@ -36,7 +36,7 @@
             function searchRouter() {
                 if (eanExact == true) {
                     console.log("EXACT EAN");
-                    // do_search();
+                    do_search();
                 } else if (nameSearch == true) {
                     console.log("NAME SEARCH");
                     // do_name_search();
@@ -52,6 +52,7 @@
         </script>
 
         <script src="/static/UI2/mode_control.js"></script>
+        <script src="/static/operator.js"></script>
 
     </head>
     <body style="background-color: black;">
@@ -135,13 +136,13 @@
                         <div class="flex hstack" id="search_stack">
                             <input type="text" name="ean-code" id="search-field-typebox" placeholder="EAN" oninput="filterNonNumeric(this)">
                             <div class="spacer"></div>
-                            <img src="/static/UI2/img_assets/search_button.png" id="search_button">
+                            <img src="/static/UI2/img_assets/search_button.png" id="search_button" onclick="searchRouter()">
                         </div>
                     </div>
                 </center>
 
                 <center>
-                    <div id="spec-search-container" style="background-color: red; width: 100%; height: auto;"></div>
+                    <div id="spec-search-container" style="width: 100%; height: auto; display: block;"></div>
                 </center>
 
             </div>
