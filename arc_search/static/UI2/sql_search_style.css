@@ -1,0 +1,50 @@
+:root {
+    --row-height: 50px;
+    --minor-text-size: 15px;
+    --major-text-size: 22px;
+    --ean-font-size: 13px;
+}
+  
+  /* Media query for screens with a maximum width of 768px (typical for mobile devices) */
+@media (max-width: 500px) {
+    :root {
+        --row-height: 50px;
+        --minor-text-size: 15px;
+        --major-text-size: 22px;
+        --ean-font-size: 13px;
+    }
+}
+  
+  /* Media query for screens with a minimum width of 769px (typical for desktop) */
+@media (min-width: 501px) {
+    :root {
+        --row-height: 60px;
+        --minor-text-size: 17px;
+        --major-text-size: 25px;
+        --ean-font-size: 15px;
+    }
+}
+
+.sql-search-row {
+    height: var(--row-height);
+}
+
+.sql-search-row div p {
+    text-align: left;
+    color: white;
+    font-family: Avenir;
+    font-size: var(--minor-text-size);
+    font-style: normal;
+    font-weight: 400;
+    margin: 0;
+    text-decoration: none;
+    vertical-align: top;
+}
+
+#sql-search-box > *:not(:last-child) {
+    margin-bottom: 25px;
+}
+
+#sql-search-desc-box > *:not(:last-child) {
+    margin-bottom: 25px;
+}

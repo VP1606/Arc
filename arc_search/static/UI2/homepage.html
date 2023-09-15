@@ -5,6 +5,7 @@
         <link rel="stylesheet" type="text/css" href="/static/UI2/homestyle.css">
         <link rel="stylesheet" type="text/css" href="/static/UI2/stacks.css">
         <link rel="stylesheet" type="text/css" href="/static/UI2/spec_style.css">
+        <link rel="stylesheet" type="text/css" href="/static/UI2/sql_search_style.css">
 
         <script>
             // Function to toggle the dropdown content
@@ -34,15 +35,15 @@
             };
 
             function searchRouter() {
-                if (eanExact == true) {
+                if (modeIconBindings['exact-ean-btn'][2] == true) {
                     console.log("EXACT EAN");
                     do_search();
-                } else if (nameSearch == true) {
+                } else if (modeIconBindings['name-search-btn'][2] == true) {
                     console.log("NAME SEARCH");
-                    // do_name_search();
-                } else if (eanSearch == true) {
+                    sql_search("name");
+                } else if (modeIconBindings['ean-search-btn'][2] == true) {
                     console.log("EAN SEARCH");
-                    // do_ean_search();
+                    sql_search("ean");
                 } else if (basketMode == true) {
                     console.log("BASKET MODE");
                     // do_basket_search();
@@ -65,6 +66,7 @@
 
         <script src="/static/UI2/mode_control.js"></script>
         <script src="/static/operator.js"></script>
+        <script src="/static/sql_search/sql_search_handler.js"></script>
 
     </head>
     <body style="background-color: black;">
@@ -159,6 +161,10 @@
                 
                 <center>
                     <div id="spec-search-container" style="width: 100%; height: auto; display: block;"></div>
+                </center>
+
+                <center>
+                    <div id="sql-search-container" style="width: 100%; height: auto; display: block;"></div>
                 </center>
 
                 <div style="height: 100px;">&zwnj;</div>

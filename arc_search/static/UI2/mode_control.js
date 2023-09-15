@@ -18,6 +18,10 @@ function ClickMode(sender) {
 
     document.getElementById("main_mode_image").src = binding[0];
     main_mode_show.querySelector('#mode_select_title').textContent = binding[1];
+    
+    for (const key in modeIconBindings) {
+        modeIconBindings[key][2] = false;
+    };
     modeIconBindings[sender.id][2] = true;
 
     var search_box = document.getElementById("search-field-typebox");
