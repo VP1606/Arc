@@ -31,9 +31,9 @@ async def test():
 
 @app.get("/update_price")
 async def update_price(id: str, target: str, stockref: str, price: str):
-    if pub_id == id:
-        _price = float(price)
-        ps.price_upload(target, stockref, _price)
+    #if pub_id == id:
+    _price = float(price)
+    ps.price_upload(target, stockref, _price)
     return Response(content='True', media_type="application/json")
 
 

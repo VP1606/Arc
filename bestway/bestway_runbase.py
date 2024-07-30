@@ -37,7 +37,7 @@ mydbs = [mysql.connector.connect(
         database="mpos"
     )]
 
-def RUN(cookies, headers, generate_ean_list=False, collect_pricing=True):
+def RUN(cookies, headers, generate_ean_list=False, collect_pricing=True, page_selection=False):
     if generate_ean_list:
         print("--------BESTWAY START EAN--------")
     else:
@@ -50,6 +50,15 @@ def RUN(cookies, headers, generate_ean_list=False, collect_pricing=True):
 
     cats = get_cats.get_cats(cookies, headers)
     ean_list = []
+    
+    if page_selection == True:
+        print(f"Page Range: {len(cats)}")
+        start_index = int(input("Enter start index: "))
+        end_index = int(input("Enter end index: "))
+        print(f"[{start_index}:{end_index}]")
+        cats = cats[start_index:end_index]
+        print(f"New Length: {len(cats)}")
+    
     for index, cat in enumerate(cats):
         print(index)
         ean_list = ean_list + get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydbs, generate_ean_list, collect_pricing)
@@ -84,4 +93,4 @@ for arg in args:
     if arg == "-spd":
         collect_pricing = False
 
-RUN(cookies=cookies_raw, headers=headers_raw, generate_ean_list=generate_ean, collect_pricing=collect_pricing)
+RUN(cookies=cookies_raw, headers=headers_raw, generate_ean_list=generate_ean, collect_pricing=collect_pricing, page_selection=False)

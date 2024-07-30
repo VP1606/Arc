@@ -64,5 +64,11 @@ class BestwayItem:
               "%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) "
         vals = (self.ean, self.name, rsp_formatted, "BESTWAY", vat_val, por, self.pack_size, int(self.code), self.brand, self.stock, b_price_formatted, self.unit_size, profit_percent)
 
-        mycursor.execute(sql, vals)
+        try:
+            mycursor.execute(sql, vals)
+        except Exception as e:
+            print("MYSQL ERROR")
+            print(e)
+            print(f"Erraneous Packet: {vals}")
+        
         mydb.commit()
