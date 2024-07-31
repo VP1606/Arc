@@ -7,38 +7,42 @@ import json
 import sys
 import os
 
+#https://curlconverter.com
 cookies = {
-    '.ASPXAUTH': '33CDC131F6B53F37F4CD7574642D835967A51D82D8A6590D9458E4A03B4E7A0865957038CCCDE8C81BF535CF43D10906E2E68CC5C5F753A1FFE61CB700FD9FF078ED772AF4E3BFA0D599EF6E357E59BDDAF20FA62473875654F8F4BABD6C07017C7BACFEFCC502ABC2364A2C04FC31B345A332373010DE4489159EA264C44AFC3FEF3C2B16CD024C200CED0B5908933933E9ACCB12F01ACD090D34668872344C',
-    'QueueITAccepted-SDFrts345E-V3_prodqueue': 'EventId%3Dprodqueue%26QueueId%3D88ffb793-eb73-481b-8cfe-b9657295ca6a%26RedirectType%3Dsafetynet%26IssueTime%3D1667054608%26Hash%3D351d8fc58a1d03a30e5b20c3b19b256f4430564d3630c79245120c9cd827534f',
-    '_dd_s': 'rum=2&id=98177935-9bbc-4705-94e1-a435824cc2e6&created=1667054607942&expire=1667056491415',
-    'Trolley-ClickAndCollect': '4',
-    'booker#lang': 'en',
-    'Booker': 'CustomerNumber=Phfyvwx2Y4sXKstBV2PQqSKCVVti1OeNQ8Qd-4PozfUVznZRoHoeyx2tJ_NfXkPwMC7hCj4i_XrbP1uJwCf_jA2',
-    'SC_ANALYTICS_GLOBAL_COOKIE': '3f4211037cf7465faddbb21ecca56654|False',
+    '_dd_s': 'rum=2&id=3f6033b8-3443-4968-bd2c-bded9f4e3dea&created=1722434687857&expire=1722435856799',
+    '.ASPXAUTH': '2A08413FCE9180612097B204333237E52944CDEC723FD2AF79D9E2564DCF2B477CD8A42671F3A4F81975ED06935D7C34D1C1CCB21E4987A9EAC95B4D47347278E48C19DC59C08D0743C673D35090564F15F22B5962E758E3AAAD63FB1F4DBFF6E7A26A0F567A7B407A422EC7E2A825F33762FC1FE1ED07CC40B693C13C0C269BD1EEDC3F41FF66A0E0F36CF1BFF01445A41A1637AEAD8C86ED652C679594B31C',
+    'Booker': 'CustomerNumber=HJ9igjKkM9f-8U6wsleIlSQXEnRNCzJF7FuDO9fyLNJfRDES6oglT85EfQvcmM2oO6gil_K0O1433LnGYZwNSA2',
+    'QueueITAccepted-SDFrts345E-V3_prodqueue': 'EventId%3Dprodqueue%26QueueId%3D8c5de78d-2f63-4d8e-9d82-57f523dfde1c%26RedirectType%3Dsafetynet%26IssueTime%3D1722434689%26Hash%3D2d7a008d02074b7e01df169d00ef5ddf5db6abee0d40665408d07857c4efcea6',
+    'ScannerID': '0f9ac8f1e0db4c72a17a50086fd38f81',
+    'Trolley-ClickAndCollect': '5031',
+    'activetrolley': 'ClickAndCollect',
     'hasRepOrders': '0',
     'unseenRepOrders': '0',
-    'ASP.NET_SessionId': 'bhgld4vdcqqjvjnu4febagnz',
-    '_ga': 'GA1.3.63679729.1666875126',
-    'CookieConsent': '{stamp:%27oJ35SLjkzW4RaUoGqC9nv0TjIDn9KP4raUYB5i2R9p0pT/40h2LtBg==%27%2Cnecessary:true%2Cpreferences:false%2Cstatistics:false%2Cmarketing:false%2Cver:1%2Cutc:1666875104776%2Cregion:%27gb%27}',
-    'X-Mapping-janbeidc': '47F18F41A1C1358593CEE9E7CB55C663',
-    '__RequestVerificationToken': 'XACfJyQWDMVZxFi6SrMR8ivsEpZKptICTqu9PlSglFldZCYGFzHH_JEHuSWM39s82i3kYEbcMjgUHasMcMTHw-QtFHNHUTdVczgVDHiiTF81',
+    'ASP.NET_SessionId': 'x0xzzhi2j52krr5ptvsyb2cd',
+    'SC_ANALYTICS_GLOBAL_COOKIE': 'f7d4ffc0f8b742218fcb0b23f7abfe47|False',
+    'shell#lang': 'en',
+    'CookieConsent': '{stamp:%27n6cuJdYIUNwbjixVQ3kz03HRxlrU67pOZdY/uQEqcseAm7sk15YIDg==%27%2Cnecessary:true%2Cpreferences:false%2Cstatistics:false%2Cmarketing:false%2Cmethod:%27explicit%27%2Cver:1%2Cutc:1722434686946%2Cregion:%27gb%27}',
+    'X-Mapping-pkbognpo': '9772CA94F76529C66119B65082B41600',
+    '__RequestVerificationToken': 'OHpZmI17RgJk6ru-jY0JnAvS-EU7mwztwwwfikMls6jzTcX-z-smQWot0fYE-rx_wmPHAmJ71DA9B6VTlj34wVyoQaY6Jxp7Q4_i7FMMceU1',
 }
 
 headers = {
-    # Requests sorts cookies= alphabetically
-    # 'Cookie': '.ASPXAUTH=33CDC131F6B53F37F4CD7574642D835967A51D82D8A6590D9458E4A03B4E7A0865957038CCCDE8C81BF535CF43D10906E2E68CC5C5F753A1FFE61CB700FD9FF078ED772AF4E3BFA0D599EF6E357E59BDDAF20FA62473875654F8F4BABD6C07017C7BACFEFCC502ABC2364A2C04FC31B345A332373010DE4489159EA264C44AFC3FEF3C2B16CD024C200CED0B5908933933E9ACCB12F01ACD090D34668872344C; QueueITAccepted-SDFrts345E-V3_prodqueue=EventId%3Dprodqueue%26QueueId%3D88ffb793-eb73-481b-8cfe-b9657295ca6a%26RedirectType%3Dsafetynet%26IssueTime%3D1667054608%26Hash%3D351d8fc58a1d03a30e5b20c3b19b256f4430564d3630c79245120c9cd827534f; _dd_s=rum=2&id=98177935-9bbc-4705-94e1-a435824cc2e6&created=1667054607942&expire=1667056491415; Trolley-ClickAndCollect=4; booker#lang=en; Booker=CustomerNumber=Phfyvwx2Y4sXKstBV2PQqSKCVVti1OeNQ8Qd-4PozfUVznZRoHoeyx2tJ_NfXkPwMC7hCj4i_XrbP1uJwCf_jA2; SC_ANALYTICS_GLOBAL_COOKIE=3f4211037cf7465faddbb21ecca56654|False; hasRepOrders=0; unseenRepOrders=0; ASP.NET_SessionId=bhgld4vdcqqjvjnu4febagnz; _ga=GA1.3.63679729.1666875126; CookieConsent={stamp:%27oJ35SLjkzW4RaUoGqC9nv0TjIDn9KP4raUYB5i2R9p0pT/40h2LtBg==%27%2Cnecessary:true%2Cpreferences:false%2Cstatistics:false%2Cmarketing:false%2Cver:1%2Cutc:1666875104776%2Cregion:%27gb%27}; X-Mapping-janbeidc=47F18F41A1C1358593CEE9E7CB55C663; __RequestVerificationToken=XACfJyQWDMVZxFi6SrMR8ivsEpZKptICTqu9PlSglFldZCYGFzHH_JEHuSWM39s82i3kYEbcMjgUHasMcMTHw-QtFHNHUTdVczgVDHiiTF81',
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    'Sec-Fetch-Site': 'same-origin',
+    # 'Cookie': '_dd_s=rum=2&id=3f6033b8-3443-4968-bd2c-bded9f4e3dea&created=1722434687857&expire=1722435856799; .ASPXAUTH=2A08413FCE9180612097B204333237E52944CDEC723FD2AF79D9E2564DCF2B477CD8A42671F3A4F81975ED06935D7C34D1C1CCB21E4987A9EAC95B4D47347278E48C19DC59C08D0743C673D35090564F15F22B5962E758E3AAAD63FB1F4DBFF6E7A26A0F567A7B407A422EC7E2A825F33762FC1FE1ED07CC40B693C13C0C269BD1EEDC3F41FF66A0E0F36CF1BFF01445A41A1637AEAD8C86ED652C679594B31C; Booker=CustomerNumber=HJ9igjKkM9f-8U6wsleIlSQXEnRNCzJF7FuDO9fyLNJfRDES6oglT85EfQvcmM2oO6gil_K0O1433LnGYZwNSA2; QueueITAccepted-SDFrts345E-V3_prodqueue=EventId%3Dprodqueue%26QueueId%3D8c5de78d-2f63-4d8e-9d82-57f523dfde1c%26RedirectType%3Dsafetynet%26IssueTime%3D1722434689%26Hash%3D2d7a008d02074b7e01df169d00ef5ddf5db6abee0d40665408d07857c4efcea6; ScannerID=0f9ac8f1e0db4c72a17a50086fd38f81; Trolley-ClickAndCollect=5031; activetrolley=ClickAndCollect; hasRepOrders=0; unseenRepOrders=0; ASP.NET_SessionId=x0xzzhi2j52krr5ptvsyb2cd; SC_ANALYTICS_GLOBAL_COOKIE=f7d4ffc0f8b742218fcb0b23f7abfe47|False; shell#lang=en; CookieConsent={stamp:%27n6cuJdYIUNwbjixVQ3kz03HRxlrU67pOZdY/uQEqcseAm7sk15YIDg==%27%2Cnecessary:true%2Cpreferences:false%2Cstatistics:false%2Cmarketing:false%2Cmethod:%27explicit%27%2Cver:1%2Cutc:1722434686946%2Cregion:%27gb%27}; X-Mapping-pkbognpo=9772CA94F76529C66119B65082B41600; __RequestVerificationToken=OHpZmI17RgJk6ru-jY0JnAvS-EU7mwztwwwfikMls6jzTcX-z-smQWot0fYE-rx_wmPHAmJ71DA9B6VTlj34wVyoQaY6Jxp7Q4_i7FMMceU1',
     # 'Accept-Encoding': 'gzip, deflate, br',
+    'Referer': 'https://www.booker.co.uk/login',
+    'Sec-Fetch-Mode': 'navigate',
     'Host': 'www.booker.co.uk',
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15',
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15',
     'Accept-Language': 'en-GB,en;q=0.9',
-    'Referer': 'https://www.booker.co.uk/products/product-list?categoryName=CS3_100001',
+    'Sec-Fetch-Dest': 'document',
     'Connection': 'keep-alive',
 }
 
 home_db_address = str(os.environ.get("HOME_SQL"))
 mydbs = [mysql.connector.connect(
-        host="192.168.1.172",
+        host=home_db_address,
         user="mpos",
         password="mpospass",
         database="mpos"
