@@ -2,7 +2,8 @@ import mysql.connector
 import get_all_cat_threaded
 import get_cats
 import os
-import multiprocessing
+from list2term.multiprocessing import pool_map
+from list2term.multiprocessing import CONCURRENCY
 
 cookies_raw = {
     'unbxd_depot': '834',
@@ -35,19 +36,18 @@ mydbs = [mysql.connector.connect(
         database="mpos"
     )]
 
-def split_array_in_half(arr):
-    midpoint = len(arr) // 2
-    first_half = arr[:midpoint]
-    second_half = arr[midpoint:]
-    return first_half, second_half
+def split_array(arr, num_splits):
+    k, m = divmod(len(arr), num_splits)
+    return [arr[i * k + min(i, m):(i + 1) * k + min(i + 1, m)] for i in range(num_splits)]
 
-def RUN(cats, cookies, headers, generate_ean_list=False, collect_pricing=True):
+
+def RUN(cats, cookies, headers, logger, generate_ean_list=False, collect_pricing=True):
     print(f"--------BESTWAY START PID {os.getpid()}--------")
     
     ean_list = []
     for index, cat in enumerate(cats):
-        print(index)
-        ean_list = ean_list + get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydbs, generate_ean_list, collect_pricing)
+        print(f"PID {os.getpid()}: index {index} of {len(cats)}")
+        ean_list = ean_list + get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydbs, generate_ean_list, collect_pricing, show_progress=False)
 
     print(f"--------BESTWAY DONE PID {os.getpid()}--------")
     return
@@ -55,16 +55,18 @@ def RUN(cats, cookies, headers, generate_ean_list=False, collect_pricing=True):
 if __name__ == "__main__":
     print("ID of main process: {}".format(os.getpid()))
     
+    concurrency_load = int(CONCURRENCY)
+    print(f"Processes to be used: {concurrency_load}")
+    
     cats = get_cats.get_cats(cookies_raw, headers_raw)
-    cats_p1, cats_p2 = split_array_in_half(cats)
+    split_cats = split_array(cats, concurrency_load)
     
-    p1 = multiprocessing.Process(target=RUN, args=(cats_p1, cookies_raw, headers_raw, False, True))
-    p2 = multiprocessing.Process(target=RUN, args=(cats_p2, cookies_raw, headers_raw, False, True))
+    iterable = []
+    for block in split_cats:
+        args = (block, cookies_raw, headers_raw, False, True)
+        iterable.append(args)
     
-    p1.start()
-    p2.start()
-    
-    p1.join()
-    p2.join()
+    results = pool_map(RUN, iterable)
+    _ = results.get()
     
     print("Main Complete")

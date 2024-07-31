@@ -68,7 +68,7 @@ def generate_ean_list(item):
     return pack
 
 
-def do_cat_threaded(href, cookies, headers, mydbs, generate_ean_list_called, collect_pricing):
+def do_cat_threaded(href, cookies, headers, mydbs, generate_ean_list_called, collect_pricing, show_progress=True):
     target_urls = build_targets(href, cookies, headers)
     threads = []
     target_book = []
@@ -76,37 +76,64 @@ def do_cat_threaded(href, cookies, headers, mydbs, generate_ean_list_called, col
 
     ean_list = []
 
-    with alive_bar(len(target_urls), title="Page Scanning", force_tty=True) as bar:
+    if show_progress:
+        with alive_bar(len(target_urls), title="Page Scanning", force_tty=True) as bar:
+            with ThreadPoolExecutor(max_workers=20) as executor:
+                for url in target_urls:
+                    threads.append(executor.submit(handle_page, url, cookies, headers))
+                for task in as_completed(threads):
+                    target_book = target_book + task.result()
+                    bar()
+    else:                
         with ThreadPoolExecutor(max_workers=20) as executor:
-            for url in target_urls:
-                threads.append(executor.submit(handle_page, url, cookies, headers))
-            for task in as_completed(threads):
-                target_book = target_book + task.result()
-                bar()
+                for url in target_urls:
+                    threads.append(executor.submit(handle_page, url, cookies, headers))
+                for task in as_completed(threads):
+                    target_book = target_book + task.result()
 
     threads = []
-    with alive_bar(len(target_book), title="Building Items", force_tty=True) as bar:
+    if show_progress:
+        with alive_bar(len(target_book), title="Building Items", force_tty=True) as bar:
+            with ThreadPoolExecutor(max_workers=20) as executor:
+                for link in target_book:
+                    threads.append(executor.submit(build_item, link, cookies, headers, collect_pricing))
+                for task in as_completed(threads):
+                    item_book = item_book + task.result()
+                    bar()
+    else:    
         with ThreadPoolExecutor(max_workers=20) as executor:
-            for link in target_book:
-                threads.append(executor.submit(build_item, link, cookies, headers, collect_pricing))
-            for task in as_completed(threads):
-                item_book = item_book + task.result()
-                bar()
+                for link in target_book:
+                    threads.append(executor.submit(build_item, link, cookies, headers, collect_pricing))
+                for task in as_completed(threads):
+                    item_book = item_book + task.result()
 
     if generate_ean_list_called:
         threads = []
-        with alive_bar(len(item_book), title="Generating EAN List", force_tty=True) as bar:
+        if show_progress:
+            with alive_bar(len(item_book), title="Generating EAN List", force_tty=True) as bar:
+                with ThreadPoolExecutor(max_workers=20) as executor:
+                    for item in item_book:
+                        threads.append(executor.submit(generate_ean_list, item))
+                    for task in as_completed(threads):
+                        ean_list.append(task.result())
+                        bar()
+        else:            
             with ThreadPoolExecutor(max_workers=20) as executor:
                 for item in item_book:
                     threads.append(executor.submit(generate_ean_list, item))
                 for task in as_completed(threads):
                     ean_list.append(task.result())
-                    bar()
 
-    with alive_bar(len(target_book), title="Committing to SQL", force_tty=True) as bar:
+    if show_progress:
+        with alive_bar(len(target_book), title="Committing to SQL", force_tty=True) as bar:
+            for el in item_book:
+                for mydb in mydbs:
+                    sql_committing(el, cookies, headers, mydb)
+                bar()
+                
+    else:
         for el in item_book:
             for mydb in mydbs:
                 sql_committing(el, cookies, headers, mydb)
-            bar()
 
     return ean_list
