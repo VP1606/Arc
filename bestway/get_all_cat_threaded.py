@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-import get_item
+import bestway.get_item as get_item
 from alive_progress import alive_bar
 import math
 from concurrent.futures import ThreadPoolExecutor, as_completed

@@ -38,7 +38,7 @@ headers = {
 
 home_db_address = str(os.environ.get("HOME_SQL"))
 mydbs = [mysql.connector.connect(
-        host=home_db_address,
+        host="192.168.1.172",
         user="mpos",
         password="mpospass",
         database="mpos"

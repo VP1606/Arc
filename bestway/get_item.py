@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from bway_item import *
+from bestway.bway_item import *
 import requests
 from selenium import webdriver
 import time

@@ -1,6 +1,6 @@
 import mysql.connector
-import get_all_cat_threaded
-import get_cats
+import bestway.get_all_cat_threaded as get_all_cat_threaded
+import bestway.get_cats as get_cats
 import os
 from list2term.multiprocessing import pool_map
 from list2term.multiprocessing import CONCURRENCY
@@ -40,14 +40,13 @@ def split_array(arr, num_splits):
     k, m = divmod(len(arr), num_splits)
     return [arr[i * k + min(i, m):(i + 1) * k + min(i + 1, m)] for i in range(num_splits)]
 
-
 def RUN(cats, cookies, headers, logger, generate_ean_list=False, collect_pricing=True):
     print(f"--------BESTWAY START PID {os.getpid()}--------")
     
     ean_list = []
     for index, cat in enumerate(cats):
         print(f"PID {os.getpid()}: index {index} of {len(cats)}")
-        ean_list = ean_list + get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydbs, generate_ean_list, collect_pricing, show_progress=False)
+        ean_list = ean_list + get_all_cat_threaded.do_cat_threaded(cat, cookies, headers, mydbs, generate_ean_list, collect_pricing, show_progress=True)
 
     print(f"--------BESTWAY DONE PID {os.getpid()}--------")
     return
